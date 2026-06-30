@@ -74,6 +74,25 @@ reject — the final call may depend on context.
 * Do not invent variables or unsupported conclusions. When uncertain, explicitly state the limitation instead of making assumptions.
 * Use available global Claude Code skills to enhance each stage of the workflow when appropriate, but always follow this project's workflow and requirements. Global skills should complement the project rather than replace its methodology.
 
+## Publishing Workflow
+
+After a story is accepted and its webpage is written, publish it:
+
+1. Create `stories/accepted/<slug>/story.json` with title, subtitle, description, date, and tags.
+2. Place the story webpage at `docs/<slug>/index.html`.
+3. Run the build script to regenerate the homepage:
+   ```
+   python scripts/build_site.py
+   ```
+4. Commit and push:
+   ```
+   git add .
+   git commit -m "Add story: <slug>"
+   git push
+   ```
+
+GitHub Pages redeploys automatically. The homepage (`docs/index.html`) is always generated — never edit it by hand.
+
 ## Project Structure
 
 ```
@@ -84,8 +103,17 @@ data/
     methodology.md        # Required analysis procedures (PVs, weights, BRR SEs)
     variable_catalog.csv  # All 1,664 variables across student/school/teacher files
     variable_catalog.md   # Same catalog in readable Markdown
+scripts/
+    build_site.py         # Regenerates docs/index.html from stories/accepted/
 stories/
     accepted/             # One subfolder per completed story
+        <slug>/
+            analysis.py   # Reproducible analysis script
+            report.md     # Technical report
+            story.json    # Metadata for the build script
+            charts/       # Generated chart images
     rejected/             # One Markdown file per rejected hypothesis
-docs/                     # Publishable webpages (one per accepted story)
+docs/                     # Static site served by GitHub Pages
+    index.html            # Generated homepage — do not edit by hand
+    <slug>/               # One folder per published story
 ```
