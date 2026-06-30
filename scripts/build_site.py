@@ -11,12 +11,13 @@ Each accepted story must have:
     docs/<slug>/index.html                -- published page (warned if missing)
 
 docs/index.html is always regenerated from scratch.
-Story pages in docs/<slug>/ are never modified by this script.
+Charts are copied from stories/accepted/<slug>/charts/ to docs/<slug>/charts/.
+Story HTML pages in docs/<slug>/ are never modified by this script.
 """
 
 import json
+import shutil
 import sys
-import warnings
 from datetime import date, datetime
 from pathlib import Path
 
@@ -120,7 +121,7 @@ def build_index(stories: list[dict]) -> str:
     count_txt = f"{n} {'story' if n == 1 else 'stories'}"
 
     return f"""<!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -354,13 +355,13 @@ const html = document.documentElement;
 const btn  = document.getElementById('theme-toggle');
 function applyTheme(dark) {{
   html.setAttribute('data-theme', dark ? 'dark' : 'light');
-  btn.textContent = dark ? '☀︎' : '☾';
+  btn.textContent = dark ? '☾' : '☀︎';
   const url = new URL(location);
   url.searchParams.set('dark', dark ? '1' : '0');
   history.replaceState(null, '', url.toString());
 }}
 const p = new URL(location).searchParams.get('dark');
-applyTheme(p === null ? true : p === '1');
+applyTheme(p === null ? false : p === '1');
 btn.addEventListener('click', () => applyTheme(html.getAttribute('data-theme') === 'light'));
 
 // ── Stagger card animations ──
@@ -395,6 +396,24 @@ def main():
 
     print()
     DOCS.mkdir(exist_ok=True)
+
+    # Copy charts from stories/ into docs/ so GitHub Pages can serve them
+    for story in stories:
+        slug       = story["slug"]
+        src_charts = STORIES / slug / "charts"
+        dst_charts = DOCS / slug / "charts"
+        if src_charts.is_dir():
+            dst_charts.mkdir(parents=True, exist_ok=True)
+            copied = 0
+            for chart in src_charts.iterdir():
+                if chart.is_file():
+                    shutil.copy2(chart, dst_charts / chart.name)
+                    copied += 1
+            if copied:
+                print(f"  charts {dst_charts.relative_to(ROOT)} ({copied} files)")
+        else:
+            print(f"  WARN  [{slug}] no charts/ folder found", file=sys.stderr)
+
     index_path = DOCS / "index.html"
     index_path.write_text(build_index(stories), encoding="utf-8")
     print(f"  wrote  {index_path.relative_to(ROOT)}")

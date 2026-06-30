@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -576,7 +576,7 @@ footer {
   </div>
 
   <div class="chart-wrap">
-    <img src="../../stories/accepted/school-lottery/charts/mean_vs_icc_scatter.png"
+    <img src="./charts/mean_vs_icc_scatter.png"
          alt="Scatter plot: national mean score vs ICC for 79 countries. Netherlands is top-right, Finland is bottom-right.">
     <p class="chart-caption">
       <strong>Figure 1.</strong> Each dot is a country. The x-axis is the national mean
@@ -644,7 +644,7 @@ footer {
   </p>
 
   <div class="chart-wrap">
-    <img src="../../stories/accepted/school-lottery/charts/school_means_distribution.png"
+    <img src="./charts/school_means_distribution.png"
          alt="Distribution of school means for Netherlands (bimodal, wide) vs Finland (single peak, narrow).">
     <p class="chart-caption">
       <strong>Figure 2.</strong> Distribution of weighted school means for the Netherlands
@@ -701,7 +701,7 @@ footer {
   </div>
 
   <div class="chart-wrap">
-    <img src="../../stories/accepted/school-lottery/charts/lottery_national_comparison.png"
+    <img src="./charts/lottery_national_comparison.png"
          alt="NLD school percentile range mapped onto the global country ranking by mean score.">
     <p class="chart-caption">
       <strong>Figure 3.</strong> All 79 countries ranked vertically by national mean
@@ -874,7 +874,7 @@ function applyTheme(dark) {
 }
 // Read from URL
 const urlDark = new URL(location).searchParams.get('dark');
-applyTheme(urlDark === null ? true : urlDark === '1');
+applyTheme(urlDark === null ? false : urlDark === '1');
 themeToggle.addEventListener('click', () => {
   applyTheme(html.getAttribute('data-theme') === 'light');
 });

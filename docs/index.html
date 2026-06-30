@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -260,13 +260,13 @@ const html = document.documentElement;
 const btn  = document.getElementById('theme-toggle');
 function applyTheme(dark) {
   html.setAttribute('data-theme', dark ? 'dark' : 'light');
-  btn.textContent = dark ? '☀︎' : '☾';
+  btn.textContent = dark ? '☾' : '☀︎';
   const url = new URL(location);
   url.searchParams.set('dark', dark ? '1' : '0');
   history.replaceState(null, '', url.toString());
 }
 const p = new URL(location).searchParams.get('dark');
-applyTheme(p === null ? true : p === '1');
+applyTheme(p === null ? false : p === '1');
 btn.addEventListener('click', () => applyTheme(html.getAttribute('data-theme') === 'light'));
 
 // ── Stagger card animations ──
