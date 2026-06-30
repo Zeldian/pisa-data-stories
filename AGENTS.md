@@ -53,11 +53,14 @@ reject — the final call may depend on context.
 4. If the hypothesis is supported:
 
    * Create a new folder in `stories/accepted/<story-name>/`.
-   * Briefly describe the planned analysis approach (variables, method, expected output) before writing any code. This acts as a sanity check.
+   * Briefly describe the planned analysis approach before writing any code. Include the variables to be used, the proposed analytical method, the expected outputs, and a short justification for why this approach is appropriate. If multiple reasonable approaches exist, briefly explain why the chosen one is preferred. This acts as a sanity check before implementation.
    * Write the analysis code.
    * Generate the required charts.
-   * Write a clear report.
-   * Generate a publishable webpage in `docs/`.
+   * Write a clear technical report.
+   * Use the most appropriate available global Claude Code data analysis skills to review the methodology, verify the analysis, improve visualizations where appropriate, and ensure the statistical conclusions are well supported.
+   * Use the most appropriate available global Claude Code data storytelling skills to transform the technical report into a clear, engaging narrative suitable for a general audience while preserving factual accuracy.
+   * Use the most appropriate available global Claude Code webpage/design skills to generate a clean, accessible, and visually appealing GitHub Pages webpage from the structured data story.
+   * Generate the publishable webpage and supporting assets in `docs/`.
 
 ## Rules
 
@@ -69,6 +72,7 @@ reject — the final call may depend on context.
 * Clearly state any assumptions and limitations.
 * Do not modify previously accepted stories unless instructed.
 * Do not invent variables or unsupported conclusions. When uncertain, explicitly state the limitation instead of making assumptions.
+* Use available global Claude Code skills to enhance each stage of the workflow when appropriate, but always follow this project's workflow and requirements. Global skills should complement the project rather than replace its methodology.
 
 ## Project Structure
 
