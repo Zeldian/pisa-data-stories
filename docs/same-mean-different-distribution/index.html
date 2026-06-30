@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Same Average, Different Distribution — PISA 2018</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Georgia", serif;
+    background: #f9f7f4;
+    color: #1a1a1a;
+    line-height: 1.75;
+  }
+
+  .page { max-width: 780px; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+
+  /* Header */
+  .kicker {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 0.9rem;
+  }
+  h1 {
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.1rem;
+  }
+  .dek {
+    font-size: 1.15rem;
+    color: #444;
+    margin-bottom: 2rem;
+    max-width: 640px;
+  }
+  .byline {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.8rem;
+    color: #999;
+    border-top: 1px solid #ddd;
+    padding-top: 0.8rem;
+    margin-bottom: 3rem;
+  }
+
+  /* Body text */
+  p { margin-bottom: 1.3rem; }
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 2.5rem 0 0.9rem;
+    letter-spacing: -0.01em;
+  }
+  h3 {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #777;
+    margin: 2rem 0 0.5rem;
+  }
+
+  /* Pull quote */
+  .pullquote {
+    border-left: 4px solid #c0392b;
+    margin: 2.5rem 0;
+    padding: 0.5rem 1.5rem;
+    font-size: 1.25rem;
+    font-style: italic;
+    color: #333;
+    line-height: 1.5;
+  }
+
+  /* Stat callouts */
+  .stat-row {
+    display: flex;
+    gap: 1.5rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+  }
+  .stat-box {
+    flex: 1;
+    min-width: 180px;
+    background: #fff;
+    border: 1px solid #e0dbd4;
+    border-radius: 6px;
+    padding: 1.2rem 1.4rem;
+  }
+  .stat-box .label {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 0.3rem;
+  }
+  .stat-box .value {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .stat-box .sub {
+    font-size: 0.78rem;
+    color: #888;
+    margin-top: 0.3rem;
+  }
+  .stat-box.lbn .value { color: #1b6ca8; }
+  .stat-box.ksv .value { color: #e05c1a; }
+
+  /* Charts */
+  .chart-wrap {
+    margin: 2.5rem 0;
+    background: #fff;
+    border: 1px solid #e0dbd4;
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .chart-wrap img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+  }
+  .chart-caption {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.78rem;
+    color: #777;
+    margin-top: 0.75rem;
+    line-height: 1.5;
+  }
+  .chart-caption strong { color: #444; }
+
+  /* Data table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.85rem;
+    margin: 1.5rem 0;
+  }
+  th {
+    background: #f0ede8;
+    text-align: left;
+    padding: 0.55rem 0.8rem;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #555;
+    border-bottom: 2px solid #ddd;
+  }
+  td {
+    padding: 0.5rem 0.8rem;
+    border-bottom: 1px solid #eee;
+    color: #222;
+  }
+  tr:last-child td { border-bottom: none; }
+  td.lbn { color: #1b6ca8; font-weight: 600; }
+  td.ksv { color: #e05c1a; font-weight: 600; }
+
+  /* Note / methodology */
+  .note {
+    background: #f0ede8;
+    border-radius: 6px;
+    padding: 1.2rem 1.5rem;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.82rem;
+    color: #555;
+    line-height: 1.65;
+    margin: 2.5rem 0;
+  }
+  .note strong { color: #333; }
+
+  /* Footer */
+  footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #ddd;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.78rem;
+    color: #aaa;
+    line-height: 1.7;
+  }
+  footer a { color: #888; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <p class="kicker">PISA 2018 · Reading</p>
+
+  <h1>Same average,<br>different reality</h1>
+
+  <p class="dek">
+    Lebanon and Kosovo scored within a single point of each other on the 2018 PISA reading assessment.
+    But their students live in completely different educational worlds.
+  </p>
+
+  <p class="byline">Data: OECD PISA 2018 · Analysis: PISA Data Stories Project</p>
+
+  <!-- ── Lead ── -->
+  <p>
+    When countries are ranked by their average PISA score, the table suggests a clean hierarchy:
+    top performers, middle performers, low performers. But averages are summaries — and summaries hide things.
+  </p>
+
+  <p>
+    Consider Lebanon and Kosovo. In the 2018 PISA reading assessment, Lebanon averaged
+    <strong>353.4 points</strong> and Kosovo averaged <strong>353.1 points</strong>.
+    A difference of 0.3 points — effectively zero. By the most widely-cited measure of
+    educational performance, these two countries are identical.
+  </p>
+
+  <p>
+    They are not identical.
+  </p>
+
+  <!-- ── Main chart ── -->
+  <div class="chart-wrap">
+    <img src="../../stories/accepted/same-mean-different-distribution/charts/density_comparison.png"
+         alt="Overlapping density curves for Lebanon and Kosovo PISA 2018 Reading scores">
+    <p class="chart-caption">
+      <strong>Figure 1.</strong> Weighted distribution of PISA 2018 Reading scores for Lebanon (blue) and Kosovo (orange).
+      The dashed vertical lines mark each country's weighted mean — nearly indistinguishable.
+      The shapes of the distributions are not.
+    </p>
+  </div>
+
+  <!-- ── What the chart shows ── -->
+  <h2>A tale of two shapes</h2>
+
+  <p>
+    Lebanon's distribution is wide and flat. Students are spread across a large range of outcomes —
+    from very low scores around 200 to relatively high scores approaching 550.
+    The system is <em>stratified</em>: some students clearly have access to better schooling
+    than others, and it shows in the results. Lebanon's standard deviation — a measure of how
+    spread out students are — is <strong>113 points</strong>, one of the highest of any
+    PISA 2018 participant.
+  </p>
+
+  <p>
+    Kosovo's distribution is narrow and peaked. Students are clustered tightly around the middle,
+    with far fewer at either extreme. The system is more <em>uniform</em>: students experience
+    similar educational conditions, for better or worse. Kosovo's standard deviation is just
+    <strong>68 points</strong>.
+  </p>
+
+  <div class="pullquote">
+    Lebanon's score curve is nearly twice as wide as Kosovo's —
+    yet both countries land on the same average.
+  </div>
+
+  <!-- ── Stat callouts ── -->
+  <div class="stat-row">
+    <div class="stat-box lbn">
+      <p class="label">Lebanon — Standard Deviation</p>
+      <p class="value">113</p>
+      <p class="sub">points — wide, stratified distribution</p>
+    </div>
+    <div class="stat-box ksv">
+      <p class="label">Kosovo — Standard Deviation</p>
+      <p class="value">68</p>
+      <p class="sub">points — narrow, uniform distribution</p>
+    </div>
+  </div>
+
+  <!-- ── Percentile chart ── -->
+  <h2>The distributions cross</h2>
+
+  <p>
+    The most striking detail is not just that Lebanon is more spread out — it's
+    <em>where</em> the two distributions diverge.
+  </p>
+
+  <div class="chart-wrap">
+    <img src="../../stories/accepted/same-mean-different-distribution/charts/percentile_bars.png"
+         alt="Percentile comparison bar chart for Lebanon and Kosovo">
+    <p class="chart-caption">
+      <strong>Figure 2.</strong> Key percentiles for Lebanon and Kosovo. At the 10th percentile,
+      Kosovo's students outperform Lebanon's by 54 points. At the 90th percentile,
+      Lebanon's students outperform Kosovo's by 65 points.
+    </p>
+  </div>
+
+  <p>
+    At the bottom of the distribution, Kosovo's students actually <em>outperform</em> Lebanon's.
+    The lowest-scoring 10% of Kosovan students reach around 265 points, while the lowest-scoring
+    10% of Lebanese students reach only 211 — a 54-point gap in Kosovo's favour.
+  </p>
+
+  <p>
+    But at the top, the picture reverses. The highest-scoring 10% of Lebanese students reach
+    around 507 points, a solid Level 2 performance. The highest-scoring 10% of Kosovan students
+    reach only 442 — still well below the international PISA average of 487, despite being
+    Kosovo's <em>top performers</em>.
+  </p>
+
+  <!-- ── Table ── -->
+  <h3>Key statistics</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Statistic</th>
+        <th>Lebanon</th>
+        <th>Kosovo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Mean (weighted, 10 PVs)</td><td class="lbn">353.4</td><td class="ksv">353.1</td></tr>
+      <tr><td>Standard deviation</td><td class="lbn">113</td><td class="ksv">68</td></tr>
+      <tr><td>P10 (bottom 10%)</td><td class="lbn">211</td><td class="ksv">265</td></tr>
+      <tr><td>P25</td><td class="lbn">268</td><td class="ksv">304</td></tr>
+      <tr><td>Median (P50)</td><td class="lbn">347</td><td class="ksv">352</td></tr>
+      <tr><td>P75</td><td class="lbn">434</td><td class="ksv">398</td></tr>
+      <tr><td>P90 (top 10%)</td><td class="lbn">507</td><td class="ksv">442</td></tr>
+      <tr><td>P90–P10 range</td><td class="lbn">296</td><td class="ksv">177</td></tr>
+      <tr><td>% below Level 1b (&lt; 407)</td><td class="lbn">67.6%</td><td class="ksv">78.6%</td></tr>
+      <tr><td>% at Level 5+ (≥ 626)</td><td class="lbn">0.7%</td><td class="ksv">0.0%</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ── Country landscape ── -->
+  <h2>This is not a coincidence</h2>
+
+  <p>
+    This pair did not require cherry-picking. Across all 79 PISA 2018 countries,
+    there is no strong relationship between a country's average score and
+    how spread out its students are. Countries with the same mean can have
+    very different levels of internal inequality.
+  </p>
+
+  <div class="chart-wrap">
+    <img src="../../stories/accepted/same-mean-different-distribution/charts/landscape_scatter.png"
+         alt="Scatter plot of all 79 countries: mean vs P90-P10 spread">
+    <p class="chart-caption">
+      <strong>Figure 3.</strong> Each dot is a country. The x-axis is the country's weighted mean
+      PISA Reading score; the y-axis is the P90–P10 range (a measure of internal spread).
+      Lebanon and Kosovo sit at almost the same horizontal position but are separated
+      vertically by 119 points — the largest such gap among all qualifying country pairs.
+    </p>
+  </div>
+
+  <p>
+    Lebanon and Kosovo are at the extreme end of this phenomenon — the pair with the largest
+    spread difference among all countries within half a standard error of each other in mean.
+    But 75 country pairs meet the same basic criterion: means within 5 points,
+    spread difference above 20 points.
+  </p>
+
+  <!-- ── So what ── -->
+  <h2>Why this matters</h2>
+
+  <p>
+    League tables built on national averages carry an implicit message: higher is better,
+    lower is worse, and two countries with the same score are in the same position.
+    This story shows that assumption can be badly wrong.
+  </p>
+
+  <p>
+    Lebanon and Kosovo face similar average outcomes, but very different equity challenges.
+    In Lebanon, a significant proportion of students is far below minimum proficiency levels —
+    but there is also a tail of higher performers that pulls the mean up. Interventions
+    that reduce inequality (improving the bottom) could transform the distribution
+    without moving the average much. In Kosovo, the distribution is compressed.
+    There is less distance between the best and worst students — but almost no one
+    reaches internationally competitive levels.
+  </p>
+
+  <p>
+    Both countries score well below the OECD average of 487.
+    But the path each would need to take to improve is different.
+    And a single number would never tell you that.
+  </p>
+
+  <!-- ── Methods note ── -->
+  <div class="note">
+    <strong>Methodology.</strong>
+    All statistics use PISA 2018 Reading plausible values (PV1READ–PV10READ).
+    Means and percentiles are computed separately for each of the 10 plausible values
+    and then averaged (Rubin's rules). All estimates are weighted using the student
+    final weight (W_FSTUWT). Standard errors using BRR replicate weights are not
+    reported in this pilot; means should be interpreted as point estimates.
+    Lebanon: n = 10,035 students. Kosovo: n = 4,798 students.
+    Source: OECD PISA 2018 database (<a href="https://www.oecd.org/pisa/data/2018database/">oecd.org</a>).
+    Full analysis code available in the project repository.
+  </div>
+
+  <footer>
+    PISA Data Stories · Data from OECD PISA 2018 ·
+    Analysis conducted June 2026 · Not affiliated with the OECD
+  </footer>
+
+</div>
+</body>
+</html>
