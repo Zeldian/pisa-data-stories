@@ -349,10 +349,47 @@ footer {
   </div>
 </section>
 
+
+<section class="reveal" id="appendix-2022">
+  <h2>Appendix — PISA 2022 Robustness Check</h2>
+  <p>Does the same pattern hold in a separate PISA cycle four years later? PISA 2022 (primary domain: Mathematics) provides an independent test with 79 countries, 21,358 schools, and the identical analytical method.</p>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <span class="stat-val">16.9%</span>
+      <span class="stat-lbl">2022 odds-breaking rate — identical to 2018's 16.9%</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-val">0.737</span>
+      <span class="stat-lbl">2022 median r (school ESCS vs. performance) — vs. 0.714 in 2018</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-val">r = 0.86</span>
+      <span class="stat-lbl">Correlation of country-level odds-breaking rates across both cycles</span>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <img src="charts/robustness_2022.png" alt="Side-by-side grouped bar chart showing Cohen's d for three climate variables in 2018 and 2022, plus a summary statistics table">
+    <p class="chart-caption">Left: Cohen's d for student-reported climate variables, odds-breaking vs. expected low-SES schools, in each cycle. Right: headline statistics. ★ p &lt; 0.05. 2022 DISCLIM = disciplinary climate in mathematics (vs. 2018 DISCLIMA in test language — same construct, different subject).</p>
+  </div>
+
+  <p>All three student-reported climate advantages replicate. Disciplinary climate remains the strongest signal (d = +0.51 in 2022, vs +0.58 in 2018). Teacher support is slightly stronger in 2022 (d = +0.28 vs +0.23). Sense of belonging is more attenuated (d = +0.24 vs +0.40), consistent with the general decline in student belonging documented in the COVID-era cohort. All three effects are highly significant and directionally identical.</p>
+
+  <p>The SES gradient marginally steepened (median r: 0.714 → 0.737), consistent with research documenting that COVID-related school disruptions hit disadvantaged schools harder. The odds-breaking rate is nevertheless unchanged at 16.9%.</p>
+
+  <p>Country-level ordering is stable (r = 0.86 across 69 shared countries). The same high-equity countries — Iceland, Albania, Kazakhstan — stay near the top; the same tracked systems — Germany, Netherlands, France, Hungary — stay near the bottom.</p>
+
+  <div class="method-box">
+    <p><strong>Verdict: fully replicated.</strong> The principal findings — a 16.9% odds-breaking rate, school climate as the primary differentiator, and near-zero rates in early-tracked systems — hold in an independent PISA cycle. The directional climate signal is consistent across all three tested dimensions. Country-level stability (r = 0.86) confirms the pattern reflects durable system characteristics, not a 2018 artefact.</p>
+    <p style="margin-top:0.6rem"><strong>Variable note:</strong> No 2022 school questionnaire is installed, so resource and staffing variables (STAFFSHORT, EDUSHORT, PROATCE, STRATIO) cannot be tested in 2022. The null result on resources from 2018 cannot be replicated here — but the climate signal, which is the primary positive finding, is fully confirmed. Full robustness script: <code>stories/accepted/schools-beat-odds/robustness_2022.py</code>.</p>
+  </div>
+</section>
+
 </div><!-- /page -->
 
 <footer>
-  PISA Data Stories · Data: OECD PISA 2018 Database · Analysis: July 2026<br>
+  PISA Data Stories · Data: OECD PISA 2018 &amp; 2022 Databases · Analysis: July 2026<br>
   Not affiliated with the OECD · School-level ecological analysis · Full methodology in report.md
 </footer>
 
