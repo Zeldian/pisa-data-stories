@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Excellence Without Misery — PISA 2018</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect fill='%230d1117' width='64' height='64' rx='10'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-size='38' font-family='serif'%3E🌿%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --bg:        #f7f4ef;
+  --bg2:       #ede9e2;
+  --text:      #1a1212;
+  --text2:     #4a3f3a;
+  --text3:     #7a6f6a;
+  --border:    #d4cfc8;
+  --accent:    #2471a3;
+  --accent2:   #c0392b;
+  --mono:      #1a7a4a;
+  --card:      #ffffff;
+  --shadow:    rgba(0,0,0,0.08);
+  --shadow2:   rgba(0,0,0,0.15);
+  --hi-hi:     #2471a3;
+  --hi-lo:     #c0392b;
+  --lo-hi:     #1a7a4a;
+  --transition: 0.3s ease;
+}
+[data-theme="dark"] {
+  --bg:        #0d1117;
+  --bg2:       #161b22;
+  --text:      #e8e3da;
+  --text2:     #b0a89f;
+  --text3:     #6e6660;
+  --border:    #2a2a35;
+  --accent:    #4a9edd;
+  --accent2:   #e05c1a;
+  --mono:      #52b788;
+  --card:      #161b22;
+  --shadow:    rgba(0,0,0,0.4);
+  --shadow2:   rgba(0,0,0,0.6);
+  --hi-hi:     #4a9edd;
+  --hi-lo:     #e05c1a;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.75;
+  transition: background var(--transition), color var(--transition);
+  overflow-x: hidden;
+}
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.75rem 2rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  transition: background var(--transition), border-color var(--transition);
+}
+.nav-brand { font-family:'JetBrains Mono',monospace; font-size:0.7rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--text3); }
+.nav-right { display:flex; gap:0.75rem; align-items:center; }
+.btn-icon { background:none; border:1px solid var(--border); cursor:pointer; color:var(--text2); width:36px; height:36px; border-radius:6px; display:flex; align-items:center; justify-content:center; transition:all var(--transition); }
+.btn-icon:hover { background:var(--bg2); border-color:var(--text3); }
+a.nav-link { font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text3); text-decoration:none; }
+a.nav-link:hover { color:var(--text); }
+
+.page { max-width:780px; margin:0 auto; padding:7rem 2rem 4rem; }
+
+h1.story-title {
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:clamp(2.2rem,5vw,3.4rem);
+  font-weight:900; line-height:1.1;
+  margin-bottom:1.2rem;
+  color:var(--text);
+}
+h1.story-title em { font-style:italic; color:var(--accent); }
+
+.story-meta {
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.68rem; letter-spacing:0.1em;
+  text-transform:uppercase; color:var(--text3);
+  margin-bottom:2.5rem;
+  display:flex; gap:1.5rem; flex-wrap:wrap;
+}
+.story-meta span { display:flex; align-items:center; gap:0.4rem; }
+
+.lead {
+  font-size:1.22rem; line-height:1.7;
+  color:var(--text2); margin-bottom:2rem;
+  font-style:italic;
+}
+
+section { padding:3.5rem 0; }
+section + section { border-top:1px solid var(--border); }
+
+h2 {
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:1.75rem; font-weight:700;
+  margin-bottom:1.2rem; color:var(--text);
+  line-height:1.2;
+}
+h3 {
+  font-family:'Lora',serif;
+  font-size:1.15rem; font-weight:600;
+  margin-bottom:0.8rem; color:var(--text);
+  margin-top:1.5rem;
+}
+p { margin-bottom:1rem; }
+p:last-child { margin-bottom:0; }
+
+.stat-row {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:1rem; margin:1.5rem 0;
+}
+.stat-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:10px; padding:1.2rem 1rem;
+  box-shadow:0 2px 8px var(--shadow);
+  text-align:center;
+}
+.stat-card .stat-val {
+  font-family:'JetBrains Mono',monospace;
+  font-size:1.8rem; font-weight:600;
+  color:var(--accent); display:block;
+  line-height:1;
+}
+.stat-card .stat-lbl {
+  font-size:0.78rem; color:var(--text3);
+  margin-top:0.4rem; display:block;
+  line-height:1.3;
+}
+
+.chart-wrap {
+  margin:2rem 0;
+  border:1px solid var(--border);
+  border-radius:10px; overflow:hidden;
+  box-shadow:0 2px 12px var(--shadow);
+}
+.chart-wrap img { width:100%; display:block; }
+.chart-caption {
+  padding:0.6rem 1rem;
+  background:var(--bg2);
+  font-size:0.8rem; color:var(--text3);
+  font-family:'JetBrains Mono',monospace;
+  border-top:1px solid var(--border);
+}
+
+.pullquote {
+  border-left:4px solid var(--accent);
+  padding:1rem 1.5rem;
+  margin:1.8rem 0;
+  background:var(--bg2);
+  border-radius:0 8px 8px 0;
+  font-style:italic;
+  font-size:1.12rem;
+  color:var(--text2);
+}
+
+.country-table-wrap { overflow-x:auto; margin:1.5rem 0; }
+table {
+  width:100%; border-collapse:collapse;
+  font-size:0.88rem;
+}
+thead tr { border-bottom:2px solid var(--border); }
+th {
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.65rem; letter-spacing:0.08em;
+  text-transform:uppercase; color:var(--text3);
+  padding:0.6rem 0.75rem; text-align:left;
+}
+td { padding:0.5rem 0.75rem; border-bottom:1px solid var(--border); color:var(--text2); }
+tr:last-child td { border-bottom:none; }
+td.num { font-family:'JetBrains Mono',monospace; text-align:right; }
+td.hi { color:var(--hi-hi); font-weight:600; }
+td.lo { color:var(--hi-lo); font-weight:600; }
+td.cnt { font-family:'JetBrains Mono',monospace; font-weight:600; font-size:0.9rem; }
+
+.quadrant-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:1px; background:var(--border);
+  border:1px solid var(--border); border-radius:10px;
+  overflow:hidden; margin:1.5rem 0;
+}
+.quad {
+  padding:1.2rem; background:var(--card);
+}
+.quad-label {
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.65rem; letter-spacing:0.1em;
+  text-transform:uppercase; font-weight:600;
+  margin-bottom:0.5rem;
+}
+.quad-countries { font-size:0.82rem; color:var(--text2); line-height:1.6; }
+.quad.hi-hi .quad-label { color:var(--hi-hi); }
+.quad.hi-lo .quad-label { color:var(--hi-lo); }
+.quad.lo-hi .quad-label { color:var(--mono); }
+.quad.lo-lo .quad-label { color:var(--text3); }
+
+.method-box {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:8px; padding:1.2rem 1.4rem;
+  font-size:0.9rem; line-height:1.65;
+}
+.method-box p + p { margin-top:0.6rem; }
+.method-box strong { color:var(--text); }
+
+.tag {
+  display:inline-block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.65rem; letter-spacing:0.08em;
+  text-transform:uppercase; font-weight:600;
+  padding:0.2rem 0.5rem;
+  border-radius:4px;
+  margin-right:0.3rem;
+}
+.tag.hi-hi { background:#d6eaf8; color:#1a5276; }
+.tag.hi-lo { background:#fde8e8; color:#922b21; }
+[data-theme="dark"] .tag.hi-hi { background:#1a3a50; color:#7dc4ed; }
+[data-theme="dark"] .tag.hi-lo { background:#501a1a; color:#eda07d; }
+
+.reveal { opacity:0; transform:translateY(18px); transition:opacity 0.55s ease, transform 0.55s ease; }
+.reveal.visible { opacity:1; transform:none; }
+
+footer {
+  text-align:center; padding:2.5rem 1rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.65rem; letter-spacing:0.08em;
+  color:var(--text3); border-top:1px solid var(--border);
+}
+
+@media(max-width:600px) {
+  .page { padding:6rem 1.2rem 3rem; }
+  .quadrant-grid { grid-template-columns:1fr; }
+  .stat-row { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">PISA Data Stories</span>
+  <div class="nav-right">
+    <a class="nav-link" href="../../docs/index.html">← All stories</a>
+    <button class="btn-icon" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
+      <i class="fa-solid fa-moon" id="theme-icon"></i>
+    </button>
+  </div>
+</nav>
+
+<div class="page">
+
+<section class="reveal">
+  <p class="story-meta">
+    <span><i class="fa-solid fa-calendar-days"></i> July 2026</span>
+    <span><i class="fa-solid fa-database"></i> PISA 2018 · 71 countries · 612,004 students</span>
+    <span><i class="fa-solid fa-chart-scatter"></i> Comparative systems analysis</span>
+  </p>
+  <h1 class="story-title">Excellence<br><em>Without Misery</em></h1>
+  <p class="lead">High academic performance and student well-being tend to pull in opposite directions — but not always. A small group of education systems manages to achieve both. The difference may lie less in how much pressure a system applies, and more in the kind of pressure.</p>
+</section>
+
+<section class="reveal">
+  <h2>The uncomfortable truth</h2>
+  <p>Ask whether high-performing education systems make students miserable, and you might expect a reassuring answer. The data is less flattering.</p>
+  <p>Across 71 countries in PISA 2018, the correlation between a country's mean academic score and its students' mean life satisfaction is <strong>−0.48</strong>. Negative. Moderate. Statistically robust. Countries where students score higher tend, on average, to be countries where students report lower life satisfaction.</p>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <span class="stat-val">−0.48</span>
+      <span class="stat-lbl">Correlation: performance vs. life satisfaction (71 countries)</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-val">71</span>
+      <span class="stat-lbl">Countries with complete performance and well-being data</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-val">7.2/10</span>
+      <span class="stat-lbl">Median student life satisfaction across all countries</span>
+    </div>
+  </div>
+
+  <p>This is the starting point — and it matters. It means the question is not "does a tradeoff exist?" but "does it have to?"</p>
+</section>
+
+<section class="reveal">
+  <h2>Mapping the tradeoff</h2>
+  <p>Placing each country on a map with academic performance on one axis and student life satisfaction on the other reveals four distinct regions. The median of each axis divides them.</p>
+
+  <div class="chart-wrap">
+    <img src="charts/quadrant_scatter.png" alt="Scatter plot: national academic performance vs. student life satisfaction, PISA 2018, 71 countries divided into four quadrants">
+    <p class="chart-caption">Each dot is one country. Dashed lines mark the sample medians. Highlighted countries are named.</p>
+  </div>
+
+  <div class="quadrant-grid">
+    <div class="quad hi-hi">
+      <p class="quad-label">✦ Excellence without misery</p>
+      <p class="quad-countries">Finland, Netherlands, Switzerland, Iceland, Spain, Lithuania — and others. High scores, high satisfaction.</p>
+    </div>
+    <div class="quad hi-lo">
+      <p class="quad-label">Excellence with misery</p>
+      <p class="quad-countries">B-S-J-Z China, Macao, Hong Kong, Japan, Korea, Taiwan, Estonia, Poland, Ireland — and others. High scores, below-median satisfaction.</p>
+    </div>
+    <div class="quad lo-hi">
+      <p class="quad-label">Lower performance, high well-being</p>
+      <p class="quad-countries">Many Latin American and Southeast Asian countries. Students report high satisfaction despite modest academic results.</p>
+    </div>
+    <div class="quad lo-lo">
+      <p class="quad-label">Lower performance, lower well-being</p>
+      <p class="quad-countries">A minority of lower-income countries face both challenges simultaneously.</p>
+    </div>
+  </div>
+
+  <p>The "excellence with misery" quadrant is the most populated among high performers — 23 countries compared to 13. The tradeoff is the norm. But the 13 in the top-left tell a different story.</p>
+</section>
+
+<section class="reveal">
+  <h2>The sharpest contrast</h2>
+  <p>Finland and Japan are, by academic measures, nearly identical education systems. In PISA 2018 mathematics, reading, and science combined, Japan scores 520 and Finland scores 516 — a difference smaller than the margin of error. They are peers.</p>
+  <p>Their students are not.</p>
+
+  <div class="country-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th>Composite score</th>
+          <th>Life satisfaction</th>
+          <th>Sense of belonging</th>
+          <th>Fear of failure (WLE)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="cnt hi">FIN</td>
+          <td class="num">516</td>
+          <td class="num hi">7.61 / 10</td>
+          <td class="num">+0.01</td>
+          <td class="num hi">−0.19</td>
+        </tr>
+        <tr>
+          <td class="cnt lo">JPN</td>
+          <td class="num">520</td>
+          <td class="num lo">6.18 / 10</td>
+          <td class="num">+0.02</td>
+          <td class="num lo">+0.38</td>
+        </tr>
+        <tr>
+          <td class="cnt lo">KOR</td>
+          <td class="num">520</td>
+          <td class="num lo">6.52 / 10</td>
+          <td class="num">+0.28</td>
+          <td class="num lo">+0.19</td>
+        </tr>
+        <tr>
+          <td class="cnt lo">TAP</td>
+          <td class="num">516</td>
+          <td class="num lo">6.52 / 10</td>
+          <td class="num">−0.05</td>
+          <td class="num lo">+0.67</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Finnish and Japanese students study similar content, sit similar assessments, and produce near-identical results. But Finnish students report a life satisfaction score 1.4 points higher — on a 10-point scale, that is substantial. Japanese students report fear of failure nearly 0.6 standard deviations above the global mean. Finnish students report it 0.2 standard deviations below.</p>
+
+  <div class="pullquote">
+    The same academic result. Profoundly different experiences of getting there.
+  </div>
+
+  <p>Korea and Taiwan amplify the pattern. Taiwan's fear-of-failure index — 0.67 standard deviations above the global mean — is the highest of any high-scoring country. Its students score 516, identical to Finland's. They report life satisfaction of 6.52.</p>
+</section>
+
+<section class="reveal">
+  <h2>Which dimension divides them?</h2>
+  <p>Life satisfaction is one measure of well-being. PISA 2018 also tracks sense of belonging, experience of bullying, positive affect, and fear of failure. How do the two groups of high-performing countries compare across all of these?</p>
+
+  <div class="chart-wrap">
+    <img src="charts/wellbeing_profile.png" alt="Panel charts showing five well-being dimensions for high-performing countries with high vs. low well-being">
+    <p class="chart-caption">Top high-performing countries in each quadrant, compared across five well-being dimensions. Lines connect the group means.</p>
+  </div>
+
+  <p>The pattern is consistent but not uniform. Belonging and bullying experience differ relatively little between the two high-performing groups. Life satisfaction and positive affect diverge more clearly. <strong>Fear of failure shows the sharpest and most consistent gap</strong> — across all dimensions measured, it is the one most tightly linked to which quadrant a high-performing country occupies.</p>
+
+  <p>This is consistent with what education researchers have documented about the systems involved: Finland's pedagogy deliberately de-emphasises ranking and competition; East Asian systems, though varied, tend to apply intense pressure through examination systems that carry high stakes for students' futures.</p>
+
+  <p>It does not prove causation. But it is the fingerprint of the difference.</p>
+</section>
+
+<section class="reveal">
+  <h2>Is the advantage shared equally?</h2>
+  <p>A well-being advantage that only benefits privileged students would be a partial one. What happens when we look at well-being by socioeconomic quartile within each group?</p>
+
+  <div class="chart-wrap">
+    <img src="charts/equity_by_escs.png" alt="Bar chart: life satisfaction by ESCS socioeconomic quartile, for excellence-with-wellbeing vs excellence-with-misery country groups">
+    <p class="chart-caption">ESCS quartile Q1 = lowest socioeconomic background; Q4 = highest. Country groups defined by performance quadrant.</p>
+  </div>
+
+  <p>In "excellence without misery" systems, the gap between the bottom and top socioeconomic quartiles is narrower. Students from disadvantaged backgrounds in Finland, the Netherlands, Switzerland, and similar countries report life satisfaction close to their more affluent peers. In "excellence with misery" systems, the gradient is steeper — low-SES students bear a larger share of the well-being deficit.</p>
+
+  <p>High academic performance and equitable well-being are not in tension in these systems. If anything, they appear to come together.</p>
+</section>
+
+<section class="reveal">
+  <h2>What this does — and doesn't — mean</h2>
+  <p>The pattern here is descriptive, not causal. This analysis cannot determine whether reducing competitive pressure would raise both achievement and satisfaction, or whether Finland's history, culture, and school structure produce these outcomes through mechanisms that simply cannot be imported. Cross-national comparisons are notoriously poor instruments for policy prescriptions.</p>
+
+  <p>What the data can say is narrower but still important: the belief that serious academic performance requires student suffering is not a universal law. It is a description of many systems, not all of them. A small group of countries — consistently, across multiple well-being dimensions — shows that high achievement and student well-being can coexist.</p>
+
+  <p>That possibility is, at minimum, worth taking seriously.</p>
+</section>
+
+<section class="reveal">
+  <h2>Country data</h2>
+  <div class="country-table-wrap">
+    <input type="search" id="search-input" placeholder="Search country code…"
+           style="width:100%;padding:0.5rem 0.75rem;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:0.8rem;margin-bottom:0.75rem">
+    <table id="country-table">
+      <thead>
+        <tr>
+          <th style="cursor:pointer" data-col="country" onclick="sortTable('country')">Country</th>
+          <th style="cursor:pointer;text-align:right" data-col="perf" onclick="sortTable('perf')">Score ↕</th>
+          <th style="cursor:pointer;text-align:right" data-col="lifesat" onclick="sortTable('lifesat')">Life sat. ↕</th>
+          <th style="cursor:pointer;text-align:right" data-col="gfofail" onclick="sortTable('gfofail')">Fear fail ↕</th>
+          <th style="cursor:pointer;text-align:right" data-col="belong" onclick="sortTable('belong')">Belonging ↕</th>
+          <th style="text-align:left">Quadrant</th>
+        </tr>
+      </thead>
+      <tbody id="country-tbody"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="reveal">
+  <h3>Methodology</h3>
+  <div class="method-box">
+    <p><strong>Performance:</strong> Weighted country mean of Math + Reading + Science composite (mean of 10 PVs per domain per student, then averaged across domains). Country means from averaged PVs are numerically equivalent to Rubin's rules for this purpose.</p>
+    <p style="margin-top:0.6rem"><strong>Well-being (primary):</strong> Weighted country mean of <code>ST016Q01NA</code> — single-item life satisfaction 0–10.</p>
+    <p style="margin-top:0.6rem"><strong>Well-being (dimensions):</strong> OECD WLE indices: <code>BELONG</code> (belonging), <code>SWBP</code> (positive affect), <code>BEINGBULLIED</code> (inverted), <code>GFOFAIL</code> (inverted). Z-standardized across countries.</p>
+    <p style="margin-top:0.6rem"><strong>Quadrant thresholds:</strong> Sample medians on both axes. No fixed cutoffs.</p>
+    <p style="margin-top:0.6rem"><strong>Weights:</strong> Student final weight <code>W_FSTUWT</code> throughout.</p>
+    <p style="margin-top:0.6rem"><strong>Limitations:</strong> Ecological correlation — country means do not describe individual students. Cultural response bias may affect East-West comparisons on subjective well-being scales. 15-year-olds only. Cross-section; no causal inference. Sub-national PISA units (QCI, QMR, QRT, MAC, HKG) are included in the scatter but excluded from narrative comparisons. Point estimates only.</p>
+    <p style="margin-top:0.6rem"><strong>Source:</strong> OECD PISA 2018 student questionnaire. Full analysis: <code>stories/accepted/excellence-without-misery/analysis.py</code>.</p>
+  </div>
+</section>
+
+</div><!-- /page -->
+
+<footer>
+  PISA Data Stories · Data: OECD PISA 2018 Database · Analysis: July 2026<br>
+  Not affiliated with the OECD · Point estimates only · Full methodology in report.md
+</footer>
+
+<script>
+const DATA = [{"country":"ALB","perf":434.8,"lifesat":7.65,"belong":0.43,"swbp":0.44,"gfofail":0.09,"quad":"lo_hi"},{"country":"ARE","perf":435.6,"lifesat":7.5,"belong":0.16,"swbp":0.37,"gfofail":0.26,"quad":"lo_hi"},{"country":"ARG","perf":379.8,"lifesat":7.63,"belong":0.22,"swbp":0.41,"gfofail":0.27,"quad":"lo_hi"},{"country":"AUS","perf":490.5,"lifesat":7.36,"belong":0.18,"swbp":0.17,"gfofail":-0.02,"quad":"lo_hi"},{"country":"AUT","perf":491.0,"lifesat":7.14,"belong":0.4,"swbp":0.11,"gfofail":-0.26,"quad":"hi_lo"},{"country":"BEL","perf":507.0,"lifesat":6.98,"belong":0.06,"swbp":0.04,"gfofail":-0.12,"quad":"hi_lo"},{"country":"BGR","perf":436.3,"lifesat":6.77,"belong":-0.14,"swbp":-0.09,"gfofail":0.15,"quad":"lo_lo"},{"country":"BIH","perf":406.3,"lifesat":7.17,"belong":0.12,"swbp":0.06,"gfofail":0.03,"quad":"lo_hi"},{"country":"BLR","perf":472.3,"lifesat":8.1,"belong":-0.1,"swbp":0.18,"gfofail":-0.13,"quad":"hi_hi"},{"country":"BRA","perf":383.4,"lifesat":7.49,"belong":0.33,"swbp":0.4,"gfofail":0.27,"quad":"lo_hi"},{"country":"BRN","perf":430.7,"lifesat":7.78,"belong":0.22,"swbp":0.23,"gfofail":0.13,"quad":"lo_hi"},{"country":"CAN","perf":511.8,"lifesat":7.39,"belong":0.12,"swbp":0.11,"gfofail":-0.1,"quad":"hi_lo"},{"country":"CHE","perf":498.2,"lifesat":7.38,"belong":0.3,"swbp":0.22,"gfofail":-0.28,"quad":"hi_hi"},{"country":"CHL","perf":418.2,"lifesat":7.53,"belong":0.26,"swbp":0.32,"gfofail":0.16,"quad":"lo_hi"},{"country":"COL","perf":390.9,"lifesat":7.5,"belong":0.35,"swbp":0.47,"gfofail":0.25,"quad":"lo_hi"},{"country":"CRI","perf":402.2,"lifesat":7.64,"belong":0.27,"swbp":0.44,"gfofail":0.15,"quad":"lo_hi"},{"country":"CZE","perf":495.5,"lifesat":6.91,"belong":-0.28,"swbp":-0.13,"gfofail":-0.05,"quad":"hi_lo"},{"country":"DEU","perf":500.4,"lifesat":7.02,"belong":0.28,"swbp":0.07,"gfofail":-0.37,"quad":"hi_lo"},{"country":"DNK","perf":509.6,"lifesat":7.3,"belong":0.22,"swbp":0.1,"gfofail":-0.25,"quad":"hi_lo"},{"country":"DOM","perf":324.5,"lifesat":7.73,"belong":0.31,"swbp":0.5,"gfofail":0.16,"quad":"lo_hi"},{"country":"ESP","perf":480.4,"lifesat":7.35,"belong":0.46,"swbp":0.3,"gfofail":-0.12,"quad":"hi_hi"},{"country":"EST","perf":525.5,"lifesat":7.19,"belong":-0.13,"swbp":-0.18,"gfofail":-0.17,"quad":"hi_lo"},{"country":"FIN","perf":516.4,"lifesat":7.61,"belong":0.01,"swbp":-0.12,"gfofail":-0.19,"quad":"hi_hi"},{"country":"FRA","perf":493.7,"lifesat":7.19,"belong":-0.07,"swbp":0.27,"gfofail":0.06,"quad":"hi_lo"},{"country":"GBR","perf":503.5,"lifesat":6.16,"belong":-0.19,"swbp":-0.29,"gfofail":0.27,"quad":"hi_lo"},{"country":"GEO","perf":397.3,"lifesat":7.47,"belong":0.22,"swbp":0.22,"gfofail":0.26,"quad":"lo_hi"},{"country":"GRC","perf":451.5,"lifesat":6.48,"belong":0.02,"swbp":-0.08,"gfofail":0.27,"quad":"lo_lo"},{"country":"HKG","perf":530.7,"lifesat":6.27,"belong":-0.39,"swbp":-0.06,"gfofail":0.39,"quad":"hi_lo"},{"country":"HRV","perf":471.9,"lifesat":7.69,"belong":0.06,"swbp":0.26,"gfofail":-0.22,"quad":"hi_hi"},{"country":"HUN","perf":479.3,"lifesat":7.12,"belong":0.07,"swbp":0.19,"gfofail":-0.1,"quad":"hi_lo"},{"country":"IDN","perf":378.5,"lifesat":7.71,"belong":0.37,"swbp":0.53,"gfofail":0.16,"quad":"lo_hi"},{"country":"IRL","perf":504.6,"lifesat":6.74,"belong":-0.15,"swbp":-0.09,"gfofail":0.21,"quad":"hi_lo"},{"country":"ISL","perf":481.4,"lifesat":7.34,"belong":0.1,"swbp":-0.09,"gfofail":0.0,"quad":"hi_hi"},{"country":"ISR","perf":463.0,"lifesat":6.87,"belong":-0.05,"swbp":0.06,"gfofail":0.23,"quad":"lo_lo"},{"country":"ITA","perf":477.0,"lifesat":6.91,"belong":0.04,"swbp":null,"gfofail":0.04,"quad":"hi_lo"},{"country":"JOR","perf":399.6,"lifesat":6.5,"belong":0.02,"swbp":-0.04,"gfofail":0.19,"quad":"lo_lo"},{"country":"JPN","perf":520.0,"lifesat":6.18,"belong":0.02,"swbp":-0.13,"gfofail":0.38,"quad":"hi_lo"},{"country":"KAZ","perf":422.7,"lifesat":7.77,"belong":0.16,"swbp":0.33,"gfofail":0.01,"quad":"lo_hi"},{"country":"KOR","perf":519.7,"lifesat":6.52,"belong":0.28,"swbp":0.03,"gfofail":0.19,"quad":"hi_lo"},{"country":"KSV","perf":365.9,"lifesat":6.45,"belong":-0.07,"swbp":-0.11,"gfofail":0.06,"quad":"lo_lo"},{"country":"LBN","perf":394.1,"lifesat":6.3,"belong":-0.18,"swbp":-0.1,"gfofail":0.37,"quad":"lo_lo"},{"country":"LTU","perf":479.7,"lifesat":7.61,"belong":-0.13,"swbp":0.08,"gfofail":-0.07,"quad":"hi_hi"},{"country":"LUX","perf":476.7,"lifesat":7.04,"belong":0.09,"swbp":0.07,"gfofail":-0.14,"quad":"hi_lo"},{"country":"LVA","perf":487.4,"lifesat":7.16,"belong":-0.26,"swbp":0.03,"gfofail":-0.1,"quad":"hi_lo"},{"country":"MAC","perf":542.1,"lifesat":6.07,"belong":-0.4,"swbp":-0.08,"gfofail":0.44,"quad":"hi_lo"},{"country":"MAR","perf":368.1,"lifesat":6.9,"belong":-0.14,"swbp":0.1,"gfofail":0.15,"quad":"lo_lo"},{"country":"MDA","perf":420.5,"lifesat":7.49,"belong":-0.03,"swbp":0.18,"gfofail":-0.1,"quad":"lo_hi"},{"country":"MEX","perf":409.2,"lifesat":7.93,"belong":0.36,"swbp":0.48,"gfofail":0.16,"quad":"lo_hi"},{"country":"MKD","perf":394.7,"lifesat":7.14,"belong":-0.06,"swbp":0.04,"gfofail":0.1,"quad":"lo_hi"},{"country":"MLT","perf":470.6,"lifesat":7.52,"belong":0.21,"swbp":0.21,"gfofail":0.0,"quad":"hi_hi"},{"country":"MNE","perf":429.3,"lifesat":6.82,"belong":-0.01,"swbp":0.06,"gfofail":0.12,"quad":"lo_lo"},{"country":"MYS","perf":440.3,"lifesat":7.41,"belong":0.42,"swbp":0.46,"gfofail":0.14,"quad":"lo_hi"},{"country":"NLD","perf":502.5,"lifesat":7.5,"belong":0.2,"swbp":0.08,"gfofail":-0.39,"quad":"hi_hi"},{"country":"NOR","perf":501.0,"lifesat":7.5,"belong":0.24,"swbp":0.1,"gfofail":-0.21,"quad":"hi_lo"},{"country":"NZL","perf":494.4,"lifesat":7.27,"belong":0.02,"swbp":0.07,"gfofail":-0.03,"quad":"hi_lo"},{"country":"PAN","perf":352.9,"lifesat":7.87,"belong":0.15,"swbp":0.36,"gfofail":0.13,"quad":"lo_hi"},{"country":"PER","perf":400.0,"lifesat":7.29,"belong":0.18,"swbp":0.22,"gfofail":0.13,"quad":"lo_hi"},{"country":"PHL","perf":352.4,"lifesat":8.26,"belong":0.52,"swbp":0.73,"gfofail":0.3,"quad":"lo_hi"},{"country":"POL","perf":512.8,"lifesat":6.74,"belong":-0.24,"swbp":-0.08,"gfofail":0.01,"quad":"hi_lo"},{"country":"PRT","perf":492.0,"lifesat":7.13,"belong":0.12,"swbp":0.22,"gfofail":-0.01,"quad":"hi_lo"},{"country":"QCI","perf":579.0,"lifesat":6.64,"belong":-0.19,"swbp":0.11,"gfofail":0.0,"quad":"hi_lo"},{"country":"QMR","perf":488.6,"lifesat":7.27,"belong":-0.42,"swbp":-0.12,"gfofail":-0.17,"quad":"hi_hi"},{"country":"QRT","perf":467.2,"lifesat":7.55,"belong":-0.38,"swbp":-0.0,"gfofail":-0.15,"quad":"hi_hi"},{"country":"ROU","perf":430.5,"lifesat":7.57,"belong":0.07,"swbp":0.2,"gfofail":0.07,"quad":"lo_hi"},{"country":"RUS","perf":481.3,"lifesat":7.32,"belong":-0.39,"swbp":-0.07,"gfofail":-0.16,"quad":"hi_hi"},{"country":"SAU","perf":373.7,"lifesat":6.85,"belong":-0.12,"swbp":0.02,"gfofail":0.19,"quad":"lo_lo"},{"country":"SRB","perf":448.1,"lifesat":6.66,"belong":-0.18,"swbp":-0.08,"gfofail":0.11,"quad":"lo_lo"},{"country":"SVK","perf":469.4,"lifesat":7.22,"belong":-0.28,"swbp":-0.02,"gfofail":0.01,"quad":"hi_hi"},{"country":"SVN","perf":503.7,"lifesat":6.86,"belong":-0.11,"swbp":-0.61,"gfofail":0.0,"quad":"hi_lo"},{"country":"SWE","perf":502.5,"lifesat":7.01,"belong":0.03,"swbp":-0.05,"gfofail":-0.0,"quad":"hi_lo"},{"country":"TAP","perf":516.5,"lifesat":6.52,"belong":-0.05,"swbp":0.12,"gfofail":0.67,"quad":"hi_lo"},{"country":"THA","perf":419.0,"lifesat":7.74,"belong":0.38,"swbp":0.48,"gfofail":0.12,"quad":"lo_hi"},{"country":"TUR","perf":462.5,"lifesat":5.62,"belong":-0.14,"swbp":-0.26,"gfofail":0.12,"quad":"hi_lo"},{"country":"UKR","perf":462.7,"lifesat":8.03,"belong":-0.24,"swbp":0.31,"gfofail":-0.22,"quad":"hi_hi"},{"country":"URY","perf":417.9,"lifesat":7.36,"belong":0.08,"swbp":0.24,"gfofail":0.07,"quad":"lo_hi"},{"country":"USA","perf":495.3,"lifesat":6.75,"belong":-0.24,"swbp":-0.13,"gfofail":0.17,"quad":"hi_lo"}];
+
+const quadLabel = {"hi_hi":"Excellence + well-being","hi_lo":"Excellence + misery","lo_hi":"Lower perf. + well-being","lo_lo":"Lower perf. + misery"};
+const quadClass = {"hi_hi":"hi","hi_lo":"lo","lo_hi":"","lo_lo":""};
+
+let tableData = [...DATA].sort((a,b)=>b.perf-a.perf);
+let sortCol = "perf", sortDir = "desc";
+
+function fmt(v, dec) { return v == null ? "—" : v.toFixed(dec); }
+
+function renderTable(data) {
+  const tbody = document.getElementById("country-tbody");
+  tbody.innerHTML = data.map(r => `
+    <tr>
+      <td class="cnt">${r.country}</td>
+      <td class="num">${fmt(r.perf,0)}</td>
+      <td class="num ${quadClass[r.quad]}">${fmt(r.lifesat,2)}</td>
+      <td class="num">${fmt(r.gfofail,2)}</td>
+      <td class="num">${fmt(r.belong,2)}</td>
+      <td><span class="tag ${r.quad}">${quadLabel[r.quad]}</span></td>
+    </tr>`).join("");
+}
+renderTable(tableData);
+
+function sortTable(col) {
+  if (sortCol === col) sortDir = sortDir === "desc" ? "asc" : "desc";
+  else { sortCol = col; sortDir = "desc"; }
+  tableData.sort((a,b) => {
+    const va = a[col] ?? -Infinity, vb = b[col] ?? -Infinity;
+    if (typeof va === "string") return sortDir === "asc" ? va.localeCompare(vb) : vb.localeCompare(va);
+    return sortDir === "asc" ? va - vb : vb - va;
+  });
+  renderTable(tableData);
+}
+
+document.getElementById("search-input").addEventListener("input", e => {
+  const q = e.target.value.trim().toUpperCase();
+  renderTable(q ? DATA.filter(r => r.country.includes(q)) : tableData);
+});
+
+// Dark mode
+const html = document.documentElement;
+const themeToggle = document.getElementById("theme-toggle");
+const themeIcon   = document.getElementById("theme-icon");
+function applyTheme(dark) {
+  html.setAttribute("data-theme", dark ? "dark" : "light");
+  themeIcon.className = dark ? "fa-solid fa-moon" : "fa-solid fa-sun";
+  const url = new URL(location);
+  url.searchParams.set("dark", dark ? "1" : "0");
+  history.replaceState(null, "", url.toString());
+}
+const urlDark = new URL(location).searchParams.get("dark");
+applyTheme(urlDark === null ? false : urlDark === "1");
+themeToggle.addEventListener("click", () => applyTheme(html.getAttribute("data-theme") === "light"));
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
+}, {threshold: 0.1});
+document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
