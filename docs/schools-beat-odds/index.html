@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Schools That Beat the Odds — PISA 2018</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect fill='%230d1117' width='64' height='64' rx='10'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-size='38' font-family='serif'%3E📈%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --bg:        #f7f4ef;
+  --bg2:       #ede9e2;
+  --text:      #1a1212;
+  --text2:     #4a3f3a;
+  --text3:     #7a6f6a;
+  --border:    #d4cfc8;
+  --accent:    #2471a3;
+  --accent2:   #c0392b;
+  --mono:      #1a7a4a;
+  --card:      #ffffff;
+  --shadow:    rgba(0,0,0,0.08);
+  --transition: 0.3s ease;
+}
+[data-theme="dark"] {
+  --bg:        #0d1117;
+  --bg2:       #161b22;
+  --text:      #e8e3da;
+  --text2:     #b0a89f;
+  --text3:     #6e6660;
+  --border:    #2a2a35;
+  --accent:    #4a9edd;
+  --accent2:   #e05c1a;
+  --mono:      #52b788;
+  --card:      #161b22;
+  --shadow:    rgba(0,0,0,0.4);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.75;
+  transition: background var(--transition), color var(--transition);
+  overflow-x: hidden;
+}
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.75rem 2rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  transition: background var(--transition), border-color var(--transition);
+}
+.nav-brand { font-family:'JetBrains Mono',monospace; font-size:0.7rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--text3); }
+.nav-right { display:flex; gap:0.75rem; align-items:center; }
+.btn-icon { background:none; border:1px solid var(--border); cursor:pointer; color:var(--text2); width:36px; height:36px; border-radius:6px; display:flex; align-items:center; justify-content:center; transition:all var(--transition); }
+.btn-icon:hover { background:var(--bg2); border-color:var(--text3); }
+a.nav-link { font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text3); text-decoration:none; }
+a.nav-link:hover { color:var(--text); }
+
+.page { max-width:780px; margin:0 auto; padding:7rem 2rem 4rem; }
+
+h1.story-title {
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:clamp(2.2rem,5vw,3.4rem);
+  font-weight:900; line-height:1.1;
+  margin-bottom:1.2rem; color:var(--text);
+}
+h1.story-title em { font-style:italic; color:var(--accent); }
+
+.story-meta {
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.68rem; letter-spacing:0.1em;
+  text-transform:uppercase; color:var(--text3);
+  margin-bottom:2.5rem;
+  display:flex; gap:1.5rem; flex-wrap:wrap;
+}
+.story-meta span { display:flex; align-items:center; gap:0.4rem; }
+
+.lead {
+  font-size:1.22rem; line-height:1.7;
+  color:var(--text2); margin-bottom:2rem;
+  font-style:italic;
+}
+
+section { padding:3.5rem 0; }
+section + section { border-top:1px solid var(--border); }
+
+h2 {
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:1.75rem; font-weight:700;
+  margin-bottom:1.2rem; color:var(--text);
+  line-height:1.2;
+}
+h3 {
+  font-family:'Lora',serif;
+  font-size:1.1rem; font-weight:600;
+  margin-bottom:0.8rem; color:var(--text);
+  margin-top:1.5rem;
+}
+p { margin-bottom:1rem; }
+p:last-child { margin-bottom:0; }
+
+.stat-row {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
+  gap:1rem; margin:1.5rem 0;
+}
+.stat-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:10px; padding:1.2rem 1rem;
+  box-shadow:0 2px 8px var(--shadow);
+  text-align:center;
+}
+.stat-card .stat-val {
+  font-family:'JetBrains Mono',monospace;
+  font-size:1.8rem; font-weight:600;
+  color:var(--accent); display:block; line-height:1;
+}
+.stat-card .stat-lbl {
+  font-size:0.78rem; color:var(--text3);
+  margin-top:0.4rem; display:block; line-height:1.3;
+}
+
+.chart-wrap {
+  margin:2rem 0;
+  border:1px solid var(--border);
+  border-radius:10px; overflow:hidden;
+  box-shadow:0 2px 12px var(--shadow);
+}
+.chart-wrap img { width:100%; display:block; }
+.chart-caption {
+  padding:0.6rem 1rem;
+  background:var(--bg2);
+  font-size:0.8rem; color:var(--text3);
+  font-family:'JetBrains Mono',monospace;
+  border-top:1px solid var(--border);
+}
+
+.pullquote {
+  border-left:4px solid var(--accent);
+  padding:1rem 1.5rem;
+  margin:1.8rem 0;
+  background:var(--bg2);
+  border-radius:0 8px 8px 0;
+  font-style:italic;
+  font-size:1.12rem;
+  color:var(--text2);
+}
+
+.two-col {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:1rem; margin:1.5rem 0;
+}
+.mini-table { font-size:0.85rem; }
+.mini-table td, .mini-table th {
+  padding:0.35rem 0.6rem; border-bottom:1px solid var(--border);
+  color:var(--text2);
+}
+.mini-table th {
+  font-family:'JetBrains Mono',monospace; font-size:0.62rem;
+  letter-spacing:0.08em; text-transform:uppercase;
+  color:var(--text3); border-bottom:2px solid var(--border);
+}
+.mini-table .cnt { font-family:'JetBrains Mono',monospace; font-weight:600; }
+.mini-table .hi { color:var(--accent); font-weight:600; }
+.mini-table .lo { color:var(--accent2); font-weight:600; }
+
+.method-box {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:8px; padding:1.2rem 1.4rem;
+  font-size:0.9rem; line-height:1.65;
+}
+.method-box p + p { margin-top:0.6rem; }
+
+.reveal { opacity:0; transform:translateY(18px); transition:opacity 0.55s ease, transform 0.55s ease; }
+.reveal.visible { opacity:1; transform:none; }
+
+footer {
+  text-align:center; padding:2.5rem 1rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.65rem; letter-spacing:0.08em;
+  color:var(--text3); border-top:1px solid var(--border);
+}
+
+@media(max-width:600px) {
+  .page { padding:6rem 1.2rem 3rem; }
+  .two-col { grid-template-columns:1fr; }
+  .stat-row { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">PISA Data Stories</span>
+  <div class="nav-right">
+    <a class="nav-link" href="../../docs/index.html">← All stories</a>
+    <button class="btn-icon" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
+      <i class="fa-solid fa-moon" id="theme-icon"></i>
+    </button>
+  </div>
+</nav>
+
+<div class="page">
+
+<section class="reveal">
+  <p class="story-meta">
+    <span><i class="fa-solid fa-calendar-days"></i> July 2026</span>
+    <span><i class="fa-solid fa-database"></i> PISA 2018 · 79 countries · 21,684 schools</span>
+    <span><i class="fa-solid fa-school"></i> School equity analysis</span>
+  </p>
+  <h1 class="story-title">The Schools That<br><em>Beat the Odds</em></h1>
+  <p class="lead">Across 79 countries, which school a 15-year-old attends is strongly predicted by how wealthy their family is. But 1 in 6 disadvantaged schools still achieves above the national average — and the gap isn't explained by resources.</p>
+</section>
+
+<section class="reveal">
+  <h2>The gradient is everywhere</h2>
+  <p>Aggregate 21,684 schools from 79 countries. Plot each school's average socioeconomic status against its students' average academic performance. The pattern is the same everywhere: wealthier schools outperform poorer ones. The median within-country correlation between school SES and school performance is <strong>r = 0.71</strong>.</p>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <span class="stat-val">0.71</span>
+      <span class="stat-lbl">Median correlation: school SES vs. school performance (79 countries)</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-val">21,684</span>
+      <span class="stat-lbl">Schools analysed across 79 countries</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-val">16.9%</span>
+      <span class="stat-lbl">Low-SES schools that still achieve above their country's average</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-val">1,220</span>
+      <span class="stat-lbl">Odds-breaking schools identified worldwide</span>
+    </div>
+  </div>
+
+  <p>No country escapes the gradient. Even in the most equitable systems, school SES and school performance are positively correlated. But the strength of that relationship varies — and in the gap between countries lies the first part of the story.</p>
+</section>
+
+<section class="reveal">
+  <h2>Some schools cross the line</h2>
+  <p>Among the bottom third of schools by average student socioeconomic status, most perform below their country's median. That is what the gradient predicts. But not all of them do.</p>
+  <p>An "odds-breaking" school is defined here as one in the bottom ESCS tertile for its country that still achieves above the country's median school performance. If SES had no predictive power, half of all low-SES schools would qualify. With a median correlation of 0.71, only <strong>16.9%</strong> manage it — 1,220 schools across the 79 countries studied.</p>
+
+  <div class="chart-wrap">
+    <img src="charts/school_scatter.png" alt="Six-panel scatter plot showing school SES vs performance for Finland, USA, Japan, Brazil, China and Germany, with odds-breaking schools highlighted in blue">
+    <p class="chart-caption">Each dot is a school. Dotted lines mark the low-SES threshold (vertical) and national median performance (horizontal). Blue dots are odds-breaking schools. Dashed line = country OLS regression for context.</p>
+  </div>
+
+  <p>The scatter reveals the mechanics. In Finland, a sizable cluster of low-SES schools sits in the upper-left quadrant — below-median SES, above-median performance. In Germany, that quadrant is nearly empty. In Brazil, a few schools break through despite some of the steepest SES gradients in the sample.</p>
+</section>
+
+<section class="reveal">
+  <h2>Where odds-breaking schools cluster</h2>
+  <p>The proportion of low-SES schools that beat the odds varies from 40% to 0% across countries — a range too wide to be explained by chance.</p>
+
+  <div class="chart-wrap">
+    <img src="charts/country_prevalence.png" alt="Horizontal bar chart showing the percentage of low-SES schools that are odds-breaking, by country, PISA 2018">
+    <p class="chart-caption">Countries with fewer than 8 low-SES schools are excluded. Sorted by prevalence.</p>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:0.5rem">Most odds-breaking</p>
+      <table class="mini-table">
+        <thead><tr><th>Country</th><th>%</th></tr></thead>
+        <tbody>
+          <tr><td class="cnt">MAC</td><td class="hi">40%</td></tr>
+          <tr><td class="cnt">ALB</td><td class="hi">37%</td></tr>
+          <tr><td class="cnt">NOR</td><td class="hi">35%</td></tr>
+          <tr><td class="cnt">ISL</td><td class="hi">34%</td></tr>
+          <tr><td class="cnt">EST</td><td class="hi">30%</td></tr>
+          <tr><td class="cnt">KAZ</td><td class="hi">32%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:0.5rem">Fewest odds-breaking</p>
+      <table class="mini-table">
+        <thead><tr><th>Country</th><th>%</th></tr></thead>
+        <tbody>
+          <tr><td class="cnt">NLD</td><td class="lo">0%</td></tr>
+          <tr><td class="cnt">LUX</td><td class="lo">0%</td></tr>
+          <tr><td class="cnt">FRA</td><td class="lo">4%</td></tr>
+          <tr><td class="cnt">HUN</td><td class="lo">4%</td></tr>
+          <tr><td class="cnt">DEU</td><td class="lo">4%</td></tr>
+          <tr><td class="cnt">ARG</td><td class="lo">5%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <p>The countries at the bottom of the list — Netherlands, Luxembourg, Germany, France, Hungary — share a structural feature: highly tracked school systems that sort students into academic and vocational tracks at age 12–14. In these systems, "low-SES schools" in the PISA sample are predominantly vocational schools designed to serve lower-performing students. Their position below the median is built into the system's architecture, not a school-level failure. No single school, however effective, can overcome a structural sorting mechanism. Estonia, Norway and Iceland, which operate less-tracked systems with comprehensive schooling through 15, show much higher rates.</p>
+
+  <div class="pullquote">
+    In a tracked system, low-SES schools cannot beat odds they were designed to produce.
+  </div>
+</section>
+
+<section class="reveal">
+  <h2>What makes the difference</h2>
+  <p>The 1,220 odds-breaking schools look different from their low-SES peers in several ways. But not in the ways most people might expect.</p>
+
+  <div class="chart-wrap">
+    <img src="charts/school_characteristics.png" alt="Forest plot showing standardized mean differences (Cohen's d) between odds-breaking and expected low-SES schools on 10 school characteristics">
+    <p class="chart-caption">Positive values = odds-breaking schools score higher. Cohen's d reported. ★ = statistically significant (p &lt; 0.05). Characteristics grouped by type.</p>
+  </div>
+
+  <p>Six characteristics significantly distinguish odds-breaking schools. All six are measures of school climate and engagement. None of the resource and staffing variables reaches significance.</p>
+
+  <p><strong>Disciplinary climate</strong> shows the largest difference (d = +0.58). Students in odds-breaking schools report more orderly, structured classrooms. <strong>Sense of belonging</strong> follows (d = +0.40): students feel more connected to their school. <strong>Teacher support</strong> (d = +0.23) and reduced <strong>student behaviour problems</strong> (d = +0.24) complete the climate picture. <strong>Parent–teacher meeting participation</strong> is 4 percentage points higher in odds-breaking schools; they also offer more <strong>extra-curricular activities</strong>.</p>
+
+  <p>Meanwhile: staff shortages are no different. Educational resource shortages are no different. The proportion of certified teachers is statistically identical — a Cohen's d of −0.01, essentially zero.</p>
+
+  <div class="pullquote">
+    Having more qualified teachers doesn't separate odds-breaking schools from their peers. Having better-structured, more supportive environments does.
+  </div>
+</section>
+
+<section class="reveal">
+  <h2>What this does — and doesn't — mean</h2>
+  <p>This analysis cannot establish causation. Odds-breaking schools score higher on climate variables — but more engaged families may self-select into better-run schools, or effective leadership may attract both better school climate and better student outcomes through a shared root cause. The data describes the pattern; it does not identify the mechanism.</p>
+
+  <p>It also does not suggest that resources are unimportant. The schools being compared are all low-SES schools; they all face resource constraints. The comparison shows that within the range of resource variation typical among disadvantaged schools, climate differences are more predictive than resource differences. This is not evidence that well-funded schools should become poorly resourced.</p>
+
+  <p>What the data can say, narrowly but clearly: there are schools in every country that serve disadvantaged students and achieve above-average results. They exist at rates from 0% to 40% depending on the country's school system design. And where they exist, the most consistent common thread is not what they have — it is how they run.</p>
+</section>
+
+<section class="reveal">
+  <h3>Methodology</h3>
+  <div class="method-box">
+    <p><strong>School performance:</strong> Weighted country mean of composite score per school — mean of 10 PVs across Math, Reading, and Science per student, averaged across domains, then weighted by <code>W_FSTUWT</code>.</p>
+    <p style="margin-top:0.6rem"><strong>SES (ESCS):</strong> OECD index of economic, social and cultural status. Weighted school mean computed from student-level data.</p>
+    <p style="margin-top:0.6rem"><strong>Odds-breaking criterion:</strong> School mean ESCS ≤ country 33rd percentile (low-SES) AND school mean performance ≥ country median performance. 79 countries, ≥10 schools per country required for inclusion.</p>
+    <p style="margin-top:0.6rem"><strong>OLS:</strong> Within-country OLS of school performance on school ESCS. Used to compute the SES gradient (r) displayed in Chart 1 and for the regression reference line. Not used in the odds-breaking classification.</p>
+    <p style="margin-top:0.6rem"><strong>School characteristics:</strong> Merged from PISA 2018 school questionnaire via CNTSCHID. Climate indices (DISCLIMA, TEACHSUP, BELONG) are student-reported WLEs aggregated to school level. School-questionnaire variables (STAFFSHORT, EDUSHORT, STUBEHA, TEACHBEHA, PROATCE, CREACTIV) are principal-reported.</p>
+    <p style="margin-top:0.6rem"><strong>Comparison:</strong> Two-sample t-test; Cohen's d (pooled SD). N odds-breaking schools = 1,220; N expected low-SES = 6,007 (those with school-Q match).</p>
+    <p style="margin-top:0.6rem"><strong>Limitations:</strong> Cross-sectional; no causal inference. School-level ecological analysis. Tracking-system confound for NLD, LUX, DEU, FRA, HUN. School questionnaire non-response may introduce bias. Full methodology: <code>stories/accepted/schools-beat-odds/report.md</code>.</p>
+  </div>
+</section>
+
+</div><!-- /page -->
+
+<footer>
+  PISA Data Stories · Data: OECD PISA 2018 Database · Analysis: July 2026<br>
+  Not affiliated with the OECD · School-level ecological analysis · Full methodology in report.md
+</footer>
+
+<script>
+// Dark mode
+const html = document.documentElement;
+const themeToggle = document.getElementById("theme-toggle");
+const themeIcon   = document.getElementById("theme-icon");
+function applyTheme(dark) {
+  html.setAttribute("data-theme", dark ? "dark" : "light");
+  themeIcon.className = dark ? "fa-solid fa-moon" : "fa-solid fa-sun";
+  const url = new URL(location);
+  url.searchParams.set("dark", dark ? "1" : "0");
+  history.replaceState(null, "", url.toString());
+}
+const urlDark = new URL(location).searchParams.get("dark");
+applyTheme(urlDark === null ? false : urlDark === "1");
+themeToggle.addEventListener("click", () =>
+  applyTheme(html.getAttribute("data-theme") === "light"));
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
+}, {threshold: 0.1});
+document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
