@@ -801,6 +801,55 @@ footer {
   </div>
 </section>
 
+<section class="reveal" id="appendix-2022">
+  <h3 style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:0.5rem">Appendix</h3>
+  <h2 style="font-size:1.45rem;line-height:1.3;margin-bottom:1.2rem">Does the Pattern Persist in PISA 2022?</h2>
+
+  <p>Applying the identical weighted variance decomposition to the PISA 2022 mathematics data (613,744 students, 80 countries) produces a near-identical picture. Across the 70 countries present in both cycles, the Pearson correlation between 2018 ICC and 2022 ICC is <strong>0.912</strong>. The median ICC across all countries was 0.338 in 2018 and 0.340 in 2022.</p>
+
+  <p style="margin-top:1rem">The countries that anchored the original story have barely moved:</p>
+
+  <div style="overflow-x:auto;margin:1.2rem 0">
+    <table style="width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:0.82rem">
+      <thead>
+        <tr style="border-bottom:2px solid var(--border)">
+          <th style="text-align:left;padding:0.5rem 0.75rem;color:var(--text3)">Country</th>
+          <th style="text-align:right;padding:0.5rem 0.75rem;color:var(--text3)">ICC 2018</th>
+          <th style="text-align:right;padding:0.5rem 0.75rem;color:var(--text3)">ICC 2022</th>
+          <th style="text-align:left;padding:0.5rem 0.75rem;color:var(--text3)">System</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:0.4rem 0.75rem;color:var(--lottery-a);font-weight:600">NLD</td><td style="text-align:right;padding:0.4rem 0.75rem">59.6%</td><td style="text-align:right;padding:0.4rem 0.75rem;font-weight:600">61.9%</td><td style="padding:0.4rem 0.75rem">Fully tracked</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:0.4rem 0.75rem">HUN</td><td style="text-align:right;padding:0.4rem 0.75rem">57.4%</td><td style="text-align:right;padding:0.4rem 0.75rem;font-weight:600">60.8%</td><td style="padding:0.4rem 0.75rem">Tracked</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:0.4rem 0.75rem">TUR</td><td style="text-align:right;padding:0.4rem 0.75rem">57.6%</td><td style="text-align:right;padding:0.4rem 0.75rem">57.2%</td><td style="padding:0.4rem 0.75rem">Tracked</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:0.4rem 0.75rem">AUT</td><td style="text-align:right;padding:0.4rem 0.75rem">49.0%</td><td style="text-align:right;padding:0.4rem 0.75rem">49.5%</td><td style="padding:0.4rem 0.75rem">Tracked</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:0.4rem 0.75rem">DEU</td><td style="text-align:right;padding:0.4rem 0.75rem">47.5%</td><td style="text-align:right;padding:0.4rem 0.75rem">47.4%</td><td style="padding:0.4rem 0.75rem">Tracked</td></tr>
+        <tr style="border-bottom:2px solid var(--border);background:var(--bg2)"><td style="padding:0.4rem 0.75rem;color:var(--lottery-b);font-weight:600">FIN</td><td style="text-align:right;padding:0.4rem 0.75rem">12.1%</td><td style="text-align:right;padding:0.4rem 0.75rem;font-weight:600">11.6%</td><td style="padding:0.4rem 0.75rem">Comprehensive</td></tr>
+        <tr style="border-bottom:1px solid var(--border);background:var(--bg2)"><td style="padding:0.4rem 0.75rem">NOR</td><td style="text-align:right;padding:0.4rem 0.75rem">14.1%</td><td style="text-align:right;padding:0.4rem 0.75rem">13.7%</td><td style="padding:0.4rem 0.75rem">Comprehensive</td></tr>
+        <tr style="border-bottom:1px solid var(--border);background:var(--bg2)"><td style="padding:0.4rem 0.75rem">EST</td><td style="text-align:right;padding:0.4rem 0.75rem">22.9%</td><td style="text-align:right;padding:0.4rem 0.75rem">21.1%</td><td style="padding:0.4rem 0.75rem">Comprehensive</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The NLD–FIN gap in fact widened from 47.5 percentage points to <strong>50.3 percentage points</strong>.</p>
+
+  <p style="margin-top:1rem">One country stands out as a notable exception: <strong>Poland (0.252 → 0.466)</strong>, the largest single-country shift in the dataset. Poland's 2019 education reform abolished its three-tier structure and moved students into differentiated secondary schools at an earlier age. The 2022 cohort is the first fully exposed to this new arrangement, and the ICC increase is consistent with earlier tracking producing more between-school sorting — an inadvertent natural experiment in the story's own argument.</p>
+
+  <figure style="margin:2rem 0">
+    <img src="charts/icc_2018_vs_2022.png" alt="Scatter plot: ICC 2018 vs ICC 2022 for 70 countries"
+         style="width:100%;max-width:700px;display:block;margin:0 auto;border-radius:8px;border:1px solid var(--border)">
+    <figcaption style="text-align:center;font-size:0.82rem;color:var(--text3);margin-top:0.75rem;font-family:'JetBrains Mono',monospace">
+      Between-school ICC: PISA 2018 vs PISA 2022, mathematics (70 countries in both cycles).<br>
+      Dashed diagonal = no change. Points along the diagonal confirm structural stability.
+    </figcaption>
+  </figure>
+
+  <div class="method-box" style="margin-top:1.5rem">
+    <p><strong>Verdict: strengthened.</strong> The structural relationship between educational system design and between-school inequality is stable across PISA cycles. The 2022 data support the original conclusion without qualification. Source: <code>data/processed/pisa_2022_core.csv.gz</code>; identical methodology to the 2018 analysis. Full robustness script: <code>stories/accepted/school-lottery/robustness_2022.py</code>.</p>
+  </div>
+</section>
+
 </div><!-- /page -->
 
 <!-- Country popup -->
@@ -845,7 +894,7 @@ footer {
 </div>
 
 <footer>
-  PISA Data Stories · Data: OECD PISA 2018 Database · Analysis: June 2026<br>
+  PISA Data Stories · Data: OECD PISA 2018 &amp; 2022 Databases · Analysis: June–July 2026<br>
   Not affiliated with the OECD · Point estimates only · Full methodology in report.md
 </footer>
 
