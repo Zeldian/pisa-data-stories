@@ -61,6 +61,7 @@ reject — the final call may depend on context.
    * Use the most appropriate available global Claude Code data storytelling skills to transform the technical report into a clear, engaging narrative suitable for a general audience while preserving factual accuracy.
    * Use the most appropriate available global Claude Code webpage/design skills to generate a clean, accessible, and visually appealing GitHub Pages webpage from the structured data story.
    * Generate the publishable webpage and supporting assets in `docs/`.
+   * *(Optional)* If the principal finding is well-suited to cross-cycle validation and an installed supplementary dataset covers the required variables, perform a lightweight robustness check. Reproduce only the minimum analysis needed to determine whether the core finding persists. Append the results to the technical report and the published webpage as a brief appendix (approximately one page; at most one comparison figure). Do not download additional data, do not create a second story, and do not perform this step unless it would genuinely strengthen or challenge confidence in the published conclusion.
 
 ## Rules
 
@@ -73,6 +74,7 @@ reject — the final call may depend on context.
 * Do not modify previously accepted stories unless instructed.
 * Do not invent variables or unsupported conclusions. When uncertain, explicitly state the limitation instead of making assumptions.
 * Use available global Claude Code skills to enhance each stage of the workflow when appropriate, but always follow this project's workflow and requirements. Global skills should complement the project rather than replace its methodology.
+* Cross-cycle validation is an optional publication enhancement and should not be treated as a required part of every story.
 
 ## Publishing Workflow
 
@@ -80,11 +82,12 @@ After a story is accepted and its webpage is written, publish it:
 
 1. Create `stories/accepted/<slug>/story.json` with title, subtitle, description, date, and tags.
 2. Place the story webpage at `docs/<slug>/index.html`.
-3. Run the build script to regenerate the homepage:
+3. *(Optional)* If a cross-cycle robustness appendix was produced, verify it is included in `docs/<slug>/index.html` and that any appendix charts are in `docs/<slug>/charts/`. Do not create a second webpage or story entry.
+4. Run the build script to regenerate the homepage:
    ```
    python scripts/build_site.py
    ```
-4. Commit and push:
+5. Commit and push:
    ```
    git add .
    git commit -m "Add story: <slug>"
@@ -96,7 +99,10 @@ GitHub Pages redeploys automatically. The homepage (`docs/index.html`) is always
 ## Cross-cycle data
 
 PISA 2018 is the primary dataset. Supplementary cycles are used for robustness
-checks only. Do not replace 2018 as the basis for any story.
+checks only. Do not replace 2018 as the basis for any story. The installed
+supplementary datasets exist solely to support lightweight robustness checks for
+accepted stories; do not use them as the basis for standalone analyses or
+multi-cycle comparative studies unless the user explicitly requests one.
 
 ### Installed cycles (immediately available)
 
