@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculators, Creators, or Both? — PISA 2022</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect fill='%230d1117' width='64' height='64' rx='10'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-size='38' font-family='serif'%3E💡%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --bg:        #f7f4ef;
+  --bg2:       #ede9e2;
+  --text:      #1a1212;
+  --text2:     #4a3f3a;
+  --text3:     #7a6f6a;
+  --border:    #d4cfc8;
+  --accent:    #2471a3;
+  --accent2:   #c0392b;
+  --mono:      #1a7a4a;
+  --card:      #ffffff;
+  --shadow:    rgba(0,0,0,0.08);
+  --transition: 0.3s ease;
+  --green:     #1e8449;
+  --blue:      #1a5276;
+  --orange:    #9c640c;
+  --gray:      #5d6d7e;
+}
+[data-theme="dark"] {
+  --bg:        #0d1117;
+  --bg2:       #161b22;
+  --text:      #e8e3da;
+  --text2:     #b0a89f;
+  --text3:     #6e6660;
+  --border:    #2a2a35;
+  --accent:    #4a9edd;
+  --accent2:   #e05c1a;
+  --mono:      #52b788;
+  --card:      #161b22;
+  --shadow:    rgba(0,0,0,0.4);
+  --green:     #2ecc71;
+  --blue:      #3498db;
+  --orange:    #e67e22;
+  --gray:      #95a5a6;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.75;
+  transition: background var(--transition), color var(--transition);
+  overflow-x: hidden;
+}
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.75rem 2rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  transition: background var(--transition), border-color var(--transition);
+}
+.nav-brand { font-family:'JetBrains Mono',monospace; font-size:0.7rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--text3); }
+.nav-right { display:flex; gap:0.75rem; align-items:center; }
+.btn-icon { background:none; border:1px solid var(--border); cursor:pointer; color:var(--text2); width:36px; height:36px; border-radius:6px; display:flex; align-items:center; justify-content:center; transition:all var(--transition); }
+.btn-icon:hover { background:var(--bg2); border-color:var(--text3); }
+a.nav-link { font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text3); text-decoration:none; }
+a.nav-link:hover { color:var(--text); }
+
+.page { max-width:780px; margin:0 auto; padding:7rem 2rem 4rem; }
+
+h1.story-title {
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:clamp(2.2rem,5vw,3.4rem);
+  font-weight:900; line-height:1.1;
+  margin-bottom:1.2rem; color:var(--text);
+}
+h1.story-title em { font-style:italic; color:var(--accent); }
+
+.story-meta {
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.68rem; letter-spacing:0.1em;
+  text-transform:uppercase; color:var(--text3);
+  margin-bottom:2.5rem;
+  display:flex; gap:1.5rem; flex-wrap:wrap;
+}
+.story-meta span { display:flex; align-items:center; gap:0.4rem; }
+
+.lead {
+  font-size:1.22rem; line-height:1.7;
+  color:var(--text2); margin-bottom:2rem;
+  font-style:italic;
+}
+
+section { padding:3.5rem 0; }
+section + section { border-top:1px solid var(--border); }
+
+h2 {
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:1.75rem; font-weight:700;
+  margin-bottom:1.2rem; color:var(--text);
+  line-height:1.2;
+}
+h3 {
+  font-family:'Lora',serif;
+  font-size:1.1rem; font-weight:600;
+  margin-bottom:0.8rem; color:var(--text);
+  margin-top:1.5rem;
+}
+p { margin-bottom:1rem; }
+p:last-child { margin-bottom:0; }
+
+.stat-row {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
+  gap:1rem; margin:1.5rem 0;
+}
+.stat-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:10px; padding:1.2rem 1rem;
+  box-shadow:0 2px 8px var(--shadow);
+  text-align:center;
+}
+.stat-card .stat-val {
+  font-family:'JetBrains Mono',monospace;
+  font-size:1.8rem; font-weight:600;
+  color:var(--accent); display:block; line-height:1;
+}
+.stat-card .stat-val.green { color:var(--green); }
+.stat-card .stat-val.orange { color:var(--orange); }
+.stat-card .stat-val.red { color:var(--accent2); }
+.stat-card .stat-lbl {
+  font-size:0.78rem; color:var(--text3);
+  margin-top:0.4rem; display:block; line-height:1.3;
+}
+
+.chart-wrap {
+  margin:2rem 0;
+  border:1px solid var(--border);
+  border-radius:10px; overflow:hidden;
+  box-shadow:0 2px 12px var(--shadow);
+}
+.chart-wrap img { width:100%; display:block; }
+.chart-caption {
+  padding:0.6rem 1rem;
+  background:var(--bg2);
+  font-size:0.8rem; color:var(--text3);
+  font-family:'JetBrains Mono',monospace;
+  border-top:1px solid var(--border);
+}
+
+.pullquote {
+  border-left:4px solid var(--accent);
+  padding:1rem 1.5rem;
+  margin:1.8rem 0;
+  background:var(--bg2);
+  border-radius:0 8px 8px 0;
+  font-style:italic;
+  font-size:1.12rem;
+  color:var(--text2);
+}
+
+.two-col {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:1rem; margin:1.5rem 0;
+}
+
+.quadrant-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:1rem; margin:1.5rem 0;
+}
+.q-card {
+  border:1px solid var(--border);
+  border-radius:10px; padding:1rem 1.2rem;
+  background:var(--card);
+  box-shadow:0 2px 8px var(--shadow);
+}
+.q-card .q-label {
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.65rem; font-weight:600;
+  letter-spacing:0.12em; text-transform:uppercase;
+  margin-bottom:0.4rem;
+}
+.q-card .q-label.both    { color:var(--green); }
+.q-card .q-label.calc    { color:var(--blue); }
+.q-card .q-label.create  { color:var(--orange); }
+.q-card .q-label.low     { color:var(--gray); }
+.q-card .q-n {
+  font-family:'JetBrains Mono',monospace;
+  font-size:1.4rem; font-weight:600;
+  line-height:1;
+  margin-bottom:0.3rem;
+}
+.q-card .q-n.both   { color:var(--green); }
+.q-card .q-n.calc   { color:var(--blue); }
+.q-card .q-n.create { color:var(--orange); }
+.q-card .q-n.low    { color:var(--gray); }
+.q-card .q-countries {
+  font-size:0.78rem; color:var(--text3);
+  line-height:1.5;
+}
+
+.mini-table { font-size:0.85rem; width:100%; border-collapse:collapse; }
+.mini-table td, .mini-table th {
+  padding:0.35rem 0.6rem; border-bottom:1px solid var(--border);
+  color:var(--text2);
+}
+.mini-table th {
+  font-family:'JetBrains Mono',monospace; font-size:0.62rem;
+  letter-spacing:0.08em; text-transform:uppercase;
+  color:var(--text3); border-bottom:2px solid var(--border);
+}
+.mini-table .cnt { font-family:'JetBrains Mono',monospace; font-weight:600; }
+.mini-table .hi  { color:var(--green); font-weight:600; }
+.mini-table .lo  { color:var(--accent2); font-weight:600; }
+.mini-table .neu { color:var(--text3); }
+
+.method-box {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:8px; padding:1.2rem 1.4rem;
+  font-size:0.9rem; line-height:1.65;
+}
+.method-box p + p { margin-top:0.6rem; }
+.method-box h3 { font-size:0.85rem; margin-top:0; }
+
+.verdict {
+  background:var(--bg2); border:1px solid var(--border);
+  border-left:4px solid var(--green);
+  border-radius:0 8px 8px 0; padding:1rem 1.4rem;
+  margin:1.5rem 0; font-size:0.95rem;
+}
+.verdict strong { color:var(--green); }
+
+.reveal { opacity:0; transform:translateY(18px); transition:opacity 0.55s ease, transform 0.55s ease; }
+.reveal.visible { opacity:1; transform:none; }
+
+.tag-row { display:flex; flex-wrap:wrap; gap:0.4rem; margin:1rem 0; }
+.tag {
+  font-family:'JetBrains Mono',monospace; font-size:0.62rem;
+  letter-spacing:0.08em; text-transform:uppercase;
+  padding:0.2rem 0.55rem; border-radius:4px;
+  background:var(--bg2); color:var(--text3);
+  border:1px solid var(--border);
+}
+
+footer {
+  text-align:center; padding:2.5rem 1rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.65rem; letter-spacing:0.08em;
+  color:var(--text3); border-top:1px solid var(--border);
+}
+
+@media(max-width:600px) {
+  .page { padding:6rem 1.2rem 3rem; }
+  .two-col, .quadrant-grid { grid-template-columns:1fr; }
+  .stat-row { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">PISA Data Stories</span>
+  <div class="nav-right">
+    <a class="nav-link" href="../index.html"><i class="fa fa-arrow-left"></i> All Stories</a>
+    <button class="btn-icon" id="theme-toggle" title="Toggle theme" aria-label="Toggle theme">
+      <i class="fa fa-moon"></i>
+    </button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- ── HEADER ─────────────────────────────────────────────────────── -->
+  <h1 class="story-title">Calculators, <em>Creators</em>,<br>or Both?</h1>
+  <div class="story-meta">
+    <span><i class="fa fa-calendar"></i> July 2026</span>
+    <span><i class="fa fa-database"></i> PISA 2022</span>
+    <span><i class="fa fa-globe"></i> 63 Countries</span>
+    <span><i class="fa fa-users"></i> 499,843 Students</span>
+  </div>
+  <p class="lead">
+    The long-held assumption: rigorous academic systems sacrifice creativity for test scores.
+    PISA 2022 measured creative thinking directly — for the first time across 63 countries.
+    The verdict upends the conventional wisdom. But it comes with a twist.
+  </p>
+  <div class="tag-row">
+    <span class="tag">Creative Thinking</span>
+    <span class="tag">Academic Performance</span>
+    <span class="tag">PISA 2022</span>
+    <span class="tag">East Asia</span>
+    <span class="tag">Country Comparison</span>
+  </div>
+
+  <!-- ── SECTION 1: THE FINDING ────────────────────────────────────── -->
+  <section class="reveal" id="finding">
+    <h2>The calculator–creator divide barely exists</h2>
+    <p>
+      Across all 63 countries that participated in PISA 2022's Creative Thinking domain,
+      academic performance and creative thinking are almost perfectly correlated.
+      Countries that score well on Math, Reading, and Science also score well on creative
+      thinking. Countries that struggle academically also struggle creatively. The middle
+      of the 2×2 map is nearly empty.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <span class="stat-val">0.92</span>
+        <span class="stat-lbl">Pearson r — academic vs creative thinking, 63 countries</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val green">30</span>
+        <span class="stat-lbl">"Both" — high academic <em>and</em> high creative thinking</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val orange">4</span>
+        <span class="stat-lbl">Off-diagonal countries — the "pure" calculators or creators</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val">0.82</span>
+        <span class="stat-lbl">Partial r after controlling for national wealth (ESCS)</span>
+      </div>
+    </div>
+
+    <div class="chart-wrap">
+      <img src="charts/country_scatter.png"
+           alt="Scatter plot: country-level academic vs creative thinking performance, PISA 2022">
+      <div class="chart-caption">
+        Country-level weighted means · Academic = mean(Math + Reading + Science) PVs ·
+        CT = mean(PV1–PV10, CRTH_NC) · 63 countries · r = 0.92
+      </div>
+    </div>
+
+    <p>
+      The scatter is a near-perfect line. Whether you look at Singapore at the top,
+      Albania at the bottom, or Estonia in the middle — countries land almost exactly
+      where their academic rank would predict. There is no cluster of "academic but not
+      creative" countries, and no cluster of "creative but not academic" ones.
+    </p>
+
+    <div class="pullquote">
+      Education systems do not appear to face a fundamental trade-off between academic
+      excellence and creative thinking. They develop both — or neither.
+    </div>
+  </section>
+
+  <!-- ── SECTION 2: THE QUADRANT MAP ───────────────────────────────── -->
+  <section class="reveal" id="quadrants">
+    <h2>Where every country lands</h2>
+    <p>
+      Splitting countries at the median academic score (439 PISA points) and median
+      creative thinking score (28.7 CT points) produces four quadrants. The off-diagonal
+      cells are nearly empty.
+    </p>
+
+    <div class="quadrant-grid">
+      <div class="q-card">
+        <div class="q-label both">Both — 30 countries</div>
+        <div class="q-n both">30</div>
+        <div class="q-countries">
+          Singapore · Korea · Estonia · Canada · Australia · Finland · New Zealand ·
+          Poland · Denmark · Belgium · Latvia · Portugal · France · Germany · Netherlands ·
+          Spain · Lithuania · Italy · Croatia · Hungary · Czech Rep. · Slovenia ·
+          Slovakia · Israel · Malta · Iceland · Serbia · Macao · Hong Kong · Chinese Taipei
+        </div>
+      </div>
+      <div class="q-card">
+        <div class="q-label low">Lower Both — 29 countries</div>
+        <div class="q-n low">29</div>
+        <div class="q-countries">
+          Greece · Romania · UAE · Uruguay · Qatar · Bulgaria · Moldova · Kazakhstan ·
+          Mongolia · Malaysia · Costa Rica · Peru · Colombia · Brazil · Jamaica ·
+          Thailand · Saudi Arabia · Baku (AZE) · Panama · N. Macedonia · Indonesia ·
+          Albania · Palestine · El Salvador · Jordan · Morocco · Philippines ·
+          Uzbekistan · Dominican Rep.
+        </div>
+      </div>
+      <div class="q-card">
+        <div class="q-label calc">Calculators — 2 countries</div>
+        <div class="q-n calc">2</div>
+        <div class="q-countries">
+          Tatarstan (Russia) · Brunei
+        </div>
+      </div>
+      <div class="q-card">
+        <div class="q-label create">Creators — 2 countries</div>
+        <div class="q-n create">2</div>
+        <div class="q-countries">
+          Chile · Mexico
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Only two countries score above the academic median while falling below the creative
+      thinking median — Tatarstan (a Russian regional sample) and Brunei, both near the
+      exact boundary. Only Chile and Mexico show the reverse: creative thinking above the
+      median, academics below. In both cases, the gap is small and the countries sit just
+      off the diagonal. The archetypes barely exist in the data.
+    </p>
+
+    <h3>The East Asian narrative is wrong</h3>
+    <p>
+      The most commonly cited examples of "calculators" — Singapore, South Korea, Hong Kong,
+      Macao, Chinese Taipei — are all firmly in the "Both" quadrant.
+      Singapore leads the world outright in creative thinking (CT score: 41.0),
+      followed by Korea (38.1), Canada (37.9), and Australia (37.3).
+      The argument that Confucian-influenced education systems trade creativity for
+      academic scores is not supported by PISA 2022.
+    </p>
+
+    <table class="mini-table">
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th>Academic</th>
+          <th>CT Score</th>
+          <th>Quadrant</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="cnt">Singapore</td><td class="hi">559.6</td><td class="hi">41.0</td><td>Both</td></tr>
+        <tr><td class="cnt">Korea</td><td class="hi">523.5</td><td class="hi">38.1</td><td>Both</td></tr>
+        <tr><td class="cnt">Hong Kong</td><td class="hi">520.2</td><td class="hi">31.6</td><td>Both</td></tr>
+        <tr><td class="cnt">Chinese Taipei</td><td class="hi">533.2</td><td class="hi">32.6</td><td>Both</td></tr>
+        <tr><td class="cnt">Macao</td><td class="hi">535.1</td><td class="hi">31.6</td><td>Both</td></tr>
+        <tr><td class="cnt">Estonia</td><td class="hi">515.6</td><td class="hi">35.9</td><td>Both</td></tr>
+        <tr><td class="cnt">Finland</td><td class="hi">495.1</td><td class="hi">35.8</td><td>Both</td></tr>
+        <tr><td class="cnt">Chile</td><td class="lo">434.4</td><td class="hi">30.7</td><td style="color:var(--orange)">Creator</td></tr>
+        <tr><td class="cnt">Brunei</td><td class="hi">439.1</td><td class="lo">23.7</td><td style="color:var(--blue)">Calculator</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── SECTION 3: THE PARADOX ────────────────────────────────────── -->
+  <section class="reveal" id="paradox">
+    <h2>The paradox: high performers don't feel creative</h2>
+    <p>
+      PISA 2022 also asked students about their creative identity, openness, and
+      activities — both inside and outside school. These self-report measures reveal a
+      striking reversal: students in the highest-performing countries consistently rate
+      themselves as <em>less</em> creative than students in the lowest-performing countries.
+    </p>
+
+    <div class="chart-wrap">
+      <img src="charts/creative_paradox.png"
+           alt="Scatter: creative self-efficacy vs CT score and academic performance — negative correlation">
+      <div class="chart-caption">
+        Country-level creative self-efficacy (CREATEFF) vs CT score (left, r = −0.34)
+        and academic performance (right, r = −0.49) · PISA 2022 · 63 countries
+      </div>
+    </div>
+
+    <p>
+      Panama, Albania, and Colombia lead the world in students' self-reported creative
+      confidence — and score near the bottom of the actual creative thinking assessment.
+      Singapore, Hong Kong, Latvia, Estonia, and New Zealand cluster in the opposite
+      corner: world-class CT scores, well below-average creative self-belief.
+    </p>
+
+    <div class="chart-wrap">
+      <img src="charts/both_vs_low.png"
+           alt="Cohen's d: Both vs Low Both countries on creative and climate variables">
+      <div class="chart-caption">
+        Student-level Cohen's d · High-performing ("Both") vs lower-performing countries ·
+        Positive = favours high-performing · All differences p &lt; 0.001 · PISA 2022
+      </div>
+    </div>
+
+    <p>
+      Compared to students in lower-performing countries, students in high-performing
+      countries report substantially less creative identity (d = −0.53), creative openness
+      (d = −0.52), and overall creative activity (d = −0.45). The one variable that
+      runs in the opposite direction is sense of belonging (d = +0.15) — students in
+      high-performing systems feel more connected to their school, even if they feel
+      less exceptional as creative individuals.
+    </p>
+
+    <div class="pullquote">
+      The countries that produce the world's most creative thinkers are also the ones
+      where students are least likely to describe themselves as creative.
+    </div>
+
+    <h3>Why the inversion?</h3>
+    <p>
+      The most plausible explanation is <strong>social calibration</strong>. In a country
+      where creative achievement is widespread and visible — where your classmates produce
+      exceptional work and your teachers set high creative standards — you are naturally
+      less likely to see yourself as unusually creative. The reference group sets the bar.
+      A student in Finland surrounded by accomplished peers may feel less exceptional than
+      a student in a lower-performing context with fewer visible reference points.
+    </p>
+    <p>
+      This is not a uniquely creative-thinking phenomenon. The same pattern appears in
+      maths: students in high-performing countries often report lower maths self-concept
+      than students in countries where the absolute performance level is lower, despite
+      objectively knowing more mathematics. PISA researchers call this the
+      <em>Big-Fish-Little-Pond Effect</em>.
+    </p>
+    <p>
+      The practical implication: self-reported creative confidence is not a good proxy for
+      creative thinking capacity. The countries investing most in creative skill development
+      are, if anything, making their students more aware of how much further there is to go.
+    </p>
+  </section>
+
+  <!-- ── SECTION 4: ESCS CONTROL ───────────────────────────────────── -->
+  <section class="reveal" id="escs">
+    <h2>It isn't just wealth</h2>
+    <p>
+      A natural objection: both academic and creative thinking scores could simply reflect
+      national income. Richer countries fund better schools, and better schools produce
+      better outcomes on every dimension. If ESCS explains everything, the CT–academic
+      correlation contains no independent educational signal.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <span class="stat-val">0.76</span>
+        <span class="stat-lbl">r(ESCS, academic) — national wealth predicts academic performance</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val">0.77</span>
+        <span class="stat-lbl">r(ESCS, CT) — national wealth predicts creative thinking equally</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val">0.82</span>
+        <span class="stat-lbl">Partial r — CT vs academic after controlling for ESCS</span>
+      </div>
+    </div>
+
+    <p>
+      ESCS predicts both academic and CT scores equally well (r ≈ 0.76–0.77). But after
+      controlling for national socioeconomic status, the correlation between academic and
+      creative thinking performance is still r = 0.82 — nearly as strong as the raw
+      relationship. The alignment between academic excellence and creative thinking is not
+      a wealth effect dressed up as an educational one. Something about how education
+      systems develop students — the depth of instruction, the quality of feedback, the
+      expectation that students reason through hard problems — appears to develop both
+      dimensions together.
+    </p>
+
+    <div class="verdict">
+      <strong>Verdict:</strong> Academic excellence and creative thinking are two sides
+      of the same coin. The r = 0.92 correlation is not a statistical artefact of
+      national wealth; after ESCS control it remains r = 0.82. Countries that have
+      learned to cultivate one have, almost without exception, learned to cultivate both.
+    </div>
+  </section>
+
+  <!-- ── METHOD BOX ─────────────────────────────────────────────────── -->
+  <section class="reveal" id="method">
+    <h2>Data &amp; Method</h2>
+    <div class="method-box">
+      <h3>Data sources</h3>
+      <p>
+        <strong>Creative Thinking PVs</strong>: <code>PV1CRTH_NC</code>–<code>PV10CRTH_NC</code>
+        from PISA 2022 CRT file (<code>CY08MSP_CRT_COG.SAV</code>). The Creative Thinking
+        domain used its own PISA scale (approximate range 0–48+, OECD mean ~33).
+        63 countries opted into this optional domain; 499,843 students have valid scores.
+      </p>
+      <p>
+        <strong>Academic PVs + weights</strong>: Math, Reading, and Science PVs (10 each)
+        plus <code>W_FSTUWT</code> and <code>ESCS</code> from the PISA 2022 student
+        questionnaire file. Joined to the CT file on <code>CNTSTUID</code>. No students
+        were missing weights after the join.
+      </p>
+      <p>
+        <strong>Context variables</strong>: Creative identity (CREATOR), creative openness
+        (CREATOPN), creative activities overall (CREATACT) and at school (CREATSCH),
+        creative self-efficacy (CREATEFF), teacher support (TEACHSUP), sense of belonging
+        (BELONG), and disciplinary climate (DISCLIM) — all from the student questionnaire.
+      </p>
+      <h3>Scores and country means</h3>
+      <p>
+        Academic performance = mean of 10 PVs across Math, Reading, and Science per student.
+        CT score = mean of 10 CT PVs per student. Country means are weighted by
+        <code>W_FSTUWT</code>. Quadrant boundaries: median academic (439.1) and median CT
+        (28.7) over the 63-country distribution.
+      </p>
+      <h3>Creative paradox analysis</h3>
+      <p>
+        Student-level Cohen's d between students in "Both" (30 countries) and "Low Both"
+        (29 countries) on each context variable. Significance via Welch's t-test. Partial
+        correlation controls for country-level ESCS via OLS residuals (62 countries with
+        valid ESCS; Costa Rica missing).
+      </p>
+      <h3>Limitations</h3>
+      <p>
+        The CT and academic scales are not directly comparable in absolute terms (different
+        IRT scalings). Japan and the United Kingdom did not participate in the CT domain and
+        are absent from all analyses. The "Both vs Low Both" comparison confounds country
+        income, cultural context, and educational policy — no individual variable should be
+        interpreted causally.
+      </p>
+    </div>
+  </section>
+
+</div><!-- /page -->
+
+<footer>
+  PISA 2022 Database (OECD) · Creative Thinking domain · 63 countries ·
+  Analysis: Python / pyreadstat / numpy / scipy · July 2026
+</footer>
+
+<script>
+(function() {
+  const toggle = document.getElementById('theme-toggle');
+  const icon   = toggle.querySelector('i');
+  const stored = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', stored);
+  icon.className = stored === 'dark' ? 'fa fa-sun' : 'fa fa-moon';
+
+  toggle.addEventListener('click', function() {
+    const cur  = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    icon.className = next === 'dark' ? 'fa fa-sun' : 'fa fa-moon';
+  });
+
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.08 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+})();
+</script>
+</body>
+</html>
