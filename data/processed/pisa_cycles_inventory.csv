@@ -1,0 +1,5 @@
+cycle,raw_filename,n_countries,n_schools,n_students,core_filename,core_size_mb,school_summary_filename,school_summary_size_mb,variables_included,date_processed,processing_script_version,notes
+2012,SPSS_STU_QQQ_2012.zip,,,,,,,,,,,Supported; raw data not installed. Obtain via free OECD registration then run: prepare_pisa_cycle.py --cycle 2012 --raw-zip <file>
+2015,SPSS_STU_QQQ_2015.zip,,,,,,,,,,,Supported; raw data not installed. Download via browser from oecd.org/pisa/data/2015database/ then run: prepare_pisa_cycle.py --cycle 2015 --raw-zip <file>
+2018,SPSS_STU_QQQ.zip,,,,,,,,,,,Primary cycle. Stories read raw SPSS directly; no core extract.
+2022,SPSS_STU_QQQ_2022.zip,80,21629,613744,pisa_2022_core.csv.gz,67.9,pisa_2022_school_summary.csv,3.07,"CYCLE,CNT,CNTSCHID,CNTSTUID,W_FSTUWT,PV[1-10]MATH,PV[1-10]READ,PV[1-10]SCIE",2026-07-06,1.0,

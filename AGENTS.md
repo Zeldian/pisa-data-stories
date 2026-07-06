@@ -93,18 +93,62 @@ After a story is accepted and its webpage is written, publish it:
 
 GitHub Pages redeploys automatically. The homepage (`docs/index.html`) is always generated — never edit it by hand.
 
+## Cross-cycle data
+
+PISA 2018 is the primary dataset. Supplementary cycles are used for robustness
+checks only. Do not replace 2018 as the basis for any story.
+
+### Installed cycles (immediately available)
+
+| Cycle | Status | Files present |
+|-------|--------|---------------|
+| 2018 | Installed | `data/raw/SPSS_STU_QQQ.zip` (primary; stories read raw directly) |
+| 2022 | Installed | `data/raw/SPSS_STU_QQQ_2022.zip` + core extract + school summary |
+
+### Supported cycles (pipeline ready; raw data not installed)
+
+| Cycle | What is needed | How to obtain |
+|-------|----------------|---------------|
+| 2015 | Student SPSS zip | Browser download from `oecd.org/pisa/data/2015database/` (Cloudflare-gated) |
+| 2012 | Student SPSS zip | Free OECD account registration at `oecd.org/en/data/register.html`, then download from `oecd.org/pisa/data/2012database/` |
+
+Once the raw zip is supplied, the pipeline generates the core extract and school
+summary automatically — no further configuration is needed:
+```
+python3 scripts/prepare_pisa_cycle.py --cycle 2022                                  # automated
+python3 scripts/prepare_pisa_cycle.py --cycle 2015 --raw-zip ~/Downloads/<file>.zip
+python3 scripts/prepare_pisa_cycle.py --cycle 2012 --raw-zip ~/Downloads/<file>.zip
+```
+
+**Use the smallest dataset that covers your needs:**
+
+| Need | File to use |
+|------|-------------|
+| School-level analysis | `data/processed/pisa_{cycle}_school_summary.csv` |
+| Student-level analysis | `data/processed/pisa_{cycle}_core.csv.gz` |
+| BRR standard errors / full variable set | `data/raw/SPSS_STU_QQQ_{cycle}.zip` (raw SPSS) |
+
+See `data/README.md` for full download instructions and variable harmonization notes.
+Check `data/processed/pisa_cycles_inventory.csv` for machine-readable cycle status.
+
 ## Project Structure
 
 ```
 data/
-    raw/                  # Original downloaded files (gitignored)
-    processed/            # Cleaned/derived datasets
-    README.md             # File inventory and usage guide
+    raw/                  # Original downloaded files (gitignored, re-downloadable)
+    processed/            # Cleaned/derived datasets (committed)
+        country_reading_summary.csv          # 2018 story aggregate
+        country_math_icc.csv                 # 2018 story aggregate
+        pisa_2022_core.csv.gz                # 2022 cross-cycle student extract (installed)
+        pisa_2022_school_summary.csv         # 2022 cross-cycle school summary (installed)
+        pisa_cycles_inventory.csv            # Cycle metadata and file registry
+    README.md             # File inventory, hierarchy, and download instructions
     methodology.md        # Required analysis procedures (PVs, weights, BRR SEs)
     variable_catalog.csv  # All 1,664 variables across student/school/teacher files
     variable_catalog.md   # Same catalog in readable Markdown
 scripts/
     build_site.py         # Regenerates docs/index.html from stories/accepted/
+    prepare_pisa_cycle.py # Downloads and processes additional PISA cycles (v1.0)
 stories/
     accepted/             # One subfolder per completed story
         <slug>/
