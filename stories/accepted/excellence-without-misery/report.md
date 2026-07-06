@@ -176,12 +176,80 @@ systems is not reserved for advantaged students.
 
 ---
 
+## Appendix — PISA 2022 Robustness Check
+
+*Does the negative correlation between national performance and student life
+satisfaction replicate in a separate PISA cycle?*
+
+PISA 2022 (conducted 2022–23, primary domain: Mathematics) covers 80 countries /
+economies; 73 have complete performance and life satisfaction data. Available
+well-being variables partially overlap with 2018: `ST016Q01NA` and `BELONG` are
+present; `BEINGBULLIED`, `SWBP`, and `GFOFAIL` are absent. `ANXMAT` (mathematics
+anxiety WLE) is new and included for reference. The identical weighted-mean method
+is applied.
+
+### Replication results
+
+| Statistic | PISA 2018 | PISA 2022 |
+|-----------|-----------|-----------|
+| Countries with complete data | 71 | 73 |
+| Performance × life satisfaction (r) | −0.481 | −0.441 |
+| p-value | < 0.001 | < 0.001 |
+| Performance median | 462.5 | 434.4 |
+| Life satisfaction median | 7.21 | 6.97 |
+| Excellence + well-being countries | 13 | 12 |
+| Excellence + misery countries | 23 | 25 |
+
+The negative correlation replicates. Both sign and approximate magnitude hold
+(r = −0.441, p < 0.001). The lower 2022 median life satisfaction (6.97 vs 7.21)
+likely reflects the COVID-19 pandemic's documented effects on adolescent well-being
+in this cohort.
+
+### Quadrant stability
+
+Among the 61 countries appearing in both cycles, 77% occupy the same quadrant in
+both. The Finland–Japan contrast is fully stable:
+
+| Country | Score 2018 | Score 2022 | Life sat. 2018 | Life sat. 2022 | Quadrant |
+|---------|-----------|-----------|----------------|----------------|---------|
+| FIN | 516 | 495 | 7.61 | 7.41 | hi_hi → hi_hi |
+| JPN | 520 | 533 | 6.18 | 6.76 | hi_lo → hi_lo |
+| KOR | 520 | 524 | 6.52 | 6.36 | hi_lo → hi_lo |
+| TAP | 516 | 533 | 6.52 | 6.85 | hi_lo → hi_lo |
+| NLD | 503 | 480 | 7.50 | 7.29 | hi_hi → hi_hi |
+| CHE | 498 | 498 | 7.38 | 7.06 | hi_hi → hi_hi |
+
+Finland and Japan remain on opposite sides of the well-being divide despite both
+showing score changes. Japan's satisfaction improved from 6.18 to 6.76, but it
+stays below the (lower) 2022 median of 6.97. The structural gap persists.
+
+### Caveat
+
+The 2022 cohort was educated partly during COVID-19 school closures. Pandemic
+disruptions to schooling and adolescent mental health confound comparisons with
+pre-pandemic 2018 data; the lower overall life satisfaction in 2022 is not
+interpretable as a system-level policy signal.
+
+### Verdict
+
+The principal finding — that a moderate negative correlation between national
+performance and student life satisfaction exists across countries, but that a
+meaningful minority of high-performing systems consistently achieve both — is
+**strengthened** by the 2022 replication. The cross-cycle quadrant stability (77%)
+confirms the pattern reflects durable system-level characteristics rather than
+a 2018-specific artefact.
+
+---
+
 ## Files
 
 | File | Description |
 |------|-------------|
 | `analysis.py` | Full analysis: data loading, country aggregation, quadrant assignment, all charts |
+| `robustness_2022.py` | PISA 2022 robustness check |
 | `charts/quadrant_scatter.png` | Main 2×2 map: performance vs. life satisfaction, 71 countries |
 | `charts/wellbeing_profile.png` | Multi-dimensional well-being profile: excellence quadrants compared |
 | `charts/equity_by_escs.png` | Life satisfaction by ESCS quartile within high-performing country groups |
-| `../../data/processed/excellence_wellbeing_country.csv` | Country-level summary: all metrics |
+| `charts/robustness_2022.png` | Side-by-side 2018 vs 2022 scatter comparison |
+| `../../data/processed/excellence_wellbeing_country.csv` | Country-level summary: all metrics (2018) |
+| `../../data/processed/excellence_wellbeing_country_2022.csv` | Country-level summary (2022) |

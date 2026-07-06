@@ -453,10 +453,71 @@ footer {
   </div>
 </section>
 
+
+<section class="reveal" id="appendix-2022">
+  <h2>Appendix — PISA 2022 Robustness Check</h2>
+  <p>Does the negative correlation between national performance and student life satisfaction replicate in a separate PISA cycle? PISA 2022 (primary domain: Mathematics) covers 73 countries with both complete performance and life satisfaction data — an independent test of the 2018 finding.</p>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <span class="stat-val">−0.44</span>
+      <span class="stat-lbl">2022 correlation: performance vs. life satisfaction (73 countries)</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-val">77%</span>
+      <span class="stat-lbl">Quadrant stability across 61 countries present in both cycles</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-val">12 vs 25</span>
+      <span class="stat-lbl">Excellence + well-being vs. excellence + misery countries in 2022</span>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <img src="charts/robustness_2022.png" alt="Side-by-side scatter plots comparing national performance vs. life satisfaction in PISA 2018 and PISA 2022">
+    <p class="chart-caption">Same axes, same method, independent dataset. Quadrant regions use each cycle's own medians as thresholds. Named countries are those with labeled points in the main chart.</p>
+  </div>
+
+  <p>The sign and approximate magnitude of the correlation hold: r = −0.481 in 2018, r = −0.441 in 2022, both p < 0.001. The structural imbalance between the two high-performance quadrants persists (12 vs 25 in 2022; 13 vs 23 in 2018).</p>
+
+  <p>The Finland–Japan contrast is fully stable across cycles. Finland remains in the "excellence + well-being" quadrant (life satisfaction 7.61 → 7.41); Japan remains in the "excellence + misery" quadrant (6.18 → 6.76). Japan's satisfaction improved, but stays below the 2022 median of 6.97. The structural gap endures.</p>
+
+  <div class="country-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th style="text-align:right">Score 2018</th>
+          <th style="text-align:right">Score 2022</th>
+          <th style="text-align:right">Life sat. 2018</th>
+          <th style="text-align:right">Life sat. 2022</th>
+          <th>Quadrant</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="cnt hi">FIN</td><td class="num">516</td><td class="num">495</td><td class="num hi">7.61</td><td class="num hi">7.41</td><td>hi_hi → hi_hi</td></tr>
+        <tr><td class="cnt hi">NLD</td><td class="num">503</td><td class="num">480</td><td class="num hi">7.50</td><td class="num hi">7.29</td><td>hi_hi → hi_hi</td></tr>
+        <tr><td class="cnt hi">CHE</td><td class="num">498</td><td class="num">498</td><td class="num hi">7.38</td><td class="num hi">7.06</td><td>hi_hi → hi_hi</td></tr>
+        <tr><td class="cnt lo">JPN</td><td class="num">520</td><td class="num">533</td><td class="num lo">6.18</td><td class="num lo">6.76</td><td>hi_lo → hi_lo</td></tr>
+        <tr><td class="cnt lo">KOR</td><td class="num">520</td><td class="num">524</td><td class="num lo">6.52</td><td class="num lo">6.36</td><td>hi_lo → hi_lo</td></tr>
+        <tr><td class="cnt lo">TAP</td><td class="num">516</td><td class="num">533</td><td class="num lo">6.52</td><td class="num lo">6.85</td><td>hi_lo → hi_lo</td></tr>
+        <tr><td class="cnt lo">EST</td><td class="num">526</td><td class="num">516</td><td class="num lo">7.19</td><td class="num lo">6.91</td><td>hi_lo → hi_lo</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The overall life satisfaction median dropped from 7.21 to 6.97 between cycles. This likely reflects the COVID-19 pandemic's documented effects on adolescent well-being in the 2022 cohort, and should not be read as a policy signal.</p>
+
+  <div class="method-box">
+    <p><strong>Verdict: strengthened.</strong> The principal finding — a moderate negative correlation between national performance and student life satisfaction, with a meaningful minority of high-performing systems consistently achieving both — replicates in an independent PISA cycle four years later. 77% quadrant stability across shared countries confirms the pattern reflects durable system-level characteristics, not a 2018-specific artefact.</p>
+    <p style="margin-top:0.6rem"><strong>Variable note:</strong> PISA 2022 includes <code>ST016Q01NA</code> (life satisfaction) and <code>BELONG</code>, but dropped <code>BEINGBULLIED</code>, <code>SWBP</code>, and <code>GFOFAIL</code>. The multi-dimensional well-being profile (Chart 2) cannot be replicated for 2022. The correlation analysis uses only life satisfaction. Full robustness script: <code>stories/accepted/excellence-without-misery/robustness_2022.py</code>.</p>
+  </div>
+</section>
+
 </div><!-- /page -->
 
 <footer>
-  PISA Data Stories · Data: OECD PISA 2018 Database · Analysis: July 2026<br>
+  PISA Data Stories · Data: OECD PISA 2018 &amp; 2022 Databases · Analysis: July 2026<br>
   Not affiliated with the OECD · Point estimates only · Full methodology in report.md
 </footer>
 
