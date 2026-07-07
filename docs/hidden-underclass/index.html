@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Hidden Underclass Inside Rich Education Systems — PISA 2018</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect fill='%230d1117' width='64' height='64' rx='10'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-size='38' font-family='serif'%3E⚠%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --bg:        #f7f4ef;
+  --bg2:       #ede9e2;
+  --text:      #1a1212;
+  --text2:     #4a3f3a;
+  --text3:     #7a6f6a;
+  --border:    #d4cfc8;
+  --accent:    #2471a3;
+  --accent2:   #c0392b;
+  --mono:      #1a7a4a;
+  --card:      #ffffff;
+  --shadow:    rgba(0,0,0,0.08);
+  --transition: 0.3s ease;
+  --green:     #1e8449;
+  --blue:      #1a5276;
+  --orange:    #9c640c;
+  --red:       #922b21;
+  --gray:      #5d6d7e;
+}
+[data-theme="dark"] {
+  --bg:        #0d1117;
+  --bg2:       #161b22;
+  --text:      #e8e3da;
+  --text2:     #b0a89f;
+  --text3:     #6e6660;
+  --border:    #2a2a35;
+  --accent:    #4a9edd;
+  --accent2:   #e05c1a;
+  --mono:      #52b788;
+  --card:      #161b22;
+  --shadow:    rgba(0,0,0,0.4);
+  --green:     #2ecc71;
+  --blue:      #3498db;
+  --orange:    #e67e22;
+  --red:       #e74c3c;
+  --gray:      #95a5a6;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.75;
+  transition: background var(--transition), color var(--transition);
+  overflow-x: hidden;
+}
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.75rem 2rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  transition: background var(--transition), border-color var(--transition);
+}
+.nav-brand { font-family:'JetBrains Mono',monospace; font-size:0.7rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--text3); }
+.nav-right { display:flex; gap:0.75rem; align-items:center; }
+.btn-icon { background:none; border:1px solid var(--border); cursor:pointer; color:var(--text2); width:36px; height:36px; border-radius:6px; display:flex; align-items:center; justify-content:center; transition:all var(--transition); }
+.btn-icon:hover { background:var(--bg2); border-color:var(--text3); }
+a.nav-link { font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text3); text-decoration:none; }
+a.nav-link:hover { color:var(--text); }
+
+.page { max-width:780px; margin:0 auto; padding:7rem 2rem 4rem; }
+
+h1.story-title {
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:clamp(2.0rem,5vw,3.2rem);
+  font-weight:900; line-height:1.1;
+  margin-bottom:1.2rem; color:var(--text);
+}
+h1.story-title em { font-style:italic; color:var(--accent2); }
+
+.story-meta {
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.68rem; letter-spacing:0.1em;
+  text-transform:uppercase; color:var(--text3);
+  margin-bottom:2.5rem;
+  display:flex; gap:1.5rem; flex-wrap:wrap;
+}
+.story-meta span { display:flex; align-items:center; gap:0.4rem; }
+
+.lead {
+  font-size:1.22rem; line-height:1.7;
+  color:var(--text2); margin-bottom:2rem;
+  font-style:italic;
+}
+
+section { padding:3.5rem 0; }
+section + section { border-top:1px solid var(--border); }
+
+h2 {
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:1.75rem; font-weight:700;
+  margin-bottom:1.2rem; color:var(--text);
+  line-height:1.2;
+}
+h3 {
+  font-family:'Lora',serif;
+  font-size:1.1rem; font-weight:600;
+  margin-bottom:0.8rem; color:var(--text);
+  margin-top:1.5rem;
+}
+p { margin-bottom:1rem; }
+p:last-child { margin-bottom:0; }
+
+.stat-row {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
+  gap:1rem; margin:1.5rem 0;
+}
+.stat-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:10px; padding:1.2rem 1rem;
+  box-shadow:0 2px 8px var(--shadow);
+  text-align:center;
+}
+.stat-card .stat-val {
+  font-family:'JetBrains Mono',monospace;
+  font-size:1.8rem; font-weight:600;
+  color:var(--accent); display:block; line-height:1;
+}
+.stat-card .stat-val.green { color:var(--green); }
+.stat-card .stat-val.orange { color:var(--orange); }
+.stat-card .stat-val.red { color:var(--red); }
+.stat-card .stat-val.gray { color:var(--gray); }
+.stat-card .stat-lbl {
+  font-size:0.78rem; color:var(--text3);
+  margin-top:0.4rem; display:block; line-height:1.3;
+}
+
+.chart-wrap {
+  margin:2rem 0;
+  border:1px solid var(--border);
+  border-radius:10px; overflow:hidden;
+  box-shadow:0 2px 12px var(--shadow);
+}
+.chart-wrap img { width:100%; display:block; }
+.chart-caption {
+  padding:0.6rem 1rem;
+  background:var(--bg2);
+  font-size:0.8rem; color:var(--text3);
+  font-family:'JetBrains Mono',monospace;
+  border-top:1px solid var(--border);
+}
+
+.pullquote {
+  border-left:4px solid var(--accent2);
+  padding:1rem 1.5rem;
+  margin:1.8rem 0;
+  background:var(--bg2);
+  border-radius:0 8px 8px 0;
+  font-style:italic;
+  font-size:1.12rem;
+  color:var(--text2);
+}
+
+.burden-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:0.75rem; margin:1.5rem 0;
+}
+.burden-item {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:8px; padding:0.8rem 1rem;
+  display:flex; align-items:flex-start; gap:0.75rem;
+}
+.burden-item .b-icon {
+  font-size:1.3rem; flex-shrink:0; margin-top:0.1rem;
+}
+.burden-item .b-text { font-size:0.85rem; line-height:1.5; color:var(--text2); }
+.burden-item .b-text strong { color:var(--text); display:block; font-size:0.9rem; }
+
+.mini-table { font-size:0.85rem; width:100%; border-collapse:collapse; margin:1rem 0; }
+.mini-table td, .mini-table th {
+  padding:0.35rem 0.6rem; border-bottom:1px solid var(--border);
+  color:var(--text2);
+}
+.mini-table th {
+  font-family:'JetBrains Mono',monospace; font-size:0.62rem;
+  letter-spacing:0.08em; text-transform:uppercase;
+  color:var(--text3); border-bottom:2px solid var(--border);
+}
+.mini-table .cnt { font-family:'JetBrains Mono',monospace; font-weight:600; }
+.mini-table .hi  { color:var(--green); font-weight:600; }
+.mini-table .lo  { color:var(--red); font-weight:600; }
+.mini-table .neu { color:var(--text3); }
+.mini-table tr:last-child td { border-bottom:none; }
+
+.method-box {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:8px; padding:1.2rem 1.4rem;
+  font-size:0.9rem; line-height:1.65;
+}
+.method-box p + p { margin-top:0.6rem; }
+.method-box h3 { font-size:0.85rem; margin-top:1rem; }
+.method-box h3:first-child { margin-top:0; }
+
+.verdict {
+  background:var(--bg2); border:1px solid var(--border);
+  border-left:4px solid var(--accent2);
+  border-radius:0 8px 8px 0; padding:1rem 1.4rem;
+  margin:1.5rem 0; font-size:0.95rem;
+}
+.verdict strong { color:var(--accent2); }
+
+.reveal { opacity:0; transform:translateY(18px); transition:opacity 0.55s ease, transform 0.55s ease; }
+.reveal.visible { opacity:1; transform:none; }
+
+.tag-row { display:flex; flex-wrap:wrap; gap:0.4rem; margin:1rem 0; }
+.tag {
+  font-family:'JetBrains Mono',monospace; font-size:0.62rem;
+  letter-spacing:0.08em; text-transform:uppercase;
+  padding:0.2rem 0.55rem; border-radius:4px;
+  background:var(--bg2); color:var(--text3);
+  border:1px solid var(--border);
+}
+
+.two-col {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:1rem; margin:1.5rem 0;
+}
+
+footer {
+  text-align:center; padding:2.5rem 1rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.65rem; letter-spacing:0.08em;
+  color:var(--text3); border-top:1px solid var(--border);
+}
+
+@media(max-width:600px) {
+  .page { padding:6rem 1.2rem 3rem; }
+  .two-col, .burden-grid { grid-template-columns:1fr; }
+  .stat-row { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">PISA Data Stories</span>
+  <div class="nav-right">
+    <a class="nav-link" href="../index.html"><i class="fa fa-arrow-left"></i> All Stories</a>
+    <button class="btn-icon" id="theme-toggle" title="Toggle theme" aria-label="Toggle theme">
+      <i class="fa fa-moon"></i>
+    </button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- ── HEADER ─────────────────────────────────────────────────────── -->
+  <h1 class="story-title">The <em>Hidden Underclass</em><br>Inside Rich Education Systems</h1>
+  <div class="story-meta">
+    <span><i class="fa fa-calendar"></i> July 2026</span>
+    <span><i class="fa fa-database"></i> PISA 2018</span>
+    <span><i class="fa fa-globe"></i> 79 Countries</span>
+    <span><i class="fa fa-users"></i> 612,004 Students</span>
+  </div>
+  <p class="lead">
+    Country averages hide a stark reality: 1 in 5 students in top-performing nations
+    carries three or more serious hardship burdens simultaneously — and their academic
+    scores fall far behind peers who carry none. In some of the world's most admired
+    education systems, a substantial minority of students is bullied, isolated, unable
+    to study, and falling behind, all at once.
+  </p>
+  <div class="tag-row">
+    <span class="tag">Equity</span>
+    <span class="tag">Hardship</span>
+    <span class="tag">Wellbeing</span>
+    <span class="tag">Belonging</span>
+    <span class="tag">Bullying</span>
+    <span class="tag">Hidden Disadvantage</span>
+  </div>
+
+  <!-- ── SECTION 1: THE INDEX ──────────────────────────────────────── -->
+  <section class="reveal" id="index">
+    <h2>Building a student hardship index</h2>
+    <p>
+      PISA 2018 asked students about their lives far beyond test scores. Six questions,
+      each probing a different kind of serious burden, can be combined into a single
+      hardship count per student. This is not a composite scale — it is a tally of
+      how many distinct problems a student faces simultaneously.
+    </p>
+
+    <div class="burden-grid">
+      <div class="burden-item">
+        <div class="b-icon">😰</div>
+        <div class="b-text">
+          <strong>Bullied above average</strong>
+          BEINGBULLIED WLE &gt; 0 — upper half of the global bullying distribution.
+          Affects 40% of students globally.
+        </div>
+      </div>
+      <div class="burden-item">
+        <div class="b-icon">🚪</div>
+        <div class="b-text">
+          <strong>Low school belonging</strong>
+          BELONG WLE in the bottom quartile globally (≤ −0.67). Affects 25% globally.
+        </div>
+      </div>
+      <div class="burden-item">
+        <div class="b-icon">🤫</div>
+        <div class="b-text">
+          <strong>No quiet study space</strong>
+          No quiet place at home to study (ST011Q03TA = No). Affects 17% globally.
+        </div>
+      </div>
+      <div class="burden-item">
+        <div class="b-icon">📚</div>
+        <div class="b-text">
+          <strong>No desk at home</strong>
+          No desk to work at (ST011Q01TA = No). Affects 17% globally.
+        </div>
+      </div>
+      <div class="burden-item">
+        <div class="b-icon">🏃</div>
+        <div class="b-text">
+          <strong>Skipped school</strong>
+          Skipped at least one school day or class in past two weeks.
+          Affects 31% globally.
+        </div>
+      </div>
+      <div class="burden-item">
+        <div class="b-icon">⚠️</div>
+        <div class="b-text">
+          <strong>Threatened at school</strong>
+          Threatened or intimidated at least once in the past year.
+          Affects 18% globally.
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Each indicator is coded 0 (no burden) or 1 (burden present). Students with
+      missing data on any indicator are coded 0 — a conservative assumption that
+      makes all rates lower bounds. The hardship count is the sum across all six (0–6).
+      <strong>Multi-burden</strong> means carrying three or more simultaneously.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <span class="stat-val red">22%</span>
+        <span class="stat-lbl">Students globally carrying 3+ burdens simultaneously</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val orange">16%</span>
+        <span class="stat-lbl">OECD students carrying 3+ burdens — a lower rate, but still 1 in 6</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val red">25%</span>
+        <span class="stat-lbl">New Zealand — highest multi-burden rate of top OECD performers</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val green">1.8%</span>
+        <span class="stat-lbl">Korea — lowest multi-burden rate among top OECD performers</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 2: THE DISTRIBUTION ───────────────────────────────── -->
+  <section class="reveal" id="distribution">
+    <h2>The view from inside top-performing countries</h2>
+    <p>
+      Average academic performance tells us almost nothing about the hardship distribution
+      underneath it. Two countries can share a headline score of 520 PISA points while
+      concealing radically different pictures of student welfare.
+    </p>
+
+    <div class="chart-wrap">
+      <img src="charts/burden_distribution.png"
+           alt="Stacked horizontal bar chart: hardship burden distribution for top 20 countries, OECD average, and global average">
+      <div class="chart-caption">
+        Top 20 high-performing countries ranked by academic performance · % of students
+        at each hardship count (0–6) · Weighted by W_FSTUWT · PISA 2018
+      </div>
+    </div>
+
+    <h3>Korea and New Zealand: same rank, opposite profiles</h3>
+    <p>
+      Korea and New Zealand both score around 515–520 PISA points — in the top ten globally.
+      But only 1.8% of Korean students carry three or more hardship burdens simultaneously.
+      In New Zealand, it's 25.1% — nearly 1 in 4. Japan (6.4%), Finland (12.6%), and
+      Estonia (16%) sit between them. Canada (20.9%), the United Kingdom (20.5%), and
+      Singapore (20.4%) are closer to New Zealand than to Korea.
+    </p>
+
+    <table class="mini-table">
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th>Academic score</th>
+          <th>Multi-burden (3+)</th>
+          <th>Severe (4+)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="cnt">Estonia</td><td>526</td><td class="neu">16.0%</td><td class="neu">5.4%</td></tr>
+        <tr><td class="cnt">Japan</td><td>520</td><td class="hi">6.4%</td><td class="hi">1.6%</td></tr>
+        <tr><td class="cnt">Korea</td><td>520</td><td class="hi">1.8%</td><td class="hi">0.3%</td></tr>
+        <tr><td class="cnt">Canada</td><td>517</td><td class="lo">20.9%</td><td class="lo">7.6%</td></tr>
+        <tr><td class="cnt">Finland</td><td>516</td><td class="neu">12.6%</td><td class="neu">4.2%</td></tr>
+        <tr><td class="cnt">Poland</td><td>513</td><td class="neu">18.5%</td><td class="neu">5.9%</td></tr>
+        <tr><td class="cnt">UK</td><td>503</td><td class="lo">20.5%</td><td class="lo">7.6%</td></tr>
+        <tr><td class="cnt">New Zealand</td><td>503</td><td class="lo">25.1%</td><td class="lo">10.2%</td></tr>
+        <tr><td class="cnt">Australia</td><td>496</td><td class="lo">24.1%</td><td class="lo">9.2%</td></tr>
+        <tr><td class="cnt">Denmark</td><td>501</td><td class="neu">15.4%</td><td class="neu">5.0%</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      The variation here is not a measurement artefact. It is a real difference in the
+      proportion of students simultaneously experiencing bullying, social isolation, material
+      disadvantage, and school disengagement. Korea's 1.8% is not a rounding issue —
+      it reflects a qualitatively different pattern of student experience.
+    </p>
+
+    <div class="pullquote">
+      Two countries can share the same PISA headline and conceal 10-fold differences
+      in the share of students facing stacked, simultaneous hardship.
+    </div>
+  </section>
+
+  <!-- ── SECTION 3: THE PERFORMANCE CLIFF ─────────────────────────── -->
+  <section class="reveal" id="cliff">
+    <h2>The performance cliff</h2>
+    <p>
+      Academic performance does not decline smoothly as burdens accumulate. It falls
+      off a cliff. Each additional simultaneous burden is associated with a measurable
+      score drop — and the drop accelerates as burdens stack. Students carrying four or
+      more burdens in OECD countries score nearly 50 PISA points below their
+      zero-burden peers. That is roughly one full year of schooling, lost.
+    </p>
+
+    <div class="chart-wrap">
+      <img src="charts/performance_cliff.png"
+           alt="Line chart: weighted mean academic score by hardship count (0 to 6), global vs OECD">
+      <div class="chart-caption">
+        Weighted mean academic score (Math + Reading + Science composite) by hardship count ·
+        Global (all 79 countries) vs OECD members · PISA 2018
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <span class="stat-val">489</span>
+        <span class="stat-lbl">OECD: mean score with zero burdens</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val red">441</span>
+        <span class="stat-lbl">OECD: mean score with four or more burdens (−48 pts)</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val">471</span>
+        <span class="stat-lbl">Global: mean score with zero burdens</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val red">358</span>
+        <span class="stat-lbl">Global: mean score with all six burdens (−113 pts)</span>
+      </div>
+    </div>
+
+    <p>
+      The steepest drop in OECD countries is between three and four burdens — a threshold
+      effect consistent with multiple serious stressors becoming mutually compounding.
+      Globally, students carrying all six burdens score 358 PISA points on average:
+      below the OECD mean by more than a standard deviation, and roughly equivalent to
+      the gap between Finland and the Dominican Republic.
+    </p>
+    <p>
+      This is a cross-sectional finding. The direction of causation — whether hardship
+      causes underperformance, underperformance causes hardship, or both — cannot be
+      established here. But the association is consistent, large in magnitude, and holds
+      within every OECD country separately.
+    </p>
+  </section>
+
+  <!-- ── SECTION 4: SCATTER ────────────────────────────────────────── -->
+  <section class="reveal" id="scatter">
+    <h2>Country averages tell an incomplete story</h2>
+    <p>
+      At the country level, higher multi-burden rates are associated with lower academic
+      performance (r = −0.38). But the correlation is moderate and the scatter is wide —
+      which is the point. Some countries combine high average performance with high
+      multi-burden rates. The country average is hiding the subgroup below it.
+    </p>
+
+    <div class="chart-wrap">
+      <img src="charts/academic_vs_hardship.png"
+           alt="Scatter: country academic performance vs % multi-burden students, 79 countries">
+      <div class="chart-caption">
+        Country-level academic performance vs % students with 3+ hardship burdens ·
+        79 countries · Pearson r = −0.38 · PISA 2018
+      </div>
+    </div>
+
+    <p>
+      The upper-left cluster — high performance, low multi-burden — is dominated by
+      East Asian systems: Korea, Japan, Macao, Chinese Taipei. The upper-right cluster
+      — high performance, high multi-burden — includes New Zealand, Canada, Australia,
+      the United Kingdom. These countries look equally successful on average; they differ
+      fundamentally in what proportion of their students is struggling in multiple
+      dimensions at once.
+    </p>
+  </section>
+
+  <!-- ── SECTION 5: ESCS BREAKDOWN ─────────────────────────────────── -->
+  <section class="reveal" id="escs">
+    <h2>Wealth doesn't protect you — especially in some countries</h2>
+    <p>
+      Hardship is not evenly distributed within countries. Students from lower-SES families
+      are substantially more likely to carry multiple burdens everywhere. But the ESCS
+      gradient tells only part of the story. In several high-performing countries, even
+      students in the highest socioeconomic quartile face substantial multi-burden rates.
+    </p>
+
+    <div class="chart-wrap">
+      <img src="charts/hidden_underclass_escs.png"
+           alt="Grouped bar chart: % multi-burden by ESCS quartile for top 15 OECD countries">
+      <div class="chart-caption">
+        % students with 3+ hardship burdens by ESCS quartile (Q1 = lowest SES) ·
+        Top 15 OECD countries by academic performance · PISA 2018
+      </div>
+    </div>
+
+    <h3>The wealthy-quartile paradox</h3>
+    <p>
+      In New Zealand and Australia, 14–18% of students in the highest socioeconomic
+      quartile carry three or more simultaneous hardship burdens. In Canada and the
+      United Kingdom, the Q4 multi-burden rate is 15–17%. These are not students from
+      disadvantaged families — they are the relatively privileged, and they are still
+      struggling in multiple dimensions simultaneously.
+    </p>
+
+    <table class="mini-table">
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th>Q1 (lowest SES)</th>
+          <th>Q4 (highest SES)</th>
+          <th>Gap</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="cnt">New Zealand</td><td class="lo">35%</td><td class="lo">14%</td><td>21 pp</td></tr>
+        <tr><td class="cnt">Australia</td><td class="lo">34%</td><td class="lo">18%</td><td>16 pp</td></tr>
+        <tr><td class="cnt">Canada</td><td class="lo">31%</td><td class="lo">15%</td><td>16 pp</td></tr>
+        <tr><td class="cnt">UK</td><td class="lo">29%</td><td class="lo">17%</td><td>12 pp</td></tr>
+        <tr><td class="cnt">Denmark</td><td class="neu">19%</td><td class="neu">8%</td><td>11 pp</td></tr>
+        <tr><td class="cnt">Finland</td><td class="neu">20%</td><td class="neu">10%</td><td>10 pp</td></tr>
+        <tr><td class="cnt">Estonia</td><td class="neu">19%</td><td class="neu">12%</td><td>7 pp</td></tr>
+        <tr><td class="cnt">Korea</td><td class="hi">4%</td><td class="hi">&lt;1%</td><td>3 pp</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      In Korea, multi-burden rates are below 4% even for the lowest SES quartile. The
+      absence of hardship stacking is not achieved at the expense of performance — Korea
+      is among the world's top academic performers. In New Zealand, Australia, Canada,
+      and the UK, high-performing systems coexist with substantial hardship even among
+      the most advantaged students. The system is not fully protecting anyone.
+    </p>
+
+    <div class="verdict">
+      <strong>Finding:</strong> Hardship stacking in wealthy education systems is not
+      simply a poverty problem. It reflects system-level features — the prevalence of
+      bullying, the degree of school belonging, the social-emotional environment — that
+      affect students across the socioeconomic spectrum.
+    </div>
+  </section>
+
+  <!-- ── METHOD BOX ─────────────────────────────────────────────────── -->
+  <section class="reveal" id="method">
+    <h2>Data &amp; Method</h2>
+    <div class="method-box">
+      <h3>Data source</h3>
+      <p>
+        PISA 2018 student questionnaire (<code>SPSS_STU_QQQ.zip</code>), loaded via
+        <code>pyreadstat</code>. 612,004 students across 79 countries. Sampling weights
+        (<code>W_FSTUWT</code>) applied to all aggregate statistics.
+      </p>
+
+      <h3>Hardship indicators</h3>
+      <p>
+        Six binary indicators (0/1): above-average bullying experience
+        (<code>BEINGBULLIED</code> WLE &gt; 0), bottom-quartile school belonging
+        (<code>BELONG</code> WLE ≤ global 25th percentile, −0.67), no quiet study
+        space (<code>ST011Q03TA</code> = No), no desk at home (<code>ST011Q01TA</code>
+        = No), skipped school or classes (<code>ST062Q01TA</code> or
+        <code>ST062Q02TA</code> ≥ 2), and threatened at school
+        (<code>ST038Q05NA</code> ≥ 2). Missing values treated as 0 (conservative
+        lower-bound assumption). Sum = hardship count per student.
+      </p>
+
+      <h3>Academic performance</h3>
+      <p>
+        Composite academic score = mean of 10 plausible values across Math, Reading,
+        and Science per student. Country means weighted by <code>W_FSTUWT</code>.
+        PISA 500-point scale (OECD mean ≈ 500).
+      </p>
+
+      <h3>Variables excluded</h3>
+      <p>
+        Paid work (<code>FL156Q03TA</code>): 79% missing — optional module, excluded.
+        Sleep problems (<code>WB154Q07HA</code>): 65% missing — optional module,
+        excluded. Life satisfaction (<code>ST016Q01NA</code>): 31% missing —
+        administered in approximately 70% of countries, excluded from main index.
+        Food insecurity: not directly measured in PISA 2018.
+      </p>
+
+      <h3>Limitations</h3>
+      <p>
+        Cross-sectional design — no causal inference on the hardship–performance
+        relationship. NaN-as-0 conservative coding may undercount burdens in countries
+        with high item non-response. The skipping threshold (≥ 1 day in two weeks) is
+        low and captures occasional, not chronic, absenteeism.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── APPENDIX: 2022 ROBUSTNESS ─────────────────────────────────── -->
+  <section class="reveal" id="appendix-robustness">
+    <h2>Appendix — PISA 2022 Robustness Check</h2>
+    <p>
+      The core finding — that within-country hardship rates vary enormously across
+      top-performing systems — was replicated using PISA 2022 data on a four-indicator
+      index. In 2022, the <code>ST011</code> questionnaire block (desk and quiet study
+      space) was removed entirely; the desk and quiet-space indicators have no 2022
+      equivalent. The four available indicators are: above-average bullying
+      (<code>BULLIED</code> WLE, available in both cycles), low school belonging, skipped
+      school, and threatened at school.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <span class="stat-val">0.80</span>
+        <span class="stat-lbl">Spearman ρ — 2018 vs 2022 multi-burden rank correlation, OECD countries (36)</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val">0.66</span>
+        <span class="stat-lbl">Spearman ρ — all 71 shared countries, both cycles</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val green">Korea</span>
+        <span class="stat-lbl">Remains lowest in both cycles: 1.8% (2018) → 4.1% (2022)</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val red">NZ / AU</span>
+        <span class="stat-lbl">Remain highest in Anglophone group: NZ 25% → 44%, AU 22% → 41%</span>
+      </div>
+    </div>
+
+    <p>
+      The country ranking of multi-burden rates is highly stable across the two cycles,
+      especially within OECD (ρ = 0.80). Korea remains the clear outlier at the low end
+      (1.8% in 2018, 4.1% in 2022), while New Zealand and Australia remain highest among
+      top-performing Anglophone systems. The absolute rates are higher in 2022 because the
+      4-indicator index with a 2+ threshold captures more students — but the relative
+      country ordering, which is the core claim, is preserved. The story told by 2018 data
+      is not a single-cycle artefact.
+    </p>
+
+    <div class="chart-wrap">
+      <img src="charts/robustness_2022_underclass.png"
+           alt="Cross-cycle comparison: 2018 vs 2022 multi-burden rates, scatter and OECD bar chart">
+      <div class="chart-caption">
+        Left: 2018 multi-burden (3+ of 6) vs 2022 multi-burden (2+ of 4) · 71 shared countries ·
+        Pearson r = 0.66, Spearman ρ = 0.66 (OECD-only ρ = 0.80) ·
+        Right: OECD country comparison, ranked by 2018 rate
+      </div>
+    </div>
+
+    <h3>What changed in 2022</h3>
+    <p>
+      PISA 2022 does provide a <code>BULLIED</code> WLE (directly comparable to
+      <code>BEINGBULLIED</code> in 2018), so that indicator is retained. What changed is
+      the complete removal of the <code>ST011</code> question block — meaning neither the
+      desk nor the quiet-space indicator can be reproduced. The 2022 four-indicator index
+      is therefore not comparable in absolute rate to the 2018 six-indicator index, but the
+      country-level rank ordering is what matters for the robustness check, and it holds.
+    </p>
+
+    <div class="method-box">
+      <h3>2022 robustness method</h3>
+      <p>
+        PISA 2022 student questionnaire (<code>CY08MSP_STU_QQQ.SAV</code>, 613,744 students,
+        80 countries). Four-indicator index: <code>BULLIED</code> WLE &gt; 0 (available
+        in 2022 as a WLE), <code>BELONG</code> WLE ≤ 2022 global 25th percentile (−0.68),
+        <code>ST062Q01TA</code>/<code>ST062Q02TA</code> ≥ 2 (skipping),
+        <code>ST038Q05NA</code> ≥ 2 (threatened). The <code>ST011</code> block (desk and
+        quiet space) was removed from the 2022 questionnaire and has no equivalent.
+        Multi-burden defined as count ≥ 2 of these four indicators — the same ≥50%
+        relative threshold as 3-of-6 in 2018. Rank correlation computed on 71 countries
+        present in both cycles.
+      </p>
+      <p>
+        <strong>Verdict:</strong> The country-level pattern of hardship concentration
+        inside top-performing systems is confirmed across both PISA cycles. The variation
+        between high-performing countries — between Korea and New Zealand, between Japan
+        and Canada — is a stable feature of these education systems, not a 2018
+        measurement anomaly.
+      </p>
+    </div>
+  </section>
+
+</div><!-- /page -->
+
+<footer>
+  PISA 2018 Database (OECD) · 79 countries · 612,004 students ·
+  Analysis: Python / pyreadstat / numpy / scipy / matplotlib · July 2026
+</footer>
+
+<script>
+(function() {
+  const toggle = document.getElementById('theme-toggle');
+  const icon   = toggle.querySelector('i');
+  const stored = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', stored);
+  icon.className = stored === 'dark' ? 'fa fa-sun' : 'fa fa-moon';
+
+  toggle.addEventListener('click', function() {
+    const cur  = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    icon.className = next === 'dark' ? 'fa fa-sun' : 'fa fa-moon';
+  });
+
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.08 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+})();
+</script>
+</body>
+</html>
