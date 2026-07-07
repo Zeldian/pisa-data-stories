@@ -602,10 +602,91 @@ footer {
     </div>
   </section>
 
+  <!-- ── APPENDIX: ROBUSTNESS ──────────────────────────────────────── -->
+  <section class="reveal" id="appendix-robustness">
+    <h2>Appendix — Robustness Checks</h2>
+    <p>
+      Because this story uses PISA 2022 data, replication against an independent cycle
+      means running it in reverse: do <em>2018 academic rankings</em> predict
+      <em>2022 creative thinking</em> scores? Three checks were conducted.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <span class="stat-val">0.89</span>
+        <span class="stat-lbl">Cross-cycle r — 2018 academic → 2022 CT · 57 shared countries</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val">0.88</span>
+        <span class="stat-lbl">OECD-only r — 28 OECD member countries in the CT sample</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val">0.87</span>
+        <span class="stat-lbl">Math-only r — CT vs Math alone rather than mean of all 3 domains</span>
+      </div>
+    </div>
+
+    <div class="chart-wrap">
+      <img src="charts/robustness_cross_cycle.png"
+           alt="Cross-cycle scatter: 2018 academic performance vs 2022 creative thinking scores, 57 countries, r = 0.89">
+      <div class="chart-caption">
+        2018 academic performance (weighted country mean) vs 2022 Creative Thinking score ·
+        57 countries present in both datasets · r = 0.885, Spearman ρ = 0.896
+      </div>
+    </div>
+
+    <p>
+      The cross-cycle check is the most demanding: a country's 2018 academic rank
+      (measured four years before the CT assessment existed) predicts its 2022 CT score
+      with r = 0.89. The causal arrow cannot run backwards — CT scores in 2022 cannot
+      have caused academic rankings in 2018. Whatever drives the alignment is a stable
+      property of education systems, not a 2022 artefact.
+    </p>
+    <p>
+      Country positions are almost entirely stable. Every country in the "Both" quadrant
+      (green) was already a high academic performer in 2018. Every country in the "Low Both"
+      cluster (grey) was already lower-performing in 2018. The rank ordering of countries
+      across these two completely independent measurements is nearly identical.
+    </p>
+
+    <h3>Sensitivity checks</h3>
+    <p>
+      Restricting the sample to the 28 OECD members in the CT dataset, the correlation
+      is r = 0.878 — essentially unchanged, and comparable to the full-sample result.
+      Using only Math performance (rather than the composite of Math, Reading, and
+      Science), the correlation with CT is r = 0.866. The finding does not depend on
+      composite construction.
+    </p>
+
+    <div class="method-box">
+      <h3>Robustness method</h3>
+      <p>
+        <strong>Cross-cycle</strong>: 2018 academic means computed from
+        <code>SPSS_STU_QQQ.zip</code> (2018 student questionnaire, 80 countries).
+        Joined with 2022 CT means on country code. 57 countries present in both datasets.
+        Pearson r and Spearman ρ reported.
+      </p>
+      <p>
+        <strong>OECD-only</strong>: 28 of the 63 CT-participating countries are OECD
+        members. CT–academic Pearson r computed within this subset.
+      </p>
+      <p>
+        <strong>Math-only</strong>: 2022 Math PVs only (not the composite academic score)
+        compared with CT across all 63 countries.
+      </p>
+      <p>
+        <strong>Verdict</strong>: The academic–creative thinking alignment is confirmed
+        across all three independent checks. The cross-cycle result (r = 0.89) is
+        particularly strong evidence that the finding reflects stable educational system
+        characteristics rather than a single-cycle measurement artefact.
+      </p>
+    </div>
+  </section>
+
 </div><!-- /page -->
 
 <footer>
-  PISA 2022 Database (OECD) · Creative Thinking domain · 63 countries ·
+  PISA 2018 &amp; 2022 Databases (OECD) · Creative Thinking domain · 63 countries ·
   Analysis: Python / pyreadstat / numpy / scipy · July 2026
 </footer>
 

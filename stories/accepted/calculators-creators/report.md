@@ -151,6 +151,47 @@ different things.
 
 ---
 
+---
+
+## Appendix — Robustness Checks
+
+*Three independent checks against the main finding (r = 0.922, CT–academic).*
+
+### Check 1: Cross-cycle (2018 academic → 2022 CT)
+
+2018 country-level academic means (from `SPSS_STU_QQQ.zip`, 80 countries) joined with
+2022 CT means on country code. 57 countries present in both datasets.
+
+| Statistic | Value |
+|-----------|-------|
+| r (2018 academic → 2022 CT) | **0.885** |
+| Spearman ρ | **0.896** |
+| r (2018 academic → 2022 academic) | 0.965 |
+| Countries | 57 |
+
+The causal arrow cannot run backwards: CT scores in 2022 cannot have caused academic
+rankings in 2018. The high cross-cycle correlation confirms that the academic–CT
+alignment reflects stable educational system characteristics.
+
+### Check 2: OECD members only
+
+28 of the 63 CT-participating countries are OECD members. Within this subset:
+r(CT, academic) = **0.878** — essentially identical to the full-sample result.
+
+### Check 3: Math performance only
+
+Using only Math PVs (not the composite academic score): r(CT, Math) = **0.866**.
+The finding does not depend on the composite construction.
+
+### Verdict
+
+All three checks confirm the main finding. No check reduces the correlation below
+r = 0.86. The cross-cycle result is particularly strong: a country's 2018 academic
+rank predicts its 2022 CT score with r = 0.89 — across a 4-year gap and a domain
+that did not exist when 2018 performance was measured.
+
+---
+
 ## Files
 
 | File | Description |
@@ -161,4 +202,6 @@ different things.
 | `charts/country_scatter.png` | Main scatter: academic vs CT, r = 0.922, quadrant coloring |
 | `charts/creative_paradox.png` | Creative self-efficacy vs CT/academic — the inverse relationship |
 | `charts/both_vs_low.png` | Cohen's d: Both vs Low Both on creative + climate variables |
+| `robustness_2022.py` | Cross-cycle + OECD-only + Math-only robustness checks |
+| `charts/robustness_cross_cycle.png` | 2018 academic → 2022 CT scatter (57 countries) |
 | `../../data/processed/calculators_creators_country.csv` | Country-level results |
