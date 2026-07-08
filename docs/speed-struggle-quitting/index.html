@@ -187,7 +187,10 @@ p:last-child { margin-bottom:0; }
 .mini-table { font-size:0.85rem; width:100%; border-collapse:collapse; margin:1rem 0; }
 .mini-table td, .mini-table th {
   padding:0.35rem 0.6rem; border-bottom:1px solid var(--border);
-  color:var(--text2);
+  color:var(--text2); text-align:left;
+}
+.mini-table td:not(:first-child), .mini-table th:not(:first-child) {
+  text-align:right;
 }
 .mini-table th {
   font-family:'JetBrains Mono',monospace; font-size:0.62rem;
@@ -301,35 +304,30 @@ footer {
 
     <div class="burden-grid">
       <div class="burden-item">
-        <div class="b-icon">⚡✅</div>
         <div class="b-text">
           <strong>Fast-Right</strong>
           Answered correctly, faster than the typical student on that item.
         </div>
       </div>
       <div class="burden-item">
-        <div class="b-icon">🐢✅</div>
         <div class="b-text">
           <strong>Slow-Right</strong>
           Answered correctly, but took longer than typical — deliberate, not rushed.
         </div>
       </div>
       <div class="burden-item">
-        <div class="b-icon">⚡❌</div>
         <div class="b-text">
           <strong>Fast-Wrong</strong>
           Answered quickly but incorrectly — possibly a rushed guess.
         </div>
       </div>
       <div class="burden-item">
-        <div class="b-icon">🐢❌</div>
         <div class="b-text">
           <strong>Slow-Wrong</strong>
           Took real time, still got it wrong — genuine struggle, not carelessness.
         </div>
       </div>
       <div class="burden-item">
-        <div class="b-icon">🚪</div>
         <div class="b-text">
           <strong>Omit / Quit</strong>
           Never answered — coded by PISA as "Not Reached" or "No Response."
