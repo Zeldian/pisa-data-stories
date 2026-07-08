@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Speed, Struggle, and Quitting — PISA 2018</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect fill='%230d1117' width='64' height='64' rx='10'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-size='34' font-family='serif'%3E⏱%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --bg:        #f7f4ef;
+  --bg2:       #ede9e2;
+  --text:      #1a1212;
+  --text2:     #4a3f3a;
+  --text3:     #7a6f6a;
+  --border:    #d4cfc8;
+  --accent:    #2471a3;
+  --accent2:   #c0392b;
+  --mono:      #1a7a4a;
+  --card:      #ffffff;
+  --shadow:    rgba(0,0,0,0.08);
+  --transition: 0.3s ease;
+  --green:     #1e8449;
+  --blue:      #1a5276;
+  --orange:    #9c640c;
+  --red:       #922b21;
+  --gray:      #5d6d7e;
+}
+[data-theme="dark"] {
+  --bg:        #0d1117;
+  --bg2:       #161b22;
+  --text:      #e8e3da;
+  --text2:     #b0a89f;
+  --text3:     #6e6660;
+  --border:    #2a2a35;
+  --accent:    #4a9edd;
+  --accent2:   #e05c1a;
+  --mono:      #52b788;
+  --card:      #161b22;
+  --shadow:    rgba(0,0,0,0.4);
+  --green:     #2ecc71;
+  --blue:      #3498db;
+  --orange:    #e67e22;
+  --red:       #e74c3c;
+  --gray:      #95a5a6;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.75;
+  transition: background var(--transition), color var(--transition);
+  overflow-x: hidden;
+}
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.75rem 2rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  transition: background var(--transition), border-color var(--transition);
+}
+.nav-brand { font-family:'JetBrains Mono',monospace; font-size:0.7rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--text3); }
+.nav-right { display:flex; gap:0.75rem; align-items:center; }
+.btn-icon { background:none; border:1px solid var(--border); cursor:pointer; color:var(--text2); width:36px; height:36px; border-radius:6px; display:flex; align-items:center; justify-content:center; transition:all var(--transition); }
+.btn-icon:hover { background:var(--bg2); border-color:var(--text3); }
+a.nav-link { font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text3); text-decoration:none; }
+a.nav-link:hover { color:var(--text); }
+
+.page { max-width:780px; margin:0 auto; padding:7rem 2rem 4rem; }
+
+h1.story-title {
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:clamp(2.0rem,5vw,3.2rem);
+  font-weight:900; line-height:1.1;
+  margin-bottom:1.2rem; color:var(--text);
+}
+h1.story-title em { font-style:italic; color:var(--accent2); }
+
+.story-meta {
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.68rem; letter-spacing:0.1em;
+  text-transform:uppercase; color:var(--text3);
+  margin-bottom:2.5rem;
+  display:flex; gap:1.5rem; flex-wrap:wrap;
+}
+.story-meta span { display:flex; align-items:center; gap:0.4rem; }
+
+.lead {
+  font-size:1.22rem; line-height:1.7;
+  color:var(--text2); margin-bottom:2rem;
+  font-style:italic;
+}
+
+section { padding:3.5rem 0; }
+section + section { border-top:1px solid var(--border); }
+
+h2 {
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:1.75rem; font-weight:700;
+  margin-bottom:1.2rem; color:var(--text);
+  line-height:1.2;
+}
+h3 {
+  font-family:'Lora',serif;
+  font-size:1.1rem; font-weight:600;
+  margin-bottom:0.8rem; color:var(--text);
+  margin-top:1.5rem;
+}
+p { margin-bottom:1rem; }
+p:last-child { margin-bottom:0; }
+
+.stat-row {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
+  gap:1rem; margin:1.5rem 0;
+}
+.stat-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:10px; padding:1.2rem 1rem;
+  box-shadow:0 2px 8px var(--shadow);
+  text-align:center;
+}
+.stat-card .stat-val {
+  font-family:'JetBrains Mono',monospace;
+  font-size:1.8rem; font-weight:600;
+  color:var(--accent); display:block; line-height:1;
+}
+.stat-card .stat-val.green { color:var(--green); }
+.stat-card .stat-val.orange { color:var(--orange); }
+.stat-card .stat-val.red { color:var(--red); }
+.stat-card .stat-val.gray { color:var(--gray); }
+.stat-card .stat-lbl {
+  font-size:0.78rem; color:var(--text3);
+  margin-top:0.4rem; display:block; line-height:1.3;
+}
+
+.chart-wrap {
+  margin:2rem 0;
+  border:1px solid var(--border);
+  border-radius:10px; overflow:hidden;
+  box-shadow:0 2px 12px var(--shadow);
+}
+.chart-wrap img { width:100%; display:block; }
+.chart-caption {
+  padding:0.6rem 1rem;
+  background:var(--bg2);
+  font-size:0.8rem; color:var(--text3);
+  font-family:'JetBrains Mono',monospace;
+  border-top:1px solid var(--border);
+}
+
+.pullquote {
+  border-left:4px solid var(--accent2);
+  padding:1rem 1.5rem;
+  margin:1.8rem 0;
+  background:var(--bg2);
+  border-radius:0 8px 8px 0;
+  font-style:italic;
+  font-size:1.12rem;
+  color:var(--text2);
+}
+
+.burden-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:0.75rem; margin:1.5rem 0;
+}
+.burden-item {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:8px; padding:0.8rem 1rem;
+  display:flex; align-items:flex-start; gap:0.75rem;
+}
+.burden-item .b-icon {
+  font-size:1.3rem; flex-shrink:0; margin-top:0.1rem;
+}
+.burden-item .b-text { font-size:0.85rem; line-height:1.5; color:var(--text2); }
+.burden-item .b-text strong { color:var(--text); display:block; font-size:0.9rem; }
+
+.mini-table { font-size:0.85rem; width:100%; border-collapse:collapse; margin:1rem 0; }
+.mini-table td, .mini-table th {
+  padding:0.35rem 0.6rem; border-bottom:1px solid var(--border);
+  color:var(--text2);
+}
+.mini-table th {
+  font-family:'JetBrains Mono',monospace; font-size:0.62rem;
+  letter-spacing:0.08em; text-transform:uppercase;
+  color:var(--text3); border-bottom:2px solid var(--border);
+}
+.mini-table .cnt { font-family:'JetBrains Mono',monospace; font-weight:600; }
+.mini-table .hi  { color:var(--green); font-weight:600; }
+.mini-table .lo  { color:var(--red); font-weight:600; }
+.mini-table .neu { color:var(--text3); }
+.mini-table tr:last-child td { border-bottom:none; }
+
+.method-box {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:8px; padding:1.2rem 1.4rem;
+  font-size:0.9rem; line-height:1.65;
+}
+.method-box p + p { margin-top:0.6rem; }
+.method-box h3 { font-size:0.85rem; margin-top:1rem; }
+.method-box h3:first-child { margin-top:0; }
+
+.verdict {
+  background:var(--bg2); border:1px solid var(--border);
+  border-left:4px solid var(--accent2);
+  border-radius:0 8px 8px 0; padding:1rem 1.4rem;
+  margin:1.5rem 0; font-size:0.95rem;
+}
+.verdict strong { color:var(--accent2); }
+
+.reveal { opacity:0; transform:translateY(18px); transition:opacity 0.55s ease, transform 0.55s ease; }
+.reveal.visible { opacity:1; transform:none; }
+
+.tag-row { display:flex; flex-wrap:wrap; gap:0.4rem; margin:1rem 0; }
+.tag {
+  font-family:'JetBrains Mono',monospace; font-size:0.62rem;
+  letter-spacing:0.08em; text-transform:uppercase;
+  padding:0.2rem 0.55rem; border-radius:4px;
+  background:var(--bg2); color:var(--text3);
+  border:1px solid var(--border);
+}
+
+.two-col {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:1rem; margin:1.5rem 0;
+}
+
+footer {
+  text-align:center; padding:2.5rem 1rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.65rem; letter-spacing:0.08em;
+  color:var(--text3); border-top:1px solid var(--border);
+}
+
+@media(max-width:600px) {
+  .page { padding:6rem 1.2rem 3rem; }
+  .two-col, .burden-grid { grid-template-columns:1fr; }
+  .stat-row { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">PISA Data Stories</span>
+  <div class="nav-right">
+    <a class="nav-link" href="../index.html"><i class="fa fa-arrow-left"></i> All Stories</a>
+    <button class="btn-icon" id="theme-toggle" title="Toggle theme" aria-label="Toggle theme">
+      <i class="fa fa-moon"></i>
+    </button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- ── HEADER ─────────────────────────────────────────────────────── -->
+  <h1 class="story-title">Speed, Struggle, and <em>Quitting</em></h1>
+  <div class="story-meta">
+    <span><i class="fa fa-calendar"></i> July 2026</span>
+    <span><i class="fa fa-database"></i> PISA 2018</span>
+    <span><i class="fa fa-globe"></i> 71 Countries</span>
+    <span><i class="fa fa-users"></i> 551,792 Students</span>
+  </div>
+  <p class="lead">
+    Two students can land on the exact same PISA score and have almost nothing else
+    in common: one blazed through the test, confident and fast; the other worked
+    every problem slowly, right up to the deadline; a third gave up on one item in
+    five. Using the item-by-item timing data buried inside PISA's computer-based
+    test — not just final scores, but how long each student took on each question —
+    a clear picture emerges of how differently the world's students reach the
+    same number.
+  </p>
+  <div class="tag-row">
+    <span class="tag">Test-Taking Behavior</span>
+    <span class="tag">Response Time</span>
+    <span class="tag">Rapid Guessing</span>
+    <span class="tag">Omission</span>
+    <span class="tag">Persistence</span>
+    <span class="tag">Equity</span>
+  </div>
+
+  <!-- ── SECTION 1: THE METHOD ─────────────────────────────────────── -->
+  <section class="reveal" id="method-intro">
+    <h2>Reading the test behind the score</h2>
+    <p>
+      When PISA moved to computer-based testing, it started quietly logging something
+      most people don't know exists: for every item a student saw, the system recorded
+      not just whether they got it right, but how long they took to make their first
+      move. Combine that timing with the scored answer, and every single item response
+      sorts into one of five behavioral profiles.
+    </p>
+
+    <div class="burden-grid">
+      <div class="burden-item">
+        <div class="b-icon">⚡✅</div>
+        <div class="b-text">
+          <strong>Fast-Right</strong>
+          Answered correctly, faster than the typical student on that item.
+        </div>
+      </div>
+      <div class="burden-item">
+        <div class="b-icon">🐢✅</div>
+        <div class="b-text">
+          <strong>Slow-Right</strong>
+          Answered correctly, but took longer than typical — deliberate, not rushed.
+        </div>
+      </div>
+      <div class="burden-item">
+        <div class="b-icon">⚡❌</div>
+        <div class="b-text">
+          <strong>Fast-Wrong</strong>
+          Answered quickly but incorrectly — possibly a rushed guess.
+        </div>
+      </div>
+      <div class="burden-item">
+        <div class="b-icon">🐢❌</div>
+        <div class="b-text">
+          <strong>Slow-Wrong</strong>
+          Took real time, still got it wrong — genuine struggle, not carelessness.
+        </div>
+      </div>
+      <div class="burden-item">
+        <div class="b-icon">🚪</div>
+        <div class="b-text">
+          <strong>Omit / Quit</strong>
+          Never answered — coded by PISA as "Not Reached" or "No Response."
+        </div>
+      </div>
+    </div>
+
+    <p>
+      "Fast" and "slow" are defined relative to each item, not a universal stopwatch
+      cutoff — an item's own median response time splits its respondents into the two
+      groups, so a 10-second multiple-choice question and a 3-minute interactive
+      simulation are each judged on their own terms. This analysis covers 311 Math,
+      Reading, and Science items with clean per-item timing, for the 551,792 students
+      (71 of 79 countries) who took the computer-based version of the test — the 8
+      paper-based countries have no timing data and are not part of this story.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <span class="stat-val">311</span>
+        <span class="stat-lbl">Items with clean per-item timing across Math, Reading, Science</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val">46</span>
+        <span class="stat-lbl">Median number of these items seen by any one student (rotated test forms)</span>
+      </div>
+      <div class="stat-card orange">
+        <span class="stat-val orange">6.6%</span>
+        <span class="stat-lbl">Global average share of items omitted or not reached</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val gray">91%</span>
+        <span class="stat-lbl">Students who took the test by computer (vs. paper) — only these have timing data</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 2: SAME SCORE, DIFFERENT STYLE ────────────────────── -->
+  <section class="reveal" id="same-score">
+    <h2>Same score, wildly different style</h2>
+    <p>
+      Strip away raw accuracy and ask a narrower question: of the items a student got
+      <em>right</em>, what share did they answer fast? Call this a student's
+      "speed style." It says nothing about how many questions they got right —
+      only how they got there. Comparing 20 countries that all scored within a
+      25-point band (495–520 on PISA's 500-point scale) shows this style is not a
+      byproduct of ability at all.
+    </p>
+
+    <div class="chart-wrap">
+      <img src="charts/same_score_different_style.png"
+           alt="Horizontal bar chart: speed style percentage for 20 countries scoring 495 to 520 on PISA 2018, with Korea, Chinese Taipei, and Japan highlighted as East Asian systems far above the rest">
+      <div class="chart-caption">
+        Speed style (% of correct answers given fast) · 20 countries scoring 495–520 ·
+        PISA 2018 computer-based assessment
+      </div>
+    </div>
+
+    <p>
+      Korea's students answer 81% of their correct items fast. Sweden's students,
+      scoring essentially the same overall, answer just 40% of theirs fast — the rest
+      come from slow, deliberate work. Both systems land in the same place on the
+      PISA scale. They get there in opposite ways.
+    </p>
+
+    <table class="mini-table">
+      <thead>
+        <tr><th>Country</th><th>Score</th><th>Speed style</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="cnt">Korea</td><td>520</td><td class="hi">81.0%</td></tr>
+        <tr><td class="cnt">Chinese Taipei</td><td>517</td><td class="hi">76.3%</td></tr>
+        <tr><td class="cnt">Japan</td><td>520</td><td class="neu">57.2%</td></tr>
+        <tr><td class="cnt">USA</td><td>495</td><td class="neu">57.1%</td></tr>
+        <tr><td class="cnt">Netherlands</td><td>502</td><td class="neu">54.6%</td></tr>
+        <tr><td class="cnt">Canada</td><td>517</td><td class="neu">53.4%</td></tr>
+        <tr><td class="cnt">Finland</td><td>516</td><td class="neu">47.6%</td></tr>
+        <tr><td class="cnt">Sweden</td><td>503</td><td class="lo">40.3%</td></tr>
+      </tbody>
+    </table>
+
+    <div class="pullquote">
+      Korea and Sweden score within one PISA point of each other. Korean students
+      answer twice as large a share of their correct items fast as Swedish students do.
+    </div>
+  </section>
+
+  <!-- ── SECTION 3: THE BROADER PATTERN ────────────────────────────── -->
+  <section class="reveal" id="broader-pattern">
+    <h2>A cluster, not a gradient</h2>
+    <p>
+      Across all 71 computer-based countries, academic performance explains only a
+      moderate share of the variation in speed style (r = 0.61) — and almost all of
+      that correlation comes from one tight regional cluster. East and Southeast Asian
+      systems (Korea, Chinese Taipei, Hong Kong, Macao, Singapore, B-S-J-Z China, Japan)
+      average 70.6% speed style. Every other system in the dataset averages 44.8%.
+      There is no smooth slope from "slow" to "fast" as scores rise — there is a
+      distinct group sitting apart from everyone else.
+    </p>
+
+    <div class="chart-wrap">
+      <img src="charts/academic_vs_speed_style.png"
+           alt="Scatter plot: academic performance vs speed style for 71 countries, with East Asian systems clustered in the upper right, far above the general trend">
+      <div class="chart-caption">
+        Academic performance vs. speed style · 71 computer-based countries ·
+        Pearson r = 0.61 · PISA 2018
+      </div>
+    </div>
+
+    <p>
+      Remove the seven East/Southeast Asian systems from the picture and the
+      relationship between score and style all but disappears — high, middle, and
+      lower performers alike span nearly the same 30–58% speed-style range.
+      Whatever drives the East Asian pattern — item familiarity, test-taking coaching,
+      cultural norms about a timed exam, or something else PISA doesn't measure directly
+      — it is not simply "being better at the test."
+    </p>
+  </section>
+
+  <!-- ── SECTION 4: GIVING UP ──────────────────────────────────────── -->
+  <section class="reveal" id="giving-up">
+    <h2>Giving up is not a low-performance problem</h2>
+    <p>
+      Omission follows the same pattern as speed style: related to performance, but
+      loosely (r = −0.65) — and the exceptions are the story. The clearest case sits
+      almost exactly on the trend line's biggest outlier pair: the Netherlands and
+      Sweden.
+    </p>
+
+    <div class="chart-wrap">
+      <img src="charts/academic_vs_omit.png"
+           alt="Scatter plot: academic performance vs percentage of items omitted, 71 countries, with an annotation highlighting Netherlands vs Sweden scoring nearly identically but differing 4x in omit rate">
+      <div class="chart-caption">
+        Academic performance vs. % of items omitted or not reached · 71 countries ·
+        Pearson r = −0.65 · PISA 2018
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <span class="stat-val">502.5</span>
+        <span class="stat-lbl">Netherlands mean score</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val">502.6</span>
+        <span class="stat-lbl">Sweden mean score — 0.1 points apart</span>
+      </div>
+      <div class="stat-card green">
+        <span class="stat-val green">2.5%</span>
+        <span class="stat-lbl">Netherlands: share of items omitted or not reached</span>
+      </div>
+      <div class="stat-card red">
+        <span class="stat-val red">10.3%</span>
+        <span class="stat-lbl">Sweden: same measure — roughly 4x higher</span>
+      </div>
+    </div>
+
+    <p>
+      Two neighboring, similarly wealthy Northern European countries, indistinguishable
+      on the headline score, differ by a factor of four in how often their students
+      simply stop trying on a question. Whatever is driving that gap — test-taking
+      culture, time pressure, motivation, familiarity with high-stakes timed exams —
+      it has nothing to do with underlying ability, since the two countries' students
+      are, on average, equally capable.
+    </p>
+  </section>
+
+  <!-- ── SECTION 5: EQUITY WITHIN COUNTRIES ────────────────────────── -->
+  <section class="reveal" id="equity">
+    <h2>Giving up is also an equity story — except where it isn't</h2>
+    <p>
+      Within most countries, omission concentrates sharply among disadvantaged
+      students. Peru's lowest-SES quintile omits more than twice as often as its
+      highest. France and the USA show the same pattern, at smaller scale. But
+      Sweden — the country with the second-highest overall omit rate in this
+      dataset — breaks that rule entirely.
+    </p>
+
+    <div class="chart-wrap">
+      <img src="charts/omit_by_escs.png"
+           alt="Grouped bar chart: omit rate by socioeconomic quintile for Sweden, Peru, France, and the USA. Peru, France, and USA show steep declines from low to high SES; Sweden is nearly flat and elevated across all quintiles">
+      <div class="chart-caption">
+        Omit/quit rate by socioeconomic quintile (ESCS) · Sweden, Peru, France, USA ·
+        PISA 2018
+      </div>
+    </div>
+
+    <table class="mini-table">
+      <thead>
+        <tr><th>Country</th><th>Q1 (lowest SES)</th><th>Q5 (highest SES)</th><th>Gradient</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="cnt">Peru</td><td class="lo">22.2%</td><td class="hi">10.1%</td><td>Steep (−12.1 pp)</td></tr>
+        <tr><td class="cnt">France</td><td class="lo">11.6%</td><td class="hi">6.0%</td><td>Steep (−5.7 pp)</td></tr>
+        <tr><td class="cnt">USA</td><td class="lo">6.7%</td><td class="hi">2.4%</td><td>Steep (−4.3 pp)</td></tr>
+        <tr><td class="cnt">Sweden</td><td class="neu">12.1%</td><td class="neu">9.9%</td><td class="neu">Flat (−2.2 pp)</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      In Peru, France, and the USA, giving up is disproportionately something poorer
+      students do — the familiar equity pattern seen throughout PISA data. In Sweden,
+      omission is high <em>and roughly uniform</em> across every socioeconomic quintile,
+      including the wealthiest. That points to something closer to a shared national
+      test-taking norm than a disadvantage-driven behavior.
+    </p>
+
+    <div class="verdict">
+      <strong>Finding:</strong> The same surface statistic — a country's omit rate —
+      can conceal two entirely different mechanisms. In most countries it is an
+      inequality problem. In Sweden, it looks like a broadly shared cultural pattern
+      that happens to sit on top of a smaller, more typical equity gradient.
+    </div>
+  </section>
+
+  <!-- ── METHOD BOX ─────────────────────────────────────────────────── -->
+  <section class="reveal" id="method">
+    <h2>Data &amp; Method</h2>
+    <div class="method-box">
+      <h3>Data source</h3>
+      <p>
+        PISA 2018 cognitive process file (<code>SPSS_STU_COG.zip</code>). Alongside the
+        standard scored response for each computer-based item, this file carries
+        genuine process variables — time to first action, timing of last visit, and
+        number of actions. Restricted to <code>ADMINMODE == 2</code> (computer-based
+        administration): 551,930 of 606,627 students, 71 of 79 countries. The 8
+        paper-based countries (Argentina, Jordan, Lebanon, Moldova, North Macedonia,
+        Romania, Saudi Arabia, Ukraine) have no item timing and are excluded.
+      </p>
+
+      <h3>Item classification</h3>
+      <p>
+        311 items (60 Math, 83 Science, 168 Reading) with a single scored-response
+        column plus a time-to-first-action column. Each (student, item) response is
+        classified using the item's own SPSS value-label text (not hardcoded codes,
+        since one item uses a non-standard scheme): <strong>Omit/Quit</strong> if coded
+        "Not Reached" or "No Response"; otherwise <strong>Correct</strong> if full
+        credit, else <strong>Wrong</strong>; then <strong>Fast</strong> or
+        <strong>Slow</strong> based on whether time-to-first-action is below or at/above
+        that item's own median among attempted responses. This yields five profiles:
+        Fast-Right, Slow-Right, Fast-Wrong, Slow-Wrong, Omit/Quit.
+      </p>
+
+      <h3>Speed style</h3>
+      <p>
+        Of a student's correctly answered items, the share answered fast:
+        <code>n_fast_right / (n_fast_right + n_slow_right)</code>. This isolates
+        response-time style from raw accuracy — two students with identical accuracy
+        but opposite styles get identical scores but very different speed-style values.
+      </p>
+
+      <h3>Aggregation</h3>
+      <p>
+        Student-level profile shares (denominator = items actually administered to
+        that student, per PISA's rotated-booklet design; median 46 of 311 items).
+        Country-level statistics are <code>W_FSTUWT</code>-weighted means — point
+        estimates, not full BRR standard errors. Academic performance = mean of 10
+        plausible values across Math, Reading, Science, averaged across domains.
+      </p>
+
+      <h3>Limitations</h3>
+      <p>
+        Descriptive, not causal — this does not test <em>why</em> a system produces one
+        style over another. Partial-credit items (15 of 311) are collapsed into
+        "wrong." "Fast" and "slow" are relative to each item's own response-time
+        distribution, not an absolute duration. "Not Reached" (ran out of time) and
+        "No Response" (skipped deliberately) are combined into one Omit/Quit category.
+        Results apply only to the 71 countries that ran the computer-based assessment.
+      </p>
+    </div>
+  </section>
+
+</div><!-- /page -->
+
+<footer>
+  PISA 2018 Database (OECD) · 71 computer-based countries · 551,792 students ·
+  Analysis: Python / pyreadstat / numpy / scipy / matplotlib · July 2026
+</footer>
+
+<script>
+(function() {
+  const toggle = document.getElementById('theme-toggle');
+  const icon   = toggle.querySelector('i');
+  const stored = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', stored);
+  icon.className = stored === 'dark' ? 'fa fa-sun' : 'fa fa-moon';
+
+  toggle.addEventListener('click', function() {
+    const cur  = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    icon.className = next === 'dark' ? 'fa fa-sun' : 'fa fa-moon';
+  });
+
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.08 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+})();
+</script>
+</body>
+</html>
