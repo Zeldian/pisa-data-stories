@@ -189,6 +189,18 @@ nav {{
   font-size: 0.9rem; transition: all 0.2s;
 }}
 .btn-icon:hover {{ border-color: var(--accent); color: var(--accent); }}
+.nav-right {{ display: flex; align-items: center; gap: 1.25rem; }}
+.nav-meta-link {{
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text3);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--border);
+  padding-bottom: 1px;
+  transition: color 0.2s, border-color 0.2s;
+}}
+.nav-meta-link:hover {{ color: var(--accent); border-color: var(--accent); }}
 
 /* ── Hero ── */
 .hero {{
@@ -328,7 +340,10 @@ footer {{
 
 <nav>
   <span class="nav-brand">PISA Data Stories</span>
-  <button class="btn-icon" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">☀︎</button>
+  <div class="nav-right">
+    <a class="nav-meta-link" href="./how-i-used-claude/">How this was built</a>
+    <button class="btn-icon" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">☀︎</button>
+  </div>
 </nav>
 
 <header class="hero">

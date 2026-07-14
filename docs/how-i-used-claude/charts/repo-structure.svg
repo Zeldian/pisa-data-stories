@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 640" font-family="'JetBrains Mono','SF Mono',Menlo,Consolas,monospace" font-size="14.5">
+  <rect x="0" y="0" width="720" height="640" fill="#fafafa"/>
+
+  <!-- data/ -->
+  <text x="24" y="34" fill="#1a1a1a" font-weight="700">data/</text>
+  <text x="24" y="58" fill="#c0392b">    raw/</text>
+  <text x="220" y="58" fill="#999">// original OECD downloads — gitignored, re-downloadable</text>
+  <text x="24" y="82" fill="#1b6ca8">    processed/</text>
+  <text x="240" y="82" fill="#999">// cleaned/derived CSVs — committed to git</text>
+  <text x="24" y="104" fill="#555">        country_reading_summary.csv</text>
+  <text x="24" y="124" fill="#555">        pisa_2022_core.csv.gz</text>
+  <text x="24" y="144" fill="#555">        pisa_cycles_inventory.csv</text>
+  <text x="24" y="168" fill="#333">    README.md</text>
+  <text x="220" y="168" fill="#999">// file inventory + download instructions</text>
+  <text x="24" y="190" fill="#333">    methodology.md</text>
+  <text x="260" y="190" fill="#999">// required procedures: PVs, weights, BRR SEs</text>
+  <text x="24" y="212" fill="#333">    variable_catalog.csv/.md</text>
+  <text x="300" y="212" fill="#999">// all 1,664 PISA variables</text>
+
+  <!-- scripts/ -->
+  <text x="24" y="256" fill="#1a1a1a" font-weight="700">scripts/</text>
+  <text x="24" y="280" fill="#333">    build_site.py</text>
+  <text x="220" y="280" fill="#999">// regenerates docs/index.html — never hand-edited</text>
+  <text x="24" y="302" fill="#333">    prepare_pisa_cycle.py</text>
+  <text x="270" y="302" fill="#999">// downloads/processes additional PISA cycles</text>
+
+  <!-- stories/ -->
+  <text x="24" y="346" fill="#1a1a1a" font-weight="700">stories/</text>
+  <text x="24" y="370" fill="#2e7d32">    accepted/&lt;slug&gt;/</text>
+  <text x="24" y="392" fill="#555">        analysis.py, report.md, story.json, charts/</text>
+  <text x="24" y="414" fill="#c0392b">    rejected/</text>
+  <text x="220" y="414" fill="#999">// one .md per rejected hypothesis</text>
+
+  <!-- docs/ -->
+  <text x="24" y="458" fill="#1a1a1a" font-weight="700">docs/</text>
+  <text x="220" y="458" fill="#999">// static site served by GitHub Pages</text>
+  <text x="24" y="480" fill="#333">    index.html</text>
+  <text x="220" y="480" fill="#999">// generated homepage — regenerated, not edited</text>
+  <text x="24" y="502" fill="#333">    &lt;slug&gt;/index.html</text>
+  <text x="240" y="502" fill="#999">// one hand-authored page per published story</text>
+
+  <!-- footer note -->
+  <line x1="24" y1="540" x2="696" y2="540" stroke="#e0dbd4" stroke-width="1"/>
+  <text x="24" y="568" fill="#777" font-size="12.5">Everything a story needs to be reproduced lives in one of these four top-level folders —</text>
+  <text x="24" y="588" fill="#777" font-size="12.5">nothing is generated from state that isn't checked into the repository.</text>
+</svg>

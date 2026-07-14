@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 650" font-family="'Helvetica Neue',Arial,sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#888"/>
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="740" height="650" fill="#fafafa"/>
+
+  <!-- main chain boxes: x=40 width=320 (right edge 360), center x=200 -->
+
+  <!-- 1 Idea -->
+  <rect x="40" y="16" width="320" height="52" rx="8" fill="#fff" stroke="#e0dbd4"/>
+  <text x="60" y="38" font-size="11" font-weight="700" letter-spacing="0.06em" fill="#999">1 · IDEA</text>
+  <text x="60" y="57" font-size="14.5" fill="#1a1a1a">A single, testable hypothesis</text>
+
+  <line x1="200" y1="68" x2="200" y2="96" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- 2 Feasibility -->
+  <rect x="40" y="100" width="320" height="64" rx="8" fill="#fff" stroke="#c0392b" stroke-width="1.5"/>
+  <text x="60" y="122" font-size="11" font-weight="700" letter-spacing="0.06em" fill="#c0392b">2 · FEASIBILITY CHECKLIST</text>
+  <text x="60" y="142" font-size="13.5" fill="#1a1a1a">Data · Variables · Analytical soundness</text>
+  <text x="60" y="158" font-size="11" fill="#888">All three required checks must pass</text>
+
+  <!-- branch to rejected -->
+  <line x1="360" y1="132" x2="396" y2="132" stroke="#c0392b" stroke-width="1.5" marker-end="url(#arrowRed)"/>
+  <text x="378" y="122" font-size="10.5" fill="#c0392b" text-anchor="middle">fails</text>
+
+  <rect x="400" y="100" width="240" height="90" rx="8" fill="#fdf1ef" stroke="#c0392b" stroke-width="1"/>
+  <text x="416" y="122" font-size="11" font-weight="700" letter-spacing="0.05em" fill="#c0392b">REJECTED</text>
+  <text x="416" y="143" font-size="12" fill="#555">Short .md in stories/rejected/</text>
+  <text x="416" y="161" font-size="12" fill="#555">explaining which check failed</text>
+  <text x="416" y="179" font-size="11" fill="#999">no analysis code is ever written</text>
+
+  <line x1="200" y1="164" x2="200" y2="192" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="214" y="184" font-size="10.5" fill="#2e7d32">all pass</text>
+
+  <!-- 3 Plan -->
+  <rect x="40" y="196" width="320" height="52" rx="8" fill="#fff" stroke="#e0dbd4"/>
+  <text x="60" y="218" font-size="11" font-weight="700" letter-spacing="0.06em" fill="#999">3 · ANALYSIS PLAN</text>
+  <text x="60" y="237" font-size="14.5" fill="#1a1a1a">Variables, method, expected output — before code</text>
+
+  <line x1="200" y1="248" x2="200" y2="276" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- 4 Code -->
+  <rect x="40" y="280" width="320" height="52" rx="8" fill="#fff" stroke="#e0dbd4"/>
+  <text x="60" y="302" font-size="11" font-weight="700" letter-spacing="0.06em" fill="#999">4 · CODE</text>
+  <text x="60" y="321" font-size="14.5" fill="#1a1a1a">analysis.py — computes stats, generates charts</text>
+
+  <line x1="200" y1="332" x2="200" y2="360" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- 5 Validation -->
+  <rect x="40" y="364" width="320" height="52" rx="8" fill="#fff" stroke="#e0dbd4"/>
+  <text x="60" y="386" font-size="11" font-weight="700" letter-spacing="0.06em" fill="#999">5 · VALIDATION</text>
+  <text x="60" y="405" font-size="14.5" fill="#1a1a1a">Methodology review · optional cross-cycle check</text>
+
+  <line x1="200" y1="416" x2="200" y2="444" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- 6 Accepted -->
+  <rect x="40" y="448" width="320" height="76" rx="8" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="60" y="470" font-size="11" font-weight="700" letter-spacing="0.06em" fill="#2e7d32">6 · ACCEPTED</text>
+  <text x="60" y="490" font-size="14.5" fill="#1a1a1a">stories/accepted/&lt;slug&gt;/</text>
+  <text x="60" y="507" font-size="11.5" fill="#888">report + charts</text>
+
+  <line x1="200" y1="524" x2="200" y2="552" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- 7 Published -->
+  <rect x="40" y="556" width="320" height="76" rx="8" fill="#fff" stroke="#1b6ca8" stroke-width="1.5"/>
+  <text x="60" y="578" font-size="11" font-weight="700" letter-spacing="0.06em" fill="#1b6ca8">7 · PUBLISHED</text>
+  <text x="60" y="598" font-size="14.5" fill="#1a1a1a">docs/&lt;slug&gt;/index.html</text>
+  <text x="60" y="615" font-size="11.5" fill="#888">live on GitHub Pages</text>
+
+</svg>

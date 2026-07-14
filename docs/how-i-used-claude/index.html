@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How I Used Claude to Turn PISA Microdata Into Published Data Stories</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Georgia", serif;
+    background: #f9f7f4;
+    color: #1a1a1a;
+    line-height: 1.75;
+  }
+
+  .page { max-width: 780px; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+
+  /* Header */
+  .kicker {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #46586b;
+    margin-bottom: 0.9rem;
+  }
+  h1 {
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.1rem;
+  }
+  .dek {
+    font-size: 1.15rem;
+    color: #444;
+    margin-bottom: 2rem;
+    max-width: 640px;
+  }
+  .byline {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.8rem;
+    color: #999;
+    border-top: 1px solid #ddd;
+    padding-top: 0.8rem;
+    margin-bottom: 3rem;
+  }
+  nav.top {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.78rem;
+    margin-bottom: 2rem;
+  }
+  nav.top a {
+    color: #777;
+    text-decoration: none;
+    border-bottom: 1px dotted #bbb;
+  }
+  nav.top a:hover { color: #46586b; border-color: #46586b; }
+
+  /* Body text */
+  p { margin-bottom: 1.3rem; }
+  h2 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    margin: 3rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+  h3 {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #777;
+    margin: 2rem 0 0.5rem;
+  }
+  ul, ol { margin: 0 0 1.3rem 1.4rem; }
+  li { margin-bottom: 0.5rem; }
+
+  /* Section kicker (mini label above a section, e.g. "STEP 3") */
+  .step-label {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #46586b;
+    margin: 2.5rem 0 0.4rem;
+  }
+
+  /* Pull quote */
+  .pullquote {
+    border-left: 4px solid #46586b;
+    margin: 2.5rem 0;
+    padding: 0.5rem 1.5rem;
+    font-size: 1.25rem;
+    font-style: italic;
+    color: #333;
+    line-height: 1.5;
+  }
+
+  /* Verbatim rule quote (from AGENTS.md) */
+  .rule-quote {
+    border-left: 4px solid #c0392b;
+    margin: 2rem 0;
+    padding: 0.6rem 1.5rem;
+    background: #fdf1ef;
+    border-radius: 0 6px 6px 0;
+  }
+  .rule-quote p {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: #333;
+    margin-bottom: 0.3rem;
+  }
+  .rule-quote .src {
+    font-family: "JetBrains Mono", "SF Mono", Menlo, monospace;
+    font-size: 0.72rem;
+    font-style: normal;
+    color: #999;
+  }
+
+  /* Stat callouts */
+  .stat-row {
+    display: flex;
+    gap: 1.5rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+  }
+  .stat-box {
+    flex: 1;
+    min-width: 160px;
+    background: #fff;
+    border: 1px solid #e0dbd4;
+    border-radius: 6px;
+    padding: 1.2rem 1.4rem;
+  }
+  .stat-box .label {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 0.3rem;
+  }
+  .stat-box .value {
+    font-size: 1.9rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #46586b;
+  }
+  .stat-box .sub {
+    font-size: 0.78rem;
+    color: #888;
+    margin-top: 0.3rem;
+  }
+
+  /* Charts / diagrams / screenshots */
+  .chart-wrap {
+    margin: 2.5rem 0;
+    background: #fff;
+    border: 1px solid #e0dbd4;
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .chart-wrap img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+  }
+  .chart-wrap.screenshot img {
+    border: 1px solid #eee;
+  }
+  .chart-caption {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.78rem;
+    color: #777;
+    margin-top: 0.75rem;
+    line-height: 1.5;
+  }
+  .chart-caption strong { color: #444; }
+
+  /* Code blocks */
+  pre {
+    background: #1e1e24;
+    color: #d8d8de;
+    border-radius: 8px;
+    padding: 1.1rem 1.3rem;
+    overflow-x: auto;
+    font-family: "JetBrains Mono", "SF Mono", Menlo, monospace;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    margin: 1.5rem 0;
+  }
+  code {
+    font-family: "JetBrains Mono", "SF Mono", Menlo, monospace;
+    font-size: 0.85em;
+    background: #eee;
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+  }
+  pre code { background: none; padding: 0; }
+  .code-caption {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.75rem;
+    color: #999;
+    margin: -1rem 0 1.5rem;
+  }
+
+  /* Data / role table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.85rem;
+    margin: 1.5rem 0;
+  }
+  th {
+    background: #f0ede8;
+    text-align: left;
+    padding: 0.55rem 0.8rem;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #555;
+    border-bottom: 2px solid #ddd;
+  }
+  td {
+    padding: 0.55rem 0.8rem;
+    border-bottom: 1px solid #eee;
+    color: #222;
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  td.claude { color: #1b6ca8; }
+  td.me { color: #c0392b; font-weight: 600; }
+
+  /* checklist table markers */
+  .chk-pass { color: #2e7d32; font-weight: 700; }
+  .chk-fail { color: #c0392b; font-weight: 700; }
+  .chk-warn { color: #b8860b; font-weight: 700; }
+
+  /* Breadcrumb flow */
+  .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 1.5rem 0 2rem;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.78rem;
+  }
+  .breadcrumb .crumb {
+    background: #fff;
+    border: 1px solid #e0dbd4;
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    color: #333;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .breadcrumb .arrow { color: #bbb; }
+
+  /* Version evolution blocks */
+  .version-block {
+    margin: 1.6rem 0;
+    padding-left: 1.25rem;
+    border-left: 3px solid #e0dbd4;
+  }
+  .version-block .vtag {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #46586b;
+    margin-bottom: 0.35rem;
+  }
+  .version-block .vtime {
+    font-family: "JetBrains Mono", "SF Mono", Menlo, monospace;
+    font-size: 0.68rem;
+    color: #aaa;
+    margin-left: 0.6rem;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .version-block p { margin-bottom: 0.9rem; }
+
+  /* Note / methodology */
+  .note {
+    background: #f0ede8;
+    border-radius: 6px;
+    padding: 1.2rem 1.5rem;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.82rem;
+    color: #555;
+    line-height: 1.65;
+    margin: 2.5rem 0;
+  }
+  .note strong { color: #333; }
+
+  /* Footer */
+  footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #ddd;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.78rem;
+    color: #aaa;
+    line-height: 1.7;
+  }
+  footer a { color: #888; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <nav class="top"><a href="../index.html">&larr; All stories</a></nav>
+
+  <p class="kicker">Behind the Scenes &middot; Methodology</p>
+
+  <h1>How I used Claude to turn PISA<br>microdata into published data stories</h1>
+
+  <p class="dek">
+    Everyone assumes the hard part of AI-assisted research is getting the AI to find something
+    interesting. It isn't. The hard part is building something that tells you, reliably, when
+    it hasn't — and this is the story of building that.
+  </p>
+
+  <p class="byline">PISA Data Stories Project &middot; a methodology note, not a research finding</p>
+
+  <!-- ── 1. The hook ── -->
+  <p>
+    Ask Claude to "find something interesting" in half a million student survey records and it
+    will. Every time. That's the problem, not the feature. Large models are extremely good at
+    producing a confident, fluent, plausible-sounding pattern out of almost any dataset you hand
+    them — a correlation, a country comparison, a causal-sounding sentence — whether or not that
+    pattern would survive five minutes of scrutiny. The genuinely hard engineering problem in
+    this project was never generating hypotheses. It was building a system that could catch its
+    own AI collaborator being confidently wrong, before a wrong finding ever reached a published
+    page.
+  </p>
+  <p>
+    This is the story of building that system: a repository, a set of rules, and a workflow
+    that turned Claude from something you prompt into something closer to a disciplined research
+    assistant — one that has to show its work, fail fast on bad ideas, and admit uncertainty
+    instead of papering over it. It happened to be built on OECD PISA education data, but the
+    system itself is the actual subject.
+  </p>
+
+  <h2>Why PISA, and why it fights back</h2>
+  <p>
+    PISA microdata is a good stress test for exactly this problem, because it's much harder to
+    work with than it looks. The OECD's 2018 questionnaire alone covers
+    <strong>1,664 variables</strong> across student, school, and teacher files. The core
+    student file — <code>SPSS_STU_QQQ.zip</code> — is 478&nbsp;MB and holds
+    <strong>612,004 students across 79 countries</strong>. None of that is the hard part.
+  </p>
+  <p>
+    The hard part is that PISA doesn't give you one score per student — it gives you
+    <strong>ten plausible values</strong> per subject (<code>PV1READ</code>&ndash;<code>PV10READ</code>,
+    and the same for math and science), a statistical device for representing uncertainty in
+    each student's estimated ability. Averaging just one of them and calling it "the score"
+    is a common, quiet way to get a PISA analysis wrong. Every student also carries a
+    <strong>survey weight</strong> (<code>W_FSTUWT</code>) and 80 replicate weights for
+    computing standard errors correctly, because PISA's sample isn't a simple random sample —
+    it's a stratified, clustered design. Add country-specific codebooks, inconsistent variable
+    names across cycles, and the temptation to compare countries as if a half-point difference
+    means something, and it's easy to see how an AI moving fast could produce something that
+    reads as rigorous and isn't.
+  </p>
+
+  <h2>Why Claude, specifically</h2>
+  <p>
+    None of what follows required a chatbot. It required something that could hold an entire
+    project's context at once — a 1,664-variable catalog, a methodology document, and a growing
+    set of precedents from prior stories — and reason across all of it consistently. A handful
+    of practical properties made Claude Code the right fit for this, not as a matter of
+    preference but of what the work actually demanded:
+  </p>
+  <ul>
+    <li><strong>Long-context reasoning.</strong> A single feasibility check means cross-referencing a hypothesis against <code>variable_catalog.csv</code>, <code>data/methodology.md</code>, and whatever the raw SPSS file actually contains — three sources, one judgment call.</li>
+    <li><strong>Repository awareness.</strong> <code>AGENTS.md</code> only works if it's actually read and followed before every hypothesis, not re-explained by hand each session.</li>
+    <li><strong>Iterative code editing.</strong> An <code>analysis.py</code> script rarely survives its first draft — weighting gets corrected, a chart gets restyled, a threshold gets adjusted after seeing the actual distribution of pairs.</li>
+    <li><strong>Structural consistency across many files.</strong> Every story touches five or six files across two directories — <code>analysis.py</code>, <code>report.md</code>, <code>story.json</code>, chart PNGs, and a hand-authored <code>docs/&lt;slug&gt;/index.html</code>. Keeping that pattern identical across every published story without drift is a coordination problem as much as a writing one.</li>
+  </ul>
+  <p>
+    Put simply: the project needed an editor that could read the whole repository's history and
+    conventions before writing a single new file, and revise its own code in place rather than
+    starting fresh each time. That's an infrastructure requirement, not a marketing claim.
+  </p>
+
+  <h2>Building the foundation</h2>
+  <p>
+    Before any hypothesis was tested, the repository was organized around one rule:
+    a reader — or a future version of Claude — should be able to reproduce any story
+    from what's committed to the repo, without re-deriving anything from memory.
+  </p>
+  <p>
+    Raw PISA files (<code>data/raw/</code>) are gitignored — they're hundreds of megabytes,
+    OECD-downloadable, and not something a repository should carry. Everything derived from
+    them that a story actually depends on — country summaries, cleaned extracts, the cycle
+    inventory — lives in <code>data/processed/</code> and <em>is</em> committed, so a story's
+    numbers stay reproducible even without re-downloading gigabytes of SPSS files.
+    <code>data/methodology.md</code> and <code>variable_catalog.csv</code> existed before the
+    first story did, precisely so that "which variables exist" and "how must plausible values
+    be pooled" were answered once, not re-litigated per hypothesis.
+  </p>
+
+  <div class="chart-wrap">
+    <img src="./charts/repo-structure.svg" alt="Diagram of the repository's top-level folder structure: data, scripts, stories, docs">
+    <p class="chart-caption">
+      <strong>Figure 1.</strong> The four top-level folders and what belongs in each.
+      Reproduced from the project structure documented in <code>AGENTS.md</code>.
+    </p>
+  </div>
+
+  <p>
+    <code>stories/</code> and <code>docs/</code> split the same story into two different jobs.
+    <code>stories/accepted/&lt;slug&gt;/</code> holds the reproducible parts — the analysis
+    script, the technical report, the chart-generating code. <code>docs/&lt;slug&gt;/</code>
+    holds the published artifact — a self-contained webpage a reader sees, with no build step
+    required to view it. Keeping them separate means a story's evidence and its presentation
+    can be reviewed independently.
+  </p>
+
+  <h2>Early attempts: the workflow nobody designed up front</h2>
+  <p>
+    None of this shipped fully formed. The project's git history — which is the only honest
+    record of how it actually happened — shows a workflow that was rewritten repeatedly in its
+    first few hours, each revision closing a gap the previous version had just exposed.
+  </p>
+
+  <div class="code-caption">The project's actual commit history, oldest first:</div>
+  <pre><code>e90e4f6  Initialize PISA data story project
+376f6ad  Add story: same-mean-different-distribution (Lebanon vs Kosovo)
+e46d5c5  Update AGENTS.md: expand workflow steps and add skills rule
+4319c45  Add story: the-school-lottery (Netherlands vs Finland ICC analysis)
+35d4fbd  Add PISA Data Stories website
+8f71359  Add README and publishing workflow to AGENTS.md
+78cac7f  Fix chart paths for GitHub Pages; default to light mode
+8c0fdca  Add cross-cycle PISA infrastructure (2022 installed; 2012/2015 supported)</code></pre>
+
+  <div class="version-block">
+    <div class="vtag">Version 1 <span class="vtime">first commit</span></div>
+    <p>
+      The original <code>AGENTS.md</code> was four short sections: a one-line Goal, a four-step
+      Workflow ("verify the required variables exist," "write the analysis code," "generate a
+      publishable webpage"), and a short Rules list. There was no feasibility table, no
+      pass/warn/fail scoring, and — notably — no rule yet against inventing unsupported conclusions.
+      It assumed that verifying variables existed was most of what "feasibility" meant.
+    </p>
+  </div>
+
+  <div class="version-block">
+    <div class="vtag">Version 2 <span class="vtime">same evening, during the first story</span></div>
+    <p>
+      It wasn't. The commit that shipped the project's first story —
+      <code>same-mean-different-distribution</code> — carries this line in its own message:
+      <em>"Also updates AGENTS.md with feasibility checklist changes from earlier sessions."</em>
+      The Required/Quality Checks tables, the explicit Analytical Soundness check, and the
+      "do not invent variables or unsupported conclusions" rule were not designed in the
+      abstract beforehand — they were written mid-project, in response to whatever went wrong
+      or felt too loose while that very first hypothesis was being tested.
+    </p>
+  </div>
+
+  <div class="version-block">
+    <div class="vtag">Version 3 <span class="vtime">under an hour later</span></div>
+    <p>
+      Passing the checklist still left a gap between "statistically correct" and "a report a
+      stranger would want to read." The next revision replaced a single vague step —
+      "write a clear report" — with four explicit ones invoking Claude Code's own skills for
+      methodology review, narrative storytelling, and page design, plus a rule that those
+      skills should complement this project's workflow, not override it.
+    </p>
+  </div>
+
+  <div class="version-block">
+    <div class="vtag">Version 4 <span class="vtime">just after midnight, same overnight session</span></div>
+    <p>
+      Here's a detail that didn't make it into any narrative because it's a little inconvenient:
+      the first two stories were published <em>before</em> a homepage existed to link them
+      together. <code>scripts/build_site.py</code> and <code>docs/index.html</code> arrived in a
+      separate commit afterward, and the publishing steps — <code>story.json</code>, the build
+      script, the git push — were folded into <code>AGENTS.md</code> only once that pipeline
+      was real. The workflow document was documenting a system that already existed, not the
+      other way around.
+    </p>
+  </div>
+
+  <div class="version-block">
+    <div class="vtag">Version 5 <span class="vtime">about a week later</span></div>
+    <p>
+      The remaining gap was time. Every finding so far rested on a single PISA cycle — nothing
+      tested whether a pattern held up when the world moved on. A week after the first session,
+      PISA 2022 data was installed and an <em>optional</em> cross-cycle robustness check was
+      added to the workflow, deliberately scoped as optional so it wouldn't become required
+      overhead on stories where a second cycle wouldn't add real confidence.
+    </p>
+  </div>
+
+  <p>
+    None of these revisions were scheduled. Each one exists because the version before it broke
+    or fell short on a real hypothesis, not a hypothetical one.
+  </p>
+
+  <h2>Creating the workflow that stuck</h2>
+  <p>
+    What those five revisions converged on is the constitution the project still runs on:
+    <code>AGENTS.md</code>, a repository file Claude reads before touching any hypothesis.
+    It was never "analyze the data and see what you find." That prompt produces exactly what
+    you'd expect from an unconstrained pattern-matcher pointed at 1,664 variables: a confident
+    correlation, no examination of whether it survives scrutiny, and no record of the ideas
+    that didn't work.
+  </p>
+  <p>
+    Instead, <code>AGENTS.md</code> requires a feasibility pass before a single line of analysis
+    code is written. Three checks are non-negotiable:
+  </p>
+
+  <table>
+    <thead><tr><th>Required check</th><th>Question</th></tr></thead>
+    <tbody>
+      <tr><td>Data Availability</td><td>Can the hypothesis be tested using the available PISA 2018 data?</td></tr>
+      <tr><td>Variable Availability</td><td>Are all required variables present in the downloaded datasets?</td></tr>
+      <tr><td>Analytical Soundness</td><td>Can it be tested with an appropriate method, without unsupported causal claims?</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.85rem;color:#777;margin-top:-0.8rem;">
+    A single failing check stops the analysis immediately — a short markdown file goes in
+    <code>stories/rejected/</code> explaining why, and no analysis code is written at all.
+  </p>
+
+  <p>
+    A second, softer table follows: Story Potential, Novelty, and Reproducibility. These don't
+    auto-reject anything — they're where judgment enters. A hypothesis can pass every required
+    check and still be weak on novelty; the rule is to say so explicitly and let the human call it,
+    not to quietly bury the ambivalence.
+  </p>
+
+  <div class="rule-quote">
+    <p>&ldquo;Do not invent variables or unsupported conclusions. When uncertain, explicitly
+    state the limitation instead of making assumptions.&rdquo;</p>
+    <p class="src">— AGENTS.md, Rules</p>
+  </div>
+
+  <p>
+    That single rule is doing most of the work in this project. It's why every published
+    report on this site has a Limitations section, why the same-mean-different-distribution
+    story states plainly that it computes no standard errors and therefore treats
+    mean differences under ~5 points as noise, and why an AI that could easily generate a
+    fluent causal story about <em>why</em> Lebanon and Kosovo differ was told, in effect,
+    not to.
+  </p>
+
+  <p>
+    If a reader wants the single clearest example of the workflow's actual philosophy, it's
+    the opening lines of <code>AGENTS.md</code> itself — not a marketing description of it,
+    the real text Claude reads before anything else happens:
+  </p>
+
+  <div class="code-caption">From <code>AGENTS.md</code>, Goal:</div>
+  <pre><code>Test one PISA data story hypothesis at a time.
+
+Determine whether the available PISA data can support the hypothesis. If it
+can, produce a complete, evidence-backed data story. If it cannot, reject
+the idea quickly with a short explanation.</code></pre>
+  <p>
+    Two sentences. One path forward, one path out. Everything else in this article is really
+    just the machinery built to make that second sentence — <em>reject the idea quickly</em> —
+    something Claude could actually act on, instead of a nice intention nobody enforces.
+  </p>
+
+  <h2>The story pipeline</h2>
+  <p>
+    End to end, one hypothesis moves through seven stages. The feasibility checklist above
+    is stage two — the only stage with a hard exit.
+  </p>
+
+  <div class="chart-wrap">
+    <img src="./charts/pipeline-flow.svg" alt="Flowchart: Idea, Feasibility Checklist, Analysis Plan, Code, Validation, Accepted, Published — with a branch from Feasibility Checklist to Rejected">
+    <p class="chart-caption">
+      <strong>Figure 2.</strong> The full workflow defined in <code>AGENTS.md</code>. A failed
+      required check exits directly to <code>stories/rejected/</code>; nothing downstream of
+      that box runs.
+    </p>
+  </div>
+
+  <p>
+    <code>stories/rejected/</code> exists for the branch that never reaches the pipeline's
+    later stages: a hypothesis whose data doesn't exist, whose variables aren't in the
+    catalog, or whose method would require an unsupported causal claim. The rule is that a
+    failed Required Check produces a short markdown file explaining <em>which</em> check
+    failed and why — a paragraph, not a postmortem — so that a rejected idea still leaves a
+    trace instead of just disappearing from the conversation. A rejection is meant to be
+    exactly as legitimate an outcome as an acceptance; the checklist's entire job is to make
+    that outcome cheap enough that it actually gets used instead of quietly avoided.
+  </p>
+
+  <p>
+    Stage three — the analysis plan — is a written commitment to a method <em>before</em>
+    code exists: which variables, which technique, what the output should look like, and
+    why that approach beats the alternatives. The <code>speed-struggle-quitting</code> story's
+    plan, for instance, spells out exactly why a within-item median time-split was used
+    instead of a fixed cutoff, and why partial-credit responses were grouped with "wrong"
+    rather than invented as a third category. That kind of decision, written down before
+    the chart exists, is much harder to quietly reverse-engineer to fit a result after the fact.
+  </p>
+
+  <h2>Publishing the first story</h2>
+  <p>
+    This is the same evening from the version history above — the hours during which
+    Version 1 of <code>AGENTS.md</code> turned into Version 2 mid-hypothesis. The hypothesis
+    that forced that revision was <strong>Same Mean, Different Distribution</strong>: the
+    finding that Lebanon and Kosovo scored within a single point of each other on PISA 2018
+    Reading — <strong>353.4</strong> vs. <strong>353.1</strong> — while having almost nothing
+    else in common. It's the clearest example of the pipeline in motion, because it's the
+    hypothesis that built the pipeline.
+  </p>
+
+  <h3>Illustrative feasibility pass</h3>
+  <p style="font-size:0.85rem;color:#888;margin-top:-0.6rem;">
+    The checklist above is produced as conversation output, not saved to a file — so nothing
+    below is a stored transcript. It's a reconstruction, built from the actual variables and
+    methods the finished analysis used, to show what clearing the checklist looked like for
+    this specific hypothesis.
+  </p>
+  <table>
+    <thead><tr><th>Check</th><th>Result</th><th>Reason</th></tr></thead>
+    <tbody>
+      <tr><td>Data Availability</td><td class="chk-pass">✓</td><td>PISA 2018 Reading is the primary domain; all 79 countries administered it.</td></tr>
+      <tr><td>Variable Availability</td><td class="chk-pass">✓</td><td><code>PV1READ</code>&ndash;<code>PV10READ</code> and <code>W_FSTUWT</code> exist in <code>SPSS_STU_QQQ.zip</code> for every country.</td></tr>
+      <tr><td>Analytical Soundness</td><td class="chk-pass">✓</td><td>Weighted means, SDs, and quantiles per plausible value, pooled per Rubin's rules — a descriptive comparison, no causal claim required.</td></tr>
+    </tbody>
+  </table>
+
+  <p>
+    With the required checks clear, the plan was simple: compute weighted mean, SD, and
+    percentiles (P10/P25/P50/P75/P90) per country across all 10 plausible values, then search
+    all <sup>79</sup>C<sub>2</sub> country pairs for ones with nearly identical means but very
+    different spreads.
+  </p>
+
+  <div class="code-caption">From <code>stories/accepted/same-mean-different-distribution/analysis.py</code>:</div>
+  <pre><code>MEAN_THRESHOLD = 5      # max difference in mean scores
+SPREAD_THRESHOLD = 20   # min difference in P90-P10 range
+
+for i in range(len(s)):
+    for j in range(i + 1, len(s)):
+        a, b = s.iloc[i], s.iloc[j]
+        mean_diff   = abs(a["mean"] - b["mean"])
+        spread_diff = abs(a["p90_p10_range"] - b["p90_p10_range"])
+        if mean_diff &lt; MEAN_THRESHOLD and spread_diff &gt; SPREAD_THRESHOLD:
+            pairs.append({...})
+
+# Selected pair: the one with the greatest spread difference
+best = pairs_df.sort_values("spread_diff", ascending=False).iloc[0]</code></pre>
+
+  <p>
+    That search — not a hunch — is what surfaced Lebanon and Kosovo out of 75 qualifying pairs.
+    The chart below is the actual output of that script.
+  </p>
+
+  <div class="chart-wrap">
+    <img src="../same-mean-different-distribution/charts/density_comparison.png" alt="Overlapping weighted density curves for Lebanon and Kosovo PISA 2018 Reading scores">
+    <p class="chart-caption">
+      <strong>Figure 3.</strong> Weighted PISA 2018 Reading distributions for Lebanon (SD 113.3)
+      and Kosovo (SD 68.3) — nearly the same mean, very different shape. Reused directly from
+      the published story's own chart output.
+    </p>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <p class="label">Lebanon &middot; P90&ndash;P10 range</p>
+      <p class="value">296</p>
+      <p class="sub">points &mdash; wide, stratified</p>
+    </div>
+    <div class="stat-box">
+      <p class="label">Kosovo &middot; P90&ndash;P10 range</p>
+      <p class="value">177</p>
+      <p class="sub">points &mdash; narrow, uniform</p>
+    </div>
+  </div>
+
+  <p>
+    From there the workflow moved exactly as diagrammed: the analysis script generated the
+    remaining charts, a technical report (<code>report.md</code>) documented method and
+    limitations, and only once that report existed did work begin on
+    <code>docs/same-mean-different-distribution/index.html</code> — the page a reader
+    actually sees, rewritten in narrative form without changing a single underlying number.
+  </p>
+
+  <h2>Scaling into a repeatable system</h2>
+  <p>
+    A workflow that only works once isn't a workflow, it's a lucky session. The real test came
+    after Same Mean, Different Distribution: could the same shape — checklist, plan, code,
+    validation, publish — produce a second finding, then a third, without a fresh round of
+    trial and error each time? It could. Every story on this site since has gone through the
+    identical sequence, and the one genuinely new capability added along the way — the optional
+    cross-cycle robustness check — was deliberately built as an appendix bolted onto an existing
+    story's report, not a reason to rebuild the pipeline. Several already-published stories
+    later had a robustness appendix added retroactively, which is itself a small proof that the
+    original structure held up under reuse.
+  </p>
+
+  <h2>Claude's role vs. my role</h2>
+  <p>
+    It would be easy to read a site like this and assume the AI just did it. It didn't. Within
+    that repeated sequence, the two of us were doing genuinely different jobs — Claude proposing
+    angles, writing analysis code, and drafting the narrative; me choosing which questions were
+    worth asking, checking that the statistics actually meant what the draft claimed, and
+    deciding what was allowed to go live.
+  </p>
+
+  <table>
+    <thead><tr><th>Stage</th><th>Claude</th><th>Me</th></tr></thead>
+    <tbody>
+      <tr><td>Workflow design</td><td class="claude">Follows the checklist and rules in <code>AGENTS.md</code></td><td class="me">Wrote and maintain <code>AGENTS.md</code> itself</td></tr>
+      <tr><td>Choosing what to test</td><td class="claude">Proposes angles and framings within a hypothesis</td><td class="me">Selected which hypotheses were worth a feasibility pass at all</td></tr>
+      <tr><td>Feasibility checks</td><td class="claude">Runs the Required/Quality checks, states results</td><td class="me">Made the judgment call on every weak quality flag</td></tr>
+      <tr><td>Analysis code</td><td class="claude">Writes <code>analysis.py</code>, computes stats, generates charts</td><td class="me">Reviewed the method against <code>data/methodology.md</code> before trusting output</td></tr>
+      <tr><td>Numbers in the report</td><td class="claude">Drafts <code>report.md</code> from its own computed output</td><td class="me">Spot-checked reported figures against the actual CSVs before publishing</td></tr>
+      <tr><td>Narrative &amp; page</td><td class="claude">Writes the story prose and the page's HTML/CSS</td><td class="me">Approved tone, accuracy, and what got emphasized</td></tr>
+      <tr><td>Publishing</td><td class="claude">Can run <code>build_site.py</code></td><td class="me">Own and run <code>git commit</code> / <code>git push</code> — nothing goes live without that</td></tr>
+      <tr><td>Repository upkeep</td><td class="claude">Follows existing structure</td><td class="me">Decide when the structure itself needs to change (e.g. adding the cross-cycle system)</td></tr>
+    </tbody>
+  </table>
+  <p>
+    None of those rows are adversarial. The whole point of the workflow was to make the
+    collaboration legible — so that if a published number turned out to be wrong, it would be
+    obvious which side of that table to go check first.
+  </p>
+
+  <h2>Publishing</h2>
+  <p>
+    A finished story becomes a live page through a fixed sequence, not an ad hoc one — the same
+    loop, closed, every time:
+  </p>
+  <div class="breadcrumb">
+    <span class="crumb">Idea</span><span class="arrow">&rarr;</span>
+    <span class="crumb">Analysis</span><span class="arrow">&rarr;</span>
+    <span class="crumb">Story</span><span class="arrow">&rarr;</span>
+    <span class="crumb">Git commit</span><span class="arrow">&rarr;</span>
+    <span class="crumb">GitHub Pages</span>
+  </div>
+  <p style="font-size:0.85rem;color:#777;margin-top:-1.2rem;">
+    Concretely, the last three steps of that loop are:
+  </p>
+  <ol>
+    <li>Write <code>stories/accepted/&lt;slug&gt;/story.json</code> — title, subtitle, description, date, tags.</li>
+    <li>Write the story page itself at <code>docs/&lt;slug&gt;/index.html</code>.</li>
+    <li>Run <code>python scripts/build_site.py</code>, which regenerates <code>docs/index.html</code> from every <code>story.json</code> it finds and copies each story's charts into <code>docs/&lt;slug&gt;/charts/</code>.</li>
+    <li><code>git add . &amp;&amp; git commit &amp;&amp; git push</code> — GitHub Pages redeploys automatically.</li>
+  </ol>
+
+  <div class="rule-quote">
+    <p>&ldquo;The homepage (<code>docs/index.html</code>) is always generated — never edit
+    it by hand.&rdquo;</p>
+    <p class="src">— AGENTS.md, Publishing Workflow</p>
+  </div>
+
+  <p>
+    That rule isn't cosmetic. This page's own link from the homepage exists because it was
+    added to <code>scripts/build_site.py</code>'s template, not because someone hand-edited
+    <code>docs/index.html</code> — which would have been silently overwritten the next time
+    a story was published. The screenshots below are the real, current site, captured directly
+    from the repository's HTML.
+  </p>
+
+  <div class="chart-wrap screenshot">
+    <img src="./charts/homepage-screenshot.png" alt="Screenshot of the PISA Data Stories homepage">
+    <p class="chart-caption">
+      <strong>Figure 4.</strong> The generated homepage — every card on it comes from a
+      <code>story.json</code> file, assembled by <code>build_site.py</code>.
+    </p>
+  </div>
+
+  <div class="chart-wrap screenshot">
+    <img src="./charts/story-page-screenshot.png" alt="Screenshot of the Same Mean, Different Distribution story page">
+    <p class="chart-caption">
+      <strong>Figure 5.</strong> A published story page — hand-authored HTML that
+      <code>build_site.py</code> never touches once it exists.
+    </p>
+  </div>
+
+  <h2>What surprised me</h2>
+
+  <p><strong>Structure did more work than any prompt.</strong> I expected the leverage to come
+  from phrasing — the right instruction, worded carefully. It didn't. <code>data/README.md</code>
+  telling future sessions to "use the smallest dataset that covers your needs," or
+  <code>methodology.md</code> existing before any hypothesis did, prevented more bad analysis
+  than any individual sentence of instruction to Claude ever did.</p>
+
+  <p><strong>Most of the real effort was in framing the question, not running the code.</strong>
+  The clearest evidence is sitting in the repository: <code>speed-struggle-quitting/PLAN.md</code>
+  spends most of its length reasoning about how to classify a single ambiguous item type and
+  why a within-item median time-split beats a fixed cutoff — decisions made before
+  <code>analysis.py</code> existed at all. The code, once the question was actually well-posed,
+  was usually the fast part.</p>
+
+  <p><strong>Publishing was not the lightweight last step I expected.</strong> A story's
+  <code>docs/&lt;slug&gt;/index.html</code> page routinely runs 400 to over 1,100 lines —
+  comparable to, and sometimes longer than, the analysis script that produced its numbers.
+  Turning a validated finding into something a stranger would want to read took real,
+  separate effort, not a template fill-in.</p>
+
+  <p><strong>Constraints made Claude more useful, not less.</strong> I expected the feasibility
+  checklist to slow things down. Instead it seemed to cut rework — a hypothesis that would have
+  needed rewriting after a wrong analytical approach got caught, questioned, or reframed before
+  any code existed to unwind.</p>
+
+  <p><strong>Reproducibility paid off later, not immediately.</strong> Keeping
+  <code>analysis.py</code> faithful and self-contained felt like overhead in the moment. It's
+  the only reason a robustness appendix could be bolted onto an already-published story a week
+  later without re-deriving the original finding from scratch.</p>
+
+  <h2>Lessons learned</h2>
+
+  <p><strong>AI output still needs a reviewer with domain judgment.</strong> Claude can compute
+  a weighted percentile correctly and still pick a framing that overstates it. The check that
+  catches that isn't a script — it's someone who reads <code>data/methodology.md</code> closely
+  enough to notice when a report's language has drifted past what the numbers support.</p>
+
+  <p><strong>Reproducibility is a design decision, not an afterthought.</strong> Every accepted
+  story keeps its <code>analysis.py</code> next to its <code>report.md</code> next to its charts,
+  in the same folder, committed together. That was chosen before the first story was written,
+  specifically so a claim could always be traced back to the code that produced it.</p>
+
+  <p><strong>Survey methodology punishes shortcuts.</strong> Ten plausible values, one survey
+  weight, 80 replicate weights, and a stratified sample design exist because a single point
+  estimate per student would understate uncertainty. <code>data/methodology.md</code> exists
+  because that's easy to forget mid-analysis and hard to notice after the fact.</p>
+
+  <p><strong>A striking correlation is not a mechanism.</strong> Nothing on this site claims to
+  explain <em>why</em> Lebanon and Kosovo differ, or why some disadvantaged schools beat the
+  odds — the data can show <em>that</em> patterns exist and describe their shape; it can't, on
+  its own, adjudicate cause. Every report's Limitations section exists to say that plainly
+  instead of implying otherwise.</p>
+
+  <p><strong>Constraints produce better output than open-ended prompting.</strong> The version
+  of this project that worked wasn't "explore this dataset and tell me something interesting."
+  It was a checklist with hard failure conditions, a required written plan before code, and an
+  explicit instruction to state limitations instead of guessing. The workflow is more
+  restrictive than a free-form prompt — and every published story exists because of it, not
+  despite it.</p>
+
+  <div class="pullquote">
+    The interesting part was never getting Claude to find a pattern in survey data.
+    It was building something that would tell me — reliably — when it hadn't.
+  </div>
+
+  <h2>What's next</h2>
+  <p>
+    Very little of <code>AGENTS.md</code>'s actual <em>structure</em> is PISA-specific, even
+    though its wording currently is — the Required Checks table literally asks about "the
+    available PISA 2018 data." But the shape underneath that wording (does the data exist,
+    do the variables exist, is the method sound) isn't about PISA at all, and neither is the
+    plan-before-code step, the accepted/rejected split, or the publishing pipeline through
+    <code>build_site.py</code>. The genuinely PISA-specific knowledge lives in a smaller,
+    separable place: <code>data/methodology.md</code> (plausible values, survey weights) and
+    the variable catalog. Swap those for a different public dataset's own quirks, and the
+    shape of the workflow — checklist, plan, code, validation, publish — doesn't obviously
+    need to change.
+  </p>
+  <p>
+    That's speculation, not a claim already tested — this project has only ever run against
+    PISA. But the parts that made it trustworthy here weren't about test scores or plausible
+    values specifically; they were about refusing to let an AI collaborator skip the step
+    where it might be wrong. Any dataset complicated enough to tempt a fast, confident,
+    unverified answer is a candidate for the same treatment. This project reads less like a
+    finished experiment and more like the first run of a template — one built on PISA because
+    PISA happened to be complicated enough to need it.
+  </p>
+
+  <div class="note">
+    <strong>A note on this page.</strong> Every statistic above is traced to a file in this
+    repository: <code>AGENTS.md</code> for the workflow, rules, and their revision history,
+    <code>report.md</code> and <code>analysis.py</code> for the Lebanon/Kosovo numbers,
+    <code>data/README.md</code> for dataset sizes and variable counts, and <code>git log</code>
+    for the version history and commit timestamps. The one exception — the reconstructed
+    feasibility table — is labeled as such where it appears. No repository feature, prompt,
+    Git history, or statistic here was invented for the sake of the narrative.
+  </div>
+
+  <footer>
+    PISA Data Stories &middot; a methodology note on how the project itself was built &middot;
+    <a href="../index.html">Back to all stories</a>
+  </footer>
+
+</div>
+</body>
+</html>
